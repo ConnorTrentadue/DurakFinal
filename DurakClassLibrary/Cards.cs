@@ -1,5 +1,5 @@
 ﻿/*
- * StandardDeck.cs - Standard 52 card deck class.  Can be used to initiate other deck sizes.
+ * Cards.cs - Class for cloning Card objects into object of multiple cards.
  * 
  * Author: Shaun McCrum
  * Since: 22 Mar 2019
@@ -8,13 +8,15 @@
  */
 
 using System;
-using System.Collections.Generic;       //List
-
+using System.Collections.Generic;       //List 
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DurakClassLibrary
 {
     public class Cards : List<Card>, ICloneable
-    {
+    { 
         /// <summary>
         /// Method for copying a card instance to another Cards object
         /// Used by Deck.Shuffle(). Implementation assumes source and target are sized identaically
@@ -29,16 +31,17 @@ namespace DurakClassLibrary
             }
         }
 
-
         /// <summary>
-        /// Creates a clode of a cards object.
+        /// Method to clone an object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>a new object of cards called newCards</returns>
         public object Clone()
         {
+            // create a new Cards object
             Cards newCards = new Cards();
             foreach (Card sourceCard in this)
             {
+                // add a clone of a card object to the newCards object.
                 newCards.Add((Card)sourceCard.Clone());
             }
             return newCards;

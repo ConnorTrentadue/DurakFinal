@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Ch13CardLib
+namespace DurakClassLibrary
 {
     public class Card : ICloneable
     {
@@ -73,19 +73,15 @@ namespace Ch13CardLib
                     if (card1.rank == Rank.Ace)
                     {
                         if (card2.rank == Rank.Ace)
-                        {
                             isGreater = false;
-                            return isGreater;
-                        }
                         else
-                            return isGreater;
+                            isGreater = true;
                     }
                     else
                     {
                         if (card2.rank == Rank.Ace)
                         {
                             isGreater = false;
-                            return isGreater;
                         }
                         else
                             return (card1.rank > card2.rank);
@@ -98,14 +94,13 @@ namespace Ch13CardLib
             }
             else
             {
-                if (useTrumps && (card2.suit == Card.trump))
-                {
-                    isGreater = false;
-                    return isGreater;
-                }
+                if (useTrumps && (card2.suit == Card.trump))                
+                    isGreater = false;                
                 else
-                    return isGreater;
+                    isGreater = true;
             }
+
+            return isGreater;
         }
 
         public static bool operator <(Card card1, Card card2)
@@ -115,18 +110,22 @@ namespace Ch13CardLib
 
         public static bool operator >=(Card card1, Card card2)
         {
+            bool isGreaterEqual = true;
+
             if (card1.suit == card2.suit)
             {
                 if (isAceHigh)
                 {
                     if (card1.rank == Rank.Ace)
                     {
-                        return true;
+                        isGreaterEqual = true;
                     }
                     else
                     {
                         if (card2.rank == Rank.Ace)
-                            return false;
+                        {
+                            isGreaterEqual = false;
+                        }
                         else
                             return (card1.rank >= card2.rank);
                     }
@@ -139,10 +138,12 @@ namespace Ch13CardLib
             else
             {
                 if (useTrumps && (card2.suit == Card.trump))
-                    return false;
-                else
-                    return true;
+                {
+                    isGreaterEqual = false;
+                }
             }
+
+            return isGreaterEqual;
         }
 
         public static bool operator <=(Card card1, Card card2)

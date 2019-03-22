@@ -9,9 +9,7 @@
 
 using System;
 using System.Collections.Generic;       //List 
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DurakClassLibrary
 {

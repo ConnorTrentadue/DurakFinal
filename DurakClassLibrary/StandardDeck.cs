@@ -1,18 +1,15 @@
 ﻿/*
- * StandardDeck.cs - Standard 52 card deck class.  Cna be used to initiate other deck sizes.
+ * StandardDeck.cs - Standard 52 card deck class.  Can be used to initiate other deck sizes leverage methods.
  * 
  * Author: Shaun McCrum
- * Since: 4 Feb 2019
- * Since: 2 Mar 2019
+ * Since: 22 Mar 2019
  * See: Watson, K. (2013). Beginning Visual C♯® 2012 programming. Indianapolis, IN: John Wiley & Sons.
  * 
  */
 
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace DurakClassLibrary
 {

@@ -133,7 +133,7 @@
             // btnNewGame
             // 
             this.btnNewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewGame.Location = new System.Drawing.Point(909, 12);
+            this.btnNewGame.Location = new System.Drawing.Point(910, 12);
             this.btnNewGame.Name = "btnNewGame";
             this.btnNewGame.Size = new System.Drawing.Size(75, 23);
             this.btnNewGame.TabIndex = 6;

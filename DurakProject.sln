@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurakProject", "DurakProject\DurakProject.csproj", "{6E5DDBD0-B64E-4506-A9CD-8BF3975DD157}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurakClassLibrary", "DurakClassLibrary\DurakClassLibrary.csproj", "{927387B7-A549-4428-B375-7EFA91564817}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6E5DDBD0-B64E-4506-A9CD-8BF3975DD157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E5DDBD0-B64E-4506-A9CD-8BF3975DD157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E5DDBD0-B64E-4506-A9CD-8BF3975DD157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{927387B7-A549-4428-B375-7EFA91564817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927387B7-A549-4428-B375-7EFA91564817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927387B7-A549-4428-B375-7EFA91564817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927387B7-A549-4428-B375-7EFA91564817}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

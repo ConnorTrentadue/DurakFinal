@@ -8,10 +8,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DurakClassLibrary
 {
@@ -27,7 +23,7 @@ namespace DurakClassLibrary
             // cards = new Card[];
             for (int suitValue = 0; suitValue < 4; suitValue++)
             {
-                for (int rankValue = 5; rankValue < 15; rankValue++)
+                for (int rankValue = 6; rankValue < 15; rankValue++)
                 {
                     // assign cards a unique value  (obsolete)
                     //cards[suitValue * 13 + rankValue - 1] = new Card((Suit)suitValue, 
@@ -91,24 +87,34 @@ namespace DurakClassLibrary
             Card.trump = trump;
         }
 
+        public bool isEmpty()
+        {
+            bool empty = false;
 
+            if (cards.Count == 0)
+            {
+                empty = true;
+            }
+
+            return empty;
+        }
 
         /// <summary>
         /// Method to create a method to test Expanding
         /// </summary>
         /// <param name = "cardNum" ></ param >
         /// < returns ></ returns >
-        public Card GetCard(int cardNum)
-        {
-            if (cardNum >= 0 && cardNum <= 35)
-            {
-                if ((cardNum == 51) && (LastCardDrawn != null))
-                    //Call the custom event handler when last card is drawn
-                    LastCardDrawn(this, EventArgs.Empty);
-                return cards[cardNum];
-            }
-            //else
-            //    throw new CardOutOfRangeException((Cards)cards.Clone());
-        }
+        //public Card GetCard(int cardNum)
+        //{
+        //    if (cardNum >= 0 && cardNum <= 35)
+        //    {
+        //        if ((cardNum == 51) && (LastCardDrawn != null))
+        //            //Call the custom event handler when last card is drawn
+        //            LastCardDrawn(this, EventArgs.Empty);
+        //        return cards[cardNum];
+        //    }
+        //    //else
+        //    //    throw new CardOutOfRangeException((Cards)cards.Clone());
+        //}
     }
 }

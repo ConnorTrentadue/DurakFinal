@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,8 +47,187 @@
     <Compile Include="Deck.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Rank.cs" />
     <Compile Include="Suit.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Back - Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Back_Colour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Black_Joker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Ace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Eight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Five.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Four.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Jack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Nine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Seven.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Six.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Ten.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Three.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs_Two.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Ace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Eight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Five.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Four.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Jack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Nine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Seven.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Six.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Ten.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Three.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds_Two.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Ace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Eight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Five.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Four.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Jack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Nine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Seven.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Six.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Ten.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Three.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts_Two.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Red_Joker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Ace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Eight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Five.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Four.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Jack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Nine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Seven.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Six.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Ten.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Three.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades_Two.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

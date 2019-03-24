@@ -17,7 +17,7 @@ namespace DurakClassLibrary
         public Player(string name)
         {
             Name = name;
-            PlayHand = new Cards();
+            Cards PlayHand = new Cards();
         }
 
         public bool WinnerCheck()

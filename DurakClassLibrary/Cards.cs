@@ -17,7 +17,7 @@ namespace DurakClassLibrary
     { 
         /// <summary>
         /// Method for copying a card instance to another Cards object
-        /// Used by Deck.Shuffle(). Implementation assumes source and target are sized identaically
+        /// Used by Deck.Shuffle(). Implementation assumes source and target are sized identically
         /// </summary>
         /// <param name="targetCards">the copied card index</param>
         public void CopyTo(Cards targetCards)

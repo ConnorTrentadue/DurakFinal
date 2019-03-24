@@ -8,148 +8,179 @@
  */
 
 using System;
+using System.Drawing;
 
 namespace DurakClassLibrary
 {
-    public class Card : ICloneable
+    public class Card : ICloneable, IComparable
     {
-        public readonly Rank rank;
-        public readonly Suit suit;
+        #region FIELDS AND PROPERTIES
 
-        public static bool useTrumps = false;
-
-        public static Suit trump = Suit.Club;
-
-        public static bool isAceHigh = true;
-
-        private Card()
+        protected Suit mySuit;
+        public Suit Suit
         {
+            get { return mySuit; }
+            set { mySuit = value; }
         }
 
-        public Card(Suit newSuit, Rank newRank)
+        protected Rank myRank;
+        public Rank Rank
         {
-            suit = newSuit;
-            rank = newRank;
+            get { return myRank; }
+            set { myRank = value; }
+        }
+
+        protected int myValue;
+        public int CardValue
+        {
+            get { return myValue; }
+            set { myValue = value; }
+        }
+
+        protected int? altValue = null;
+        public int? AlternateValue
+        {
+            get { return altValue; }
+            set { altValue = value; }
+        }
+
+        protected bool faceUp = false;
+        public bool FaceUp
+        {
+            get { return faceUp; }
+            set { faceUp = value; }
+        }
+
+        #endregion
+
+        #region CONSTRUCTORS
+
+        public Card(Rank rank = Rank.Ace, Suit suit = Suit.Heart)
+        {
+            this.myRank = rank;
+            this.mySuit = suit;
+            this.myValue = (int)rank;
+        }
+
+        #endregion
+
+        #region PUBLIC METHODS
+
+        public virtual int CompareTo(object obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("Unable to compare a card to a null object.");
+            }
+
+            Card compareCard = obj as Card;
+
+            if (compareCard != null)
+            {
+                int thisSort = this.myValue * 10 + (int)this.mySuit;
+                int compareCardSort = compareCard.myValue * 10 + (int)compareCard.mySuit;
+                return (thisSort.CompareTo(compareCardSort));
+            }
+            else
+            {
+                throw new ArgumentException("Object being compared cannot be converted to a Card.");
+            }
         }
 
         public object Clone()
         {
-            return MemberwiseClone();
+            return this.MemberwiseClone();
         }
 
         public override string ToString()
         {
-            return "The " + rank + " of " + suit + "s";
+            string cardString;
+
+            if (faceUp)
+            {
+                cardString = myRank.ToString() + " of " + mySuit.ToString();
+            }
+            else
+            {
+                cardString = "Face Down";
+            }
+
+            return cardString;
         }
 
-        public static bool operator ==(Card card1, Card card2)
+        public override bool Equals(object obj)
         {
-            return (card1.suit == card2.suit) && (card1.rank == card2.rank);
-        }
-
-        public static bool operator !=(Card card1, Card card2)
-        {
-            return !(card1 == card2);
-        }
-
-        public override bool Equals(object card)
-        {
-            return this == (Card)card;
+            return (this.CardValue == ((Card)obj).CardValue);
         }
 
         public override int GetHashCode()
         {
-            return 13 * (int)suit + (int)rank;
+            return this.myValue * 100 + (int)this.mySuit * 10 + ((this.faceUp) ? 1 : 0);
         }
 
-        public static bool operator >(Card card1, Card card2)
+        public Image GetCardImage()
         {
-            bool isGreater = true;
+            string imageName;
+            Image cardImage;
 
-            if (card1.suit == card2.suit)
+            if (!faceUp)
             {
-                if (isAceHigh)
-                {
-                    if (card1.rank == Rank.Ace)
-                    {
-                        if (card2.rank == Rank.Ace)
-                            isGreater = false;
-                        else
-                            isGreater = true;
-                    }
-                    else
-                    {
-                        if (card2.rank == Rank.Ace)
-                        {
-                            isGreater = false;
-                        }
-                        else
-                            return (card1.rank > card2.rank);
-                    }
-                }
-                else
-                {
-                    return (card1.rank > card2.rank);
-                }
+                imageName = "Back";
             }
             else
             {
-                if (useTrumps && (card2.suit == Card.trump))                
-                    isGreater = false;                
-                else
-                    isGreater = true;
+                imageName = mySuit.ToString() + "_" + myRank.ToString();
             }
 
-            return isGreater;
+            cardImage = Properties.Resources.ResourceManager.GetObject(imageName) as Image;
+
+            return cardImage;
         }
 
-        public static bool operator <(Card card1, Card card2)
+        public string DebugString()
         {
-            return !(card1 >= card2);
+            string cardState = (string)(myRank.ToString() + " of " + mySuit.ToString().PadLeft(20));
+            cardState += (string)((FaceUp) ? "(Face Up)" : "(Face Down)").PadLeft(12);
+            cardState += " Value: " + myValue.ToString().PadLeft(2);
+            cardState += ((altValue != null) ? "/" + altValue.ToString() : "");
+            return cardState;
         }
 
-        public static bool operator >=(Card card1, Card card2)
+        #endregion
+
+        #region RELATIONAL OPERATORS
+
+        public static bool operator ==(Card left, Card right)
         {
-            bool isGreaterEqual = true;
-
-            if (card1.suit == card2.suit)
-            {
-                if (isAceHigh)
-                {
-                    if (card1.rank == Rank.Ace)
-                    {
-                        isGreaterEqual = true;
-                    }
-                    else
-                    {
-                        if (card2.rank == Rank.Ace)
-                        {
-                            isGreaterEqual = false;
-                        }
-                        else
-                            return (card1.rank >= card2.rank);
-                    }
-                }
-                else
-                {
-                    return (card1.rank >= card2.rank);
-                }
-            }
-            else
-            {
-                if (useTrumps && (card2.suit == Card.trump))
-                {
-                    isGreaterEqual = false;
-                }
-            }
-
-            return isGreaterEqual;
+            return (left.CardValue == right.CardValue);
         }
 
-        public static bool operator <=(Card card1, Card card2)
+        public static bool operator !=(Card left, Card right)
         {
-            return !(card1 > card2);
+            return (left.CardValue != right.CardValue);
         }
+
+        public static bool operator <(Card left, Card right)
+        {
+            return (left.CardValue < right.CardValue);
+        }
+
+        public static bool operator <=(Card left, Card right)
+        {
+            return (left.CardValue <= right.CardValue);
+        }
+
+        public static bool operator >(Card left, Card right)
+        {
+            return (left.CardValue > right.CardValue);
+        }
+
+        public static bool operator >=(Card left, Card right)
+        {
+            return (left.CardValue >= right.CardValue);
+        }
+
+        #endregion
     }
 }
 

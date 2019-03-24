@@ -85,7 +85,6 @@ namespace DurakClassLibrary
         /// <summary>
         /// Non default constructor, set trump
         /// </summary>
-        /// <param name="useTrump">to hold status if this a card is trump</param>
         /// <param name="trump">the suit value of the trump</param>
         public Deck(Suit trump) : this()
         {
@@ -97,19 +96,19 @@ namespace DurakClassLibrary
         /// <summary>
         /// Method to create a method to test Expanding
         /// </summary>
-        /// <param name="cardNum"></param>
-        /// <returns></returns>
+        /// <param name = "cardNum" ></ param >
+        /// < returns ></ returns >
         public Card GetCard(int cardNum)
         {
-            if (cardNum >= 0 && cardNum <= 51)
+            if (cardNum >= 0 && cardNum <= 35)
             {
                 if ((cardNum == 51) && (LastCardDrawn != null))
                     //Call the custom event handler when last card is drawn
                     LastCardDrawn(this, EventArgs.Empty);
                 return cards[cardNum];
             }
-            else
-                throw new CardOutOfRangeException((Cards)cards.Clone());
+            //else
+            //    throw new CardOutOfRangeException((Cards)cards.Clone());
         }
     }
 }

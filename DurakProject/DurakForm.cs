@@ -34,7 +34,12 @@ namespace DurakProject
 
         private void frmDurak_Load(object sender, EventArgs e)
         {
+            /// <summary>
+            /// Initializes the card dealer/deck on form Load.
+            /// </summary>
 
+            // Set the deck image to a card back image
+            //pnlDeck.BackgroundImage = new Card()).GetCardImage();
         }
 
         private void lblGameNumber_Click(object sender, EventArgs e)

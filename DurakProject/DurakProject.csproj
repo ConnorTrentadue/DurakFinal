@@ -78,5 +78,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DurakClassLibrary\DurakClassLibrary.csproj">
+      <Project>{927387b7-a549-4428-b375-7efa91564817}</Project>
+      <Name>DurakClassLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

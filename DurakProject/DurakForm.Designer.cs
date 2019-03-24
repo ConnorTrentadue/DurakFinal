@@ -79,6 +79,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpbPlayArea.BackColor = System.Drawing.Color.Transparent;
+            this.grpbPlayArea.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("grpbPlayArea.BackgroundImage")));
             this.grpbPlayArea.Controls.Add(this.pbTrumpIndicator);
             this.grpbPlayArea.Location = new System.Drawing.Point(218, 118);
             this.grpbPlayArea.Name = "grpbPlayArea";

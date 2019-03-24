@@ -8,5 +8,6 @@ namespace DurakClassLibrary
 {
     class Deck
     {
+
     }
 }

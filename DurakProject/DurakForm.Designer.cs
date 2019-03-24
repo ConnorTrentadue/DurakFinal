@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDurak));
-            this.grpbComputerPlayer = new System.Windows.Forms.GroupBox();
-            this.grpbHumanPlayer = new System.Windows.Forms.GroupBox();
-            this.grpbPlayArea = new System.Windows.Forms.GroupBox();
-            this.pbTrumpIndicator = new System.Windows.Forms.PictureBox();
-            this.grpbDeck = new System.Windows.Forms.GroupBox();
-            this.grpbTrumpCard = new System.Windows.Forms.GroupBox();
-            this.grpbDiscard = new System.Windows.Forms.GroupBox();
             this.btnNewGame = new System.Windows.Forms.Button();
             this.btnForfeit = new System.Windows.Forms.Button();
             this.lblGameNumber = new System.Windows.Forms.Label();
@@ -44,92 +37,16 @@
             this.lblTies = new System.Windows.Forms.Label();
             this.lblCardsRemaining = new System.Windows.Forms.Label();
             this.lblLosses = new System.Windows.Forms.Label();
-            this.grpbPlayArea.SuspendLayout();
+            this.pnlPlayerHand = new System.Windows.Forms.Panel();
+            this.pnlComputerHand = new System.Windows.Forms.Panel();
+            this.pnlDiscard = new System.Windows.Forms.Panel();
+            this.pnlDeck = new System.Windows.Forms.Panel();
+            this.pnlTrumpCard = new System.Windows.Forms.Panel();
+            this.pbTrumpIndicator = new System.Windows.Forms.PictureBox();
+            this.pnlPlayArea = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
+            this.pnlPlayArea.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // grpbComputerPlayer
-            // 
-            this.grpbComputerPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpbComputerPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.grpbComputerPlayer.Location = new System.Drawing.Point(217, 12);
-            this.grpbComputerPlayer.Name = "grpbComputerPlayer";
-            this.grpbComputerPlayer.Size = new System.Drawing.Size(654, 100);
-            this.grpbComputerPlayer.TabIndex = 0;
-            this.grpbComputerPlayer.TabStop = false;
-            this.grpbComputerPlayer.Text = "Attacker";
-            // 
-            // grpbHumanPlayer
-            // 
-            this.grpbHumanPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpbHumanPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.grpbHumanPlayer.Location = new System.Drawing.Point(217, 494);
-            this.grpbHumanPlayer.Name = "grpbHumanPlayer";
-            this.grpbHumanPlayer.Size = new System.Drawing.Size(654, 100);
-            this.grpbHumanPlayer.TabIndex = 1;
-            this.grpbHumanPlayer.TabStop = false;
-            this.grpbHumanPlayer.Text = "Defender";
-            // 
-            // grpbPlayArea
-            // 
-            this.grpbPlayArea.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpbPlayArea.BackColor = System.Drawing.Color.Transparent;
-            this.grpbPlayArea.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("grpbPlayArea.BackgroundImage")));
-            this.grpbPlayArea.Controls.Add(this.pbTrumpIndicator);
-            this.grpbPlayArea.Location = new System.Drawing.Point(218, 118);
-            this.grpbPlayArea.Name = "grpbPlayArea";
-            this.grpbPlayArea.Size = new System.Drawing.Size(654, 370);
-            this.grpbPlayArea.TabIndex = 2;
-            this.grpbPlayArea.TabStop = false;
-            // 
-            // pbTrumpIndicator
-            // 
-            this.pbTrumpIndicator.Location = new System.Drawing.Point(6, 19);
-            this.pbTrumpIndicator.Name = "pbTrumpIndicator";
-            this.pbTrumpIndicator.Size = new System.Drawing.Size(36, 33);
-            this.pbTrumpIndicator.TabIndex = 0;
-            this.pbTrumpIndicator.TabStop = false;
-            // 
-            // grpbDeck
-            // 
-            this.grpbDeck.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpbDeck.BackColor = System.Drawing.Color.Transparent;
-            this.grpbDeck.Location = new System.Drawing.Point(891, 247);
-            this.grpbDeck.Name = "grpbDeck";
-            this.grpbDeck.Size = new System.Drawing.Size(76, 100);
-            this.grpbDeck.TabIndex = 3;
-            this.grpbDeck.TabStop = false;
-            // 
-            // grpbTrumpCard
-            // 
-            this.grpbTrumpCard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpbTrumpCard.BackColor = System.Drawing.Color.Transparent;
-            this.grpbTrumpCard.Location = new System.Drawing.Point(973, 247);
-            this.grpbTrumpCard.Name = "grpbTrumpCard";
-            this.grpbTrumpCard.Size = new System.Drawing.Size(76, 100);
-            this.grpbTrumpCard.TabIndex = 4;
-            this.grpbTrumpCard.TabStop = false;
-            // 
-            // grpbDiscard
-            // 
-            this.grpbDiscard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpbDiscard.BackColor = System.Drawing.Color.Transparent;
-            this.grpbDiscard.Location = new System.Drawing.Point(120, 247);
-            this.grpbDiscard.Name = "grpbDiscard";
-            this.grpbDiscard.Size = new System.Drawing.Size(76, 100);
-            this.grpbDiscard.TabIndex = 5;
-            this.grpbDiscard.TabStop = false;
             // 
             // btnNewGame
             // 
@@ -222,6 +139,70 @@
             this.lblLosses.Text = "Losses:";
             this.lblLosses.Click += new System.EventHandler(this.lblLosses_Click);
             // 
+            // pnlPlayerHand
+            // 
+            this.pnlPlayerHand.BackColor = System.Drawing.Color.Transparent;
+            this.pnlPlayerHand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlPlayerHand.Location = new System.Drawing.Point(218, 496);
+            this.pnlPlayerHand.Name = "pnlPlayerHand";
+            this.pnlPlayerHand.Size = new System.Drawing.Size(654, 105);
+            this.pnlPlayerHand.TabIndex = 14;
+            // 
+            // pnlComputerHand
+            // 
+            this.pnlComputerHand.BackColor = System.Drawing.Color.Transparent;
+            this.pnlComputerHand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlComputerHand.Location = new System.Drawing.Point(218, 7);
+            this.pnlComputerHand.Name = "pnlComputerHand";
+            this.pnlComputerHand.Size = new System.Drawing.Size(654, 105);
+            this.pnlComputerHand.TabIndex = 15;
+            // 
+            // pnlDiscard
+            // 
+            this.pnlDiscard.BackColor = System.Drawing.Color.Transparent;
+            this.pnlDiscard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDiscard.Location = new System.Drawing.Point(116, 247);
+            this.pnlDiscard.Name = "pnlDiscard";
+            this.pnlDiscard.Size = new System.Drawing.Size(75, 108);
+            this.pnlDiscard.TabIndex = 16;
+            // 
+            // pnlDeck
+            // 
+            this.pnlDeck.BackColor = System.Drawing.Color.Transparent;
+            this.pnlDeck.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDeck.Location = new System.Drawing.Point(892, 247);
+            this.pnlDeck.Name = "pnlDeck";
+            this.pnlDeck.Size = new System.Drawing.Size(75, 108);
+            this.pnlDeck.TabIndex = 17;
+            // 
+            // pnlTrumpCard
+            // 
+            this.pnlTrumpCard.BackColor = System.Drawing.Color.Transparent;
+            this.pnlTrumpCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTrumpCard.Location = new System.Drawing.Point(985, 247);
+            this.pnlTrumpCard.Name = "pnlTrumpCard";
+            this.pnlTrumpCard.Size = new System.Drawing.Size(75, 108);
+            this.pnlTrumpCard.TabIndex = 18;
+            // 
+            // pbTrumpIndicator
+            // 
+            this.pbTrumpIndicator.BackColor = System.Drawing.Color.Transparent;
+            this.pbTrumpIndicator.Location = new System.Drawing.Point(3, 3);
+            this.pbTrumpIndicator.Name = "pbTrumpIndicator";
+            this.pbTrumpIndicator.Size = new System.Drawing.Size(36, 33);
+            this.pbTrumpIndicator.TabIndex = 0;
+            this.pbTrumpIndicator.TabStop = false;
+            // 
+            // pnlPlayArea
+            // 
+            this.pnlPlayArea.BackColor = System.Drawing.Color.Transparent;
+            this.pnlPlayArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlPlayArea.Controls.Add(this.pbTrumpIndicator);
+            this.pnlPlayArea.Location = new System.Drawing.Point(219, 118);
+            this.pnlPlayArea.Name = "pnlPlayArea";
+            this.pnlPlayArea.Size = new System.Drawing.Size(652, 368);
+            this.pnlPlayArea.TabIndex = 19;
+            // 
             // frmDurak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -229,6 +210,12 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1091, 606);
+            this.Controls.Add(this.pnlPlayArea);
+            this.Controls.Add(this.pnlTrumpCard);
+            this.Controls.Add(this.pnlDeck);
+            this.Controls.Add(this.pnlDiscard);
+            this.Controls.Add(this.pnlComputerHand);
+            this.Controls.Add(this.pnlPlayerHand);
             this.Controls.Add(this.lblLosses);
             this.Controls.Add(this.lblCardsRemaining);
             this.Controls.Add(this.lblTies);
@@ -237,12 +224,6 @@
             this.Controls.Add(this.lblGameNumber);
             this.Controls.Add(this.btnForfeit);
             this.Controls.Add(this.btnNewGame);
-            this.Controls.Add(this.grpbDiscard);
-            this.Controls.Add(this.grpbTrumpCard);
-            this.Controls.Add(this.grpbDeck);
-            this.Controls.Add(this.grpbPlayArea);
-            this.Controls.Add(this.grpbHumanPlayer);
-            this.Controls.Add(this.grpbComputerPlayer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -250,22 +231,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Durak Game";
             this.Load += new System.EventHandler(this.frmDurak_Load);
-            this.grpbPlayArea.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).EndInit();
+            this.pnlPlayArea.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox grpbComputerPlayer;
-        private System.Windows.Forms.GroupBox grpbHumanPlayer;
-        private System.Windows.Forms.GroupBox grpbPlayArea;
-        private System.Windows.Forms.PictureBox pbTrumpIndicator;
-        private System.Windows.Forms.GroupBox grpbDeck;
-        private System.Windows.Forms.GroupBox grpbTrumpCard;
-        private System.Windows.Forms.GroupBox grpbDiscard;
         private System.Windows.Forms.Button btnNewGame;
         private System.Windows.Forms.Button btnForfeit;
         private System.Windows.Forms.Label lblGameNumber;
@@ -274,6 +247,13 @@
         private System.Windows.Forms.Label lblTies;
         private System.Windows.Forms.Label lblCardsRemaining;
         private System.Windows.Forms.Label lblLosses;
+        private System.Windows.Forms.Panel pnlPlayerHand;
+        private System.Windows.Forms.Panel pnlComputerHand;
+        private System.Windows.Forms.Panel pnlDiscard;
+        private System.Windows.Forms.Panel pnlDeck;
+        private System.Windows.Forms.Panel pnlTrumpCard;
+        private System.Windows.Forms.PictureBox pbTrumpIndicator;
+        private System.Windows.Forms.Panel pnlPlayArea;
     }
 }
 

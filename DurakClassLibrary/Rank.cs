@@ -10,7 +10,7 @@
 
 namespace DurakClassLibrary
 {
-    public enum Rank
+    public enum Rank : byte
     {
         Two = 2,
         Three = 3,

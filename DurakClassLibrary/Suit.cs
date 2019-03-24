@@ -9,7 +9,7 @@
 
 namespace DurakClassLibrary
 {
-    public enum Suit
+    public enum Suit : byte
     {
         Club,
         Diamond,

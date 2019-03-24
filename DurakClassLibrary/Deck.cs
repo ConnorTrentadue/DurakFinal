@@ -32,7 +32,7 @@ namespace DurakClassLibrary
                     // assign cards a unique value  (obsolete)
                     //cards[suitValue * 13 + rankValue - 1] = new Card((Suit)suitValue, 
                     //    (Rank)rankValue);
-                    cards.Add(new Card((Suit)suitValue, (Rank)rankValue));
+                    cards.Add(new Card((Rank)rankValue, (Suit)suitValue));
                 }
             }
 

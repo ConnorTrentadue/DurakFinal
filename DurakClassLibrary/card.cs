@@ -136,6 +136,11 @@ namespace DurakClassLibrary
             return cardImage;
         }
 
+        /// <summary>
+        /// Trump suit assignment
+        /// </summary>
+        public static Suit trump = Suit.Club;
+
         public string DebugString()
         {
             string cardState = (string)(myRank.ToString() + " of " + mySuit.ToString().PadLeft(20));

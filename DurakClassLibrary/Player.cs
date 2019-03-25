@@ -15,16 +15,16 @@ namespace DurakClassLibrary
             Cards PlayHand = new Cards();
         }
 
-        public bool WinnerCheck()
+        public bool HandEmpty()
         {
-            bool winner = false;
+            bool isEmpty = false;
             
-            if(Hand.Count == 0 && deck.isEmpty())
+            if(Hand.Count == 0)
             {
-                winner = true;
+                isEmpty = true;
             }
 
-            return winner;
+            return isEmpty;
         }
     }
 }

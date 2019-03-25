@@ -3,6 +3,7 @@ namespace DurakClassLibrary
 {
     class Player
     {
+        #region CONSTRUCTORS AND FIELD PROPERTIES
         public string Name { get; private set; }
 
         public Cards Hand { get; private set; }
@@ -14,17 +15,25 @@ namespace DurakClassLibrary
             Name = name;
             Cards PlayHand = new Cards();
         }
+        #endregion
 
-        public bool WinnerCheck()
+        #region METHODS
+        /// <summary>
+        /// isEmpty boolean method to determine if the hand is empty
+        /// </summary>
+        /// <returns>is empty</returns>
+        public bool HandEmpty()
         {
-            bool winner = false;
-            
-            if(Hand.count == 0 && Deck.isEmpty())
+            bool isEmpty = false;
+
+            if (Hand.Count == 0)
             {
-                winner = true;
+                isEmpty = true;
             }
 
-            return winner;
+            return isEmpty;
         }
+        #endregion
+
     }
 }

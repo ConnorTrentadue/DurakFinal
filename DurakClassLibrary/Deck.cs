@@ -31,7 +31,6 @@ namespace DurakClassLibrary
                     cards.Add(new Card((Rank)rankValue, (Suit)suitValue));
                 }
             }
-
         }
         
         public void Shuffle()
@@ -108,7 +107,7 @@ namespace DurakClassLibrary
         //{
         //    if (cardNum >= 0 && cardNum <= 35)
         //    {
-        //        if ((cardNum == 51) && (LastCardDrawn != null))
+        //        if ((cardNum == 35) && (LastCardDrawn != null))
         //            //Call the custom event handler when last card is drawn
         //            LastCardDrawn(this, EventArgs.Empty);
         //        return cards[cardNum];

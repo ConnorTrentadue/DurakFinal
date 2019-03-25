@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DurakClassLibrary
 {
-    public partial class CardBox : UserControl
+    public partial class cbCardBox : UserControl
     {
 
         private Card myCard;
@@ -48,15 +42,12 @@ namespace DurakClassLibrary
         {
             set
             {
-                if(card.FaceUp != value)
+                if (card.FaceUp != value)
                 {
                     card.FaceUp = value;
                     UpdateCardImage();
 
-                    if(CardFlipped != null)
-                    {
-                        CardFlipped(this, new EventArgs());
-                    }
+                    CardFlipped?.Invoke(this, new EventArgs());
                 }
             }
             get { return card.FaceUp; }
@@ -67,12 +58,9 @@ namespace DurakClassLibrary
         {
             set
             {
-                if(myOrientation != null)
-                {
-                    myOrientation = value;
-                    this.Size = new Size(Size.Height, Size.Width);
-                    UpdateCardImage();
-                }
+                myOrientation = value;
+                this.Size = new Size(Size.Height, Size.Width);
+                UpdateCardImage();
             }
             get { return myOrientation; }
         }
@@ -81,20 +69,20 @@ namespace DurakClassLibrary
         {
             pbMyPictureBox.Image = myCard.GetCardImage();
 
-            if(myOrientation == Orientation.Horizontal)
+            if (myOrientation == Orientation.Horizontal)
             {
                 pbMyPictureBox.Image.RotateFlip(RotateFlipType.Rotate90FlipNone); // Remove to not flip card
             }
         }
 
-        public CardBox()
+        public cbCardBox()
         {
             InitializeComponent();
             myOrientation = Orientation.Vertical;
             myCard = new Card();
         }
 
-        public CardBox(Card card, Orientation or = Orientation.Vertical)
+        public cbCardBox(Card card, Orientation or = Orientation.Vertical)
         {
             InitializeComponent();
             myOrientation = or;
@@ -112,8 +100,7 @@ namespace DurakClassLibrary
 
         private void pbMyPictureBox_Click(object sender, EventArgs e)
         {
-            if (Click != null)
-                Click(this, e);
+            Click?.Invoke(this, e);
         }
 
         public override string ToString()

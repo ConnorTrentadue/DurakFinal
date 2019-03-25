@@ -31,8 +31,9 @@ namespace DurakClassLibrary
                     cards.Add(new Card((Rank)rankValue, (Suit)suitValue));
                 }
             }
-        }
 
+        }
+        
         public void Shuffle()
         {
             // create temp card array
@@ -86,24 +87,34 @@ namespace DurakClassLibrary
             Card.trump = trump;
         }
 
+        public bool isEmpty()
+        {
+            bool empty = false;
 
+            if (cards.Count == 0)
+            {
+                empty = true;
+            }
 
-        ///// <summary>
-        ///// Method to create a method to test Expanding - DELETE ME LATER IF UNUSED.
-        ///// </summary>
-        ///// <param name = "cardNum" ></ param >
-        ///// < returns ></ returns >
+            return empty;
+        }
+
+        /// <summary>
+        /// Method to create a method to test Expanding
+        /// </summary>
+        /// <param name = "cardNum" ></ param >
+        /// < returns ></ returns >
         //public Card GetCard(int cardNum)
         //{
         //    if (cardNum >= 0 && cardNum <= 35)
         //    {
-        //        if ((cardNum == 35) && (LastCardDrawn != null))
+        //        if ((cardNum == 51) && (LastCardDrawn != null))
         //            //Call the custom event handler when last card is drawn
         //            LastCardDrawn(this, EventArgs.Empty);
         //        return cards[cardNum];
         //    }
-        //    else
-        //        throw new CardOutOfRangeException((Cards)cards.Clone());
+        //    //else
+        //    //    throw new CardOutOfRangeException((Cards)cards.Clone());
         //}
     }
 }

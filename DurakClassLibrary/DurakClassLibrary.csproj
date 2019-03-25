@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="CardBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardBox.Designer.cs">
+      <DependentUpon>CardBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cards.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Player.cs" />
@@ -56,6 +63,9 @@
     <Compile Include="Suit.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CardBox.resx">
+      <DependentUpon>CardBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

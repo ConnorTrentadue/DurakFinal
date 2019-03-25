@@ -23,14 +23,14 @@ namespace DurakClassLibrary
         /// Card Property  - Set/Get the card object
         /// </summary>
         private Card myCard;
-        public Card card
+        public Card Card
         {
             set
             {
                 myCard = value;
                 UpdateCardImage(); //updates the card image.
             }
-            get { return card; }
+            get { return Card; }
         }
 
 
@@ -41,24 +41,23 @@ namespace DurakClassLibrary
         {
             set
             {
-                card.Suit = value;
+                Card.Suit = value;
                 UpdateCardImage();
             }
-            get { return card.Suit; }
+            get { return Card.Suit; }
         }
-
 
         /// <summary>
         /// Rank Property  - Set/Get the card object rank
         /// </summary>
-        public Rank rank
+        public Rank Rank
         {
             set
             {
-                card.Rank = value;
+                Card.Rank = value;
                 UpdateCardImage();
             }
-            get { return card.Rank; }
+            get { return Card.Rank; }
         }
 
         /// <summary>
@@ -69,15 +68,15 @@ namespace DurakClassLibrary
             set
             {
                 //if the value is different than the card's FaceUp property
-                if (card.FaceUp != value)
+                if (Card.FaceUp != value)
                 {
-                    card.FaceUp = value;  // change the card's FaceUp value
+                    Card.FaceUp = value;  // change the card's FaceUp value
                     UpdateCardImage();  //updates the card's image
                     //if there is a handler for the CardFlipped delegate in teh client program
                     CardFlipped?.Invoke(this, new EventArgs());     // call  it with new event args since we don't pass anything
                 }
             }
-            get { return card.FaceUp; }
+            get { return Card.FaceUp; }
         }
 
         /// <summary>
@@ -113,21 +112,36 @@ namespace DurakClassLibrary
             //}
         }
 
-
         #endregion
+
+        #region EVENTS AND HANDLERS
+        /// <summary>
+        /// Event handler for the load event
+        /// </summary>
         private void Cardbox_Load(object sender, EventArgs e)
         {
             UpdateCardImage();
         }
 
+        /// <summary>
+        /// Event the client program will handle when the card flips face up / down
+        /// </summary>
         public event EventHandler CardFlipped;
 
+        /// <summary>
+        /// Event the client program will handle when the user clicks the control
+        /// </summary>
         new public event EventHandler Click;
 
+        /// <summary>
+        /// Event handler for the clicking of the picturebox control
+        /// </summary>
         private void pbMyPictureBox_Click(object sender, EventArgs e)
         {
-
+            //if there is a hander for clicking the control in the client that is not null
+            Click?.Invoke(this, e); // call the event
         }
+        #endregion
 
         #region CONSTRUCTORS
         /// <summary>

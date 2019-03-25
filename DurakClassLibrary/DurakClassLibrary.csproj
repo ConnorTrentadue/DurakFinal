@@ -44,11 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
-    <Compile Include="CardBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CardBox.Designer.cs">
-      <DependentUpon>CardBox.cs</DependentUpon>
+    <Compile Include="CardBox%28OBSOLETE%29.cs" />
+    <Compile Include="CardBox%28OBSOLETE%29.Designer.cs">
+      <DependentUpon>CardBox%28OBSOLETE%29.cs</DependentUpon>
     </Compile>
     <Compile Include="Cards.cs" />
     <Compile Include="ComputerPlayer.cs" />
@@ -64,8 +62,8 @@
     <Compile Include="Suit.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CardBox.resx">
-      <DependentUpon>CardBox.cs</DependentUpon>
+    <EmbeddedResource Include="CardBox%28OBSOLETE%29.resx">
+      <DependentUpon>CardBox%28OBSOLETE%29.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

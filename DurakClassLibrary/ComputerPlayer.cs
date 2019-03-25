@@ -16,7 +16,7 @@ namespace DurakClassLibrary
         /// <summary>
         /// Difficulty parameter used to determine AI skill
         /// </summary>
-        public int aiDifficulty { get; private set; } 
+        public int AiDifficulty { get; private set; } 
 
         /// <summary>
         /// Parameterized Constructor.
@@ -24,6 +24,6 @@ namespace DurakClassLibrary
         /// </summary>
         /// <param name="name"></param>
         /// <param name="difficulty"></param>
-        public ComputerPlayer(string name, int difficulty) : base (name) { aiDifficulty = difficulty; }
+        public ComputerPlayer(string name, int difficulty) : base (name) { AiDifficulty = difficulty; }
     }
 }

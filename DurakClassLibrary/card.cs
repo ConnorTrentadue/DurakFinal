@@ -15,6 +15,11 @@ namespace DurakClassLibrary
     {
         #region FIELDS AND PROPERTIES
 
+        /// <summary>
+        /// Trump suit assignment
+        /// </summary>
+        public static Suit trump = Suit.Club;
+
         protected Suit mySuit;
         public Suit Suit
         {
@@ -26,7 +31,17 @@ namespace DurakClassLibrary
         public Rank Rank
         {
             get { return myRank; }
-            set { myRank = value; }
+            set
+            {
+                if (mySuit == trump)
+                {
+                    myRank = value + 100;
+                }
+                else
+                {
+                    myRank = value;
+                }
+            }
         }
 
         protected int myValue;
@@ -135,11 +150,6 @@ namespace DurakClassLibrary
 
             return cardImage;
         }
-
-        /// <summary>
-        /// Trump suit assignment
-        /// </summary>
-        public static Suit trump = Suit.Club;
 
         public string DebugString()
         {

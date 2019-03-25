@@ -19,7 +19,7 @@ namespace DurakClassLibrary
         {
             bool winner = false;
             
-            if(Hand.count == 0 && Deck.isEmpty())
+            if(Hand.Count == 0 && deck.isEmpty())
             {
                 winner = true;
             }

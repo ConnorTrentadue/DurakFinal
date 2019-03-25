@@ -18,6 +18,10 @@ namespace DurakClassLibrary
 
         private Cards cards = new Cards();
 
+        /// <summary>
+        /// Default Constructor
+        /// Instantiates a new deck for Durak (36 cards total)
+        /// </summary>
         public Deck()
         {
             // cards = new Card[];
@@ -71,6 +75,10 @@ namespace DurakClassLibrary
             return newDeck;
         }
 
+        /// <summary>
+        /// Parameterized Constructor
+        /// </summary>
+        /// <param name="newCards"></param>
         private Deck(Cards newCards)
         {
             cards = newCards;

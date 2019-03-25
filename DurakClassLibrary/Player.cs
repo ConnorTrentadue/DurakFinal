@@ -1,14 +1,14 @@
 ﻿
 namespace DurakClassLibrary
 {
-    class Player
+    public class Player
     {
         #region CONSTRUCTORS AND FIELD PROPERTIES
         public string Name { get; private set; }
 
         public Cards Hand { get; private set; }
 
-        private Player() { }
+        public Player() { }
 
         public Player(string name)
         {

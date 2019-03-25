@@ -18,7 +18,7 @@ namespace DurakClassLibrary
         /// <summary>
         /// Trump suit assignment
         /// </summary>
-        public static Suit trump = Suit.Club;
+        public static Suit trump { get; set; }
 
         protected Suit mySuit;
         public Suit Suit
@@ -64,6 +64,8 @@ namespace DurakClassLibrary
             get { return faceUp; }
             set { faceUp = value; }
         }
+
+        
 
         #endregion
 

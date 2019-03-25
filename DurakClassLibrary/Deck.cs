@@ -103,7 +103,7 @@ namespace DurakClassLibrary
         }
 
         /// <summary>
-        /// isEmpty method to determine if the deck is empty
+        /// isEmpty boolean method to determine if the deck is empty
         /// </summary>
         /// <returns>if the deck is empty</returns>
         public bool isEmpty()

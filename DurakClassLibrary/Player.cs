@@ -19,7 +19,7 @@ namespace DurakClassLibrary
 
         #region METHODS
         /// <summary>
-        /// isEmpty boolena method to determine if the hand is empty
+        /// isEmpty boolean method to determine if the hand is empty
         /// </summary>
         /// <returns>is empty</returns>
         public bool HandEmpty()

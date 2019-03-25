@@ -13,8 +13,9 @@ namespace DurakClassLibrary
 {
     public class Deck : ICloneable
     {
-        //craetes the custom event handler
-        public event EventHandler LastCardDrawn;
+        
+        #region CONSTUCTORS
+        
 
         private Cards cards = new Cards();
 
@@ -36,7 +37,33 @@ namespace DurakClassLibrary
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Parameterized Constructor
+        /// </summary>
+        /// <param name="newCards"></param>
+        private Deck(Cards newCards)
+        {
+            cards = newCards;
+        }
+
+
+        /// <summary>
+        /// Non default constructor, set trump
+        /// </summary>
+        /// <param name="trump">the suit value of the trump</param>
+        public Deck(Suit trump) : this()
+        {
+            Card.trump = trump;
+        }
+        #endregion
+
+        #region EVENT HANDLERS
+        //creates the custom event handler
+        public event EventHandler LastCardDrawn;
+        #endregion
+
+        #region METHODS
         public void Shuffle()
         {
             // create temp card array
@@ -76,24 +103,9 @@ namespace DurakClassLibrary
         }
 
         /// <summary>
-        /// Parameterized Constructor
+        /// isEmpty boolean method to determine if the deck is empty
         /// </summary>
-        /// <param name="newCards"></param>
-        private Deck(Cards newCards)
-        {
-            cards = newCards;
-        }
-
-
-        /// <summary>
-        /// Non default constructor, set trump
-        /// </summary>
-        /// <param name="trump">the suit value of the trump</param>
-        public Deck(Suit trump) : this()
-        {
-            Card.trump = trump;
-        }
-
+        /// <returns>if the deck is empty</returns>
         public bool isEmpty()
         {
             bool empty = false;
@@ -123,5 +135,10 @@ namespace DurakClassLibrary
         //    //else
         //    //    throw new CardOutOfRangeException((Cards)cards.Clone());
         //}
+        #endregion
+
+
+
+
     }
 }

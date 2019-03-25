@@ -14,7 +14,7 @@ namespace DurakClassLibrary
             Name = name;
             Cards PlayHand = new Cards();
         }
-
+        
         public bool HandEmpty()
         {
             bool isEmpty = false;

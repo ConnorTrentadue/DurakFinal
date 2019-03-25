@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurakProject", "DurakProjec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurakClassLibrary", "DurakClassLibrary\DurakClassLibrary.csproj", "{927387B7-A549-4428-B375-7EFA91564817}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBox", "CardBox\CardBox.csproj", "{BE7338B8-23DF-4D40-B23C-9462696C2529}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{927387B7-A549-4428-B375-7EFA91564817}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{927387B7-A549-4428-B375-7EFA91564817}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{927387B7-A549-4428-B375-7EFA91564817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE7338B8-23DF-4D40-B23C-9462696C2529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE7338B8-23DF-4D40-B23C-9462696C2529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE7338B8-23DF-4D40-B23C-9462696C2529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE7338B8-23DF-4D40-B23C-9462696C2529}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

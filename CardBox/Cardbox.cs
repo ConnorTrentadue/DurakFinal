@@ -23,28 +23,28 @@ namespace DurakClassLibrary
         /// Card Property  - Set/Get the card object
         /// </summary>
         private Card myCard;
-        public Card Card
+        public Card card
         {
             set
             {
                 myCard = value;
                 UpdateCardImage(); //updates the card image.
             }
-            get { return Card; }
+            get { return card; }
         }
 
 
         /// <summary>
         /// Suit Property  - Set/Get the card object suit
         /// </summary>
-        public Suit suit
+        public Suit Suit
         {
             set
             {
-                Card.Suit = value;
+                card.Suit = value;
                 UpdateCardImage();
             }
-            get { return Card.Suit; }
+            get { return card.Suit; }
         }
 
 
@@ -55,10 +55,10 @@ namespace DurakClassLibrary
         {
             set
             {
-                Card.Rank = value;
+                card.Rank = value;
                 UpdateCardImage();
             }
-            get { return Card.Rank; }
+            get { return card.Rank; }
         }
 
         /// <summary>
@@ -69,15 +69,15 @@ namespace DurakClassLibrary
             set
             {
                 //if the value is different than the card's FaceUp property
-                if (Card.FaceUp != value)
+                if (card.FaceUp != value)
                 {
-                    Card.FaceUp = value;  // change the card's FaceUp value
+                    card.FaceUp = value;  // change the card's FaceUp value
                     UpdateCardImage();  //updates the card's image
                     //if there is a handler for the CardFlipped delegate in teh client program
                     CardFlipped?.Invoke(this, new EventArgs());     // call  it with new event args since we don't pass anything
                 }
             }
-            get { return Card.FaceUp; }
+            get { return card.FaceUp; }
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace DurakClassLibrary
 
         private void pbMyPictureBox_Click(object sender, EventArgs e)
         {
-            Click?.Invoke(this, e);
+
         }
 
         #region CONSTRUCTORS

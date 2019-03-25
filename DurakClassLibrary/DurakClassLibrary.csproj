@@ -51,6 +51,7 @@
       <DependentUpon>CardBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Cards.cs" />
+    <Compile Include="ComputerPlayer.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

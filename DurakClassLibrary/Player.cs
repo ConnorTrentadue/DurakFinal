@@ -1,4 +1,12 @@
-﻿
+﻿/*
+ * Player.cs - Player class for creating a player object.
+ * 
+ * Author: Raymond Michael
+ * Since: 24 Mar 2019
+ * 
+ */
+
+
 namespace DurakClassLibrary
 {
     public class Player

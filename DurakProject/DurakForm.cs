@@ -52,7 +52,8 @@ namespace DurakProject
         {
             // create a new deck
             Deck durakDeck = new Deck();
-            
+            Card card = new Card();
+
             // shuffle the new deck.
             durakDeck.Shuffle();
 
@@ -64,6 +65,20 @@ namespace DurakProject
 
             //deal 12 cards, (6 each) to the players.
             //alternate the cards into each player's hand
+            for(int i = 1; i <= 6 /* * playerCount */; i++)
+            {
+                card = durakDeck.DrawCard();
+                CardBox aCardBox = new CardBox(card);
+
+                if(i % 2 == 0)
+                {
+                    pnlPlayerHand.Controls.Add(aCardBox);
+                }
+                else
+                {
+                    pnlComputerHand.Controls.Add(aCardBox);
+                }
+            }           
 
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();

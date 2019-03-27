@@ -55,8 +55,9 @@ namespace DurakProject
         /// <param name="e"></param>
         private void btnNewGame_Click(object sender, EventArgs e)
         {
-            pnlPlayerHand.Controls.Clear();
             pnlComputerHand.Controls.Clear();
+            pnlPlayerHand.Controls.Clear();
+            pnlTrumpCard.Controls.Clear();
 
             // create a new deck
             Deck durakDeck = new Deck();
@@ -76,15 +77,16 @@ namespace DurakProject
             for(int i = 1; i <= 12 /* * playerCount */; i++)
             {
                 card = durakDeck.DrawCard();
-                card.FaceUp = true;
-                CardBox aCardBox = new CardBox(card);
 
                 if(i % 2 == 0)
                 {
+                    card.FaceUp = true;
+                    CardBox aCardBox = new CardBox(card);
                     pnlPlayerHand.Controls.Add(aCardBox);
                 }
                 else
                 {
+                    CardBox aCardBox = new CardBox(card);
                     pnlComputerHand.Controls.Add(aCardBox);
                 }
             }

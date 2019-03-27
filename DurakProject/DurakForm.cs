@@ -24,6 +24,10 @@ namespace DurakProject
 {
     public partial class frmDurak : Form
     {
+        #region FIELDS AND PROPERTIES
+        static private Size regularSize = new Size(75, 108);
+        #endregion
+
         public frmDurak()
         {
             InitializeComponent();
@@ -88,7 +92,7 @@ namespace DurakProject
 
             // set the image of the trump card
             pbTrumpCard.Image = (new Card()).GetCardImage();
-            pbTrumpIndicator.Image = (new Card()).GetCardImage();
+            pbTrumpIndicator.Image = pbTrumpCard.Image;
         }
 
         private void btnForfeit_Click(object sender, EventArgs e)

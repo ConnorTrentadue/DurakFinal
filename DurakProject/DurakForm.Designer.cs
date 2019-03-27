@@ -198,7 +198,7 @@
             this.pbTrumpCard.BackColor = System.Drawing.Color.Transparent;
             this.pbTrumpCard.Location = new System.Drawing.Point(991, 247);
             this.pbTrumpCard.Name = "pbTrumpCard";
-            this.pbTrumpCard.Size = new System.Drawing.Size(71, 108);
+            this.pbTrumpCard.Size = new System.Drawing.Size(75, 108);
             this.pbTrumpCard.TabIndex = 0;
             this.pbTrumpCard.TabStop = false;
             // 

@@ -16,7 +16,7 @@ namespace DurakClassLibrary
     /// <summary>
     /// A control to use in Windows Forms Application to display a playing card
     /// </summary>
-    public partial class cbCardBox : UserControl
+    public partial class CardBox : UserControl
     {
         #region Fields and Properties
         /// <summary>
@@ -147,7 +147,7 @@ namespace DurakClassLibrary
         /// <summary>
         /// Default Constructor - constructs the control with a new card with vertical orientation
         /// </summary>
-        public cbCardBox()
+        public CardBox()
         {
             InitializeComponent(); //required  method for designer support
             myOrientation = Orientation.Vertical; //set the orientation
@@ -160,7 +160,7 @@ namespace DurakClassLibrary
         /// </summary>
         /// <param name="card">Card object</param>
         /// <param name="orientation">Orientation enumeration</param>
-        public cbCardBox(Card card, Orientation or = Orientation.Vertical)
+        public CardBox(Card card, Orientation or = Orientation.Vertical)
         {
             InitializeComponent(); //required  method for designer support
             myOrientation = or; //set the orientation

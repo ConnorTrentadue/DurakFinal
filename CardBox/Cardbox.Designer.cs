@@ -1,6 +1,6 @@
 ﻿namespace DurakClassLibrary
 {
-    partial class cbCardBox
+    partial class CardBox
     {
         /// <summary> 
         /// Required designer variable.
@@ -41,12 +41,12 @@
             this.pbMyPictureBox.TabIndex = 1;
             this.pbMyPictureBox.TabStop = false;
             // 
-            // cbCardBox
+            // CardBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pbMyPictureBox);
-            this.Name = "cbCardBox";
+            this.Name = "CardBox";
             this.Size = new System.Drawing.Size(75, 108);
             ((System.ComponentModel.ISupportInitialize)(this.pbMyPictureBox)).EndInit();
             this.ResumeLayout(false);

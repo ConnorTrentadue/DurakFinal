@@ -61,11 +61,16 @@ namespace DurakProject
             pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
 
             // Show the number of cards in the deck
+            // CardsRemaining not yet Completed
             lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+
+            card = durakDeck.DrawCard();
+            CardBox newCard = new CardBox(card);
+            pnlPlayerHand.Controls.Add(newCard);
 
             //deal 12 cards, (6 each) to the players.
             //alternate the cards into each player's hand
-            for(int i = 1; i <= 6 /* * playerCount */; i++)
+            for (int i = 1; i <= 6 /* * playerCount */; i++)
             {
                 card = durakDeck.DrawCard();
                 CardBox aCardBox = new CardBox(card);
@@ -85,8 +90,8 @@ namespace DurakProject
             //trumpCard.FaceUp = true;
             Suit trumpSuit = durakDeck.GetCard(0).Suit;
             // set the image of the trump card
-            pbTrumpCard.Image = durakDeck.GetCard(0).GetCardImage();
-            pbTrumpIndicator.Image = pbTrumpCard.Image;
+            pnlTrumpCard.Image = trumpCard.GetCardImage();
+            pbTrumpIndicator.Image = pnlTrumpCard.Image;
         }
 
         private void btnForfeit_Click(object sender, EventArgs e)

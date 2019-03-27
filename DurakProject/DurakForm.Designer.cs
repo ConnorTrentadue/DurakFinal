@@ -43,11 +43,10 @@
             this.pbTrumpIndicator = new System.Windows.Forms.PictureBox();
             this.pnlPlayArea = new System.Windows.Forms.Panel();
             this.pbDeck = new System.Windows.Forms.PictureBox();
-            this.pbTrumpCard = new System.Windows.Forms.PictureBox();
+            this.pnlTrumpCard = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
             this.pnlPlayArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTrumpCard)).BeginInit();
             this.SuspendLayout();
             // 
             // btnNewGame
@@ -195,15 +194,13 @@
             this.pbDeck.TabIndex = 20;
             this.pbDeck.TabStop = false;
             // 
-            // pbTrumpCard
+            // pnlTrumpCard
             // 
-            this.pbTrumpCard.BackColor = System.Drawing.Color.Transparent;
-            this.pbTrumpCard.Location = new System.Drawing.Point(991, 247);
-            this.pbTrumpCard.Name = "pbTrumpCard";
-            this.pbTrumpCard.Size = new System.Drawing.Size(75, 108);
-            this.pbTrumpCard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbTrumpCard.TabIndex = 0;
-            this.pbTrumpCard.TabStop = false;
+            this.pnlTrumpCard.BackColor = System.Drawing.Color.Transparent;
+            this.pnlTrumpCard.Location = new System.Drawing.Point(991, 247);
+            this.pnlTrumpCard.Name = "pnlTrumpCard";
+            this.pnlTrumpCard.Size = new System.Drawing.Size(75, 108);
+            this.pnlTrumpCard.TabIndex = 21;
             // 
             // frmDurak
             // 
@@ -212,7 +209,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1091, 606);
-            this.Controls.Add(this.pbTrumpCard);
+            this.Controls.Add(this.pnlTrumpCard);
             this.Controls.Add(this.pbDeck);
             this.Controls.Add(this.pnlPlayArea);
             this.Controls.Add(this.pnlDiscard);
@@ -236,7 +233,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).EndInit();
             this.pnlPlayArea.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTrumpCard)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,7 +253,7 @@
         private System.Windows.Forms.PictureBox pbTrumpIndicator;
         private System.Windows.Forms.Panel pnlPlayArea;
         private System.Windows.Forms.PictureBox pbDeck;
-        private System.Windows.Forms.PictureBox pbTrumpCard;
+        private System.Windows.Forms.Panel pnlTrumpCard;
     }
 }
 

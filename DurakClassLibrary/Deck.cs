@@ -67,7 +67,9 @@ namespace DurakClassLibrary
         #endregion
 
         #region METHODS
-
+        /// <summary>
+        /// CardsRemaining property gets the cards left in the deck.
+        /// </summary>
         public int CardsRemaining { get; }
 
         public void Shuffle()
@@ -141,9 +143,9 @@ namespace DurakClassLibrary
         /// <returns></returns>
         public Card GetCard(int cardNum)
         {
-            if (cardNum >= 0 && cardNum <= 51)
+            if (cardNum >= 0 && cardNum <= 35)
             {
-                if ((cardNum == 51) && (LastCardDrawn != null))
+                if ((cardNum == 35) && (LastCardDrawn != null))
                     //Call the custom event handler when last card is drawn
                     LastCardDrawn(this, EventArgs.Empty);
                 return cards[cardNum];

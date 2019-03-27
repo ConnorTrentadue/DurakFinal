@@ -52,14 +52,13 @@ namespace DurakProject
         {
             // create a new deck
             Deck durakDeck = new Deck();
-            //Card card = new Card();
+            Card card = new Card();
 
             // shuffle the new deck.
             durakDeck.Shuffle();
 
             // Set the deck image to a card back image
-            //pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
-            pbDeck.Image = (new Card()).GetCardImage();
+            pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
 
             // Show the number of cards in the deck
             lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
@@ -68,7 +67,7 @@ namespace DurakProject
             //alternate the cards into each player's hand
             for(int i = 1; i <= 6 /* * playerCount */; i++)
             {
-                Card card = durakDeck.DrawCard();
+                card = durakDeck.DrawCard();
                 CardBox aCardBox = new CardBox(card);
 
                 if(i % 2 == 0)
@@ -83,14 +82,14 @@ namespace DurakProject
 
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
-            trumpCard.FaceUp = true;
+            CardBox aTrumpCardbox = new CardBox(trumpCard);
+            pnlTrumpCard.Controls.Add(aTrumpCardbox);
+            //trumpCard.FaceUp = true;
             MessageBox.Show(trumpCard.ToString());
             //Suit trumpSuit = durakDeck.GetCard(0).Suit;
             // set the image of the trump card
-            CardBox cardBox = new CardBox(trumpCard);
-
-            pnlTrumpCard.Controls.Add(cardBox);
-            //pbTrumpIndicator.Image = pnlTrumpCard.Image;
+            //pnlTrumpCard.Image = trumpCard.GetCardImage();
+            //pnlTrumpIndicator.Image = pbTrumpCard.Image;
         }
 
         private void btnForfeit_Click(object sender, EventArgs e)

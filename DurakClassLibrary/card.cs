@@ -71,7 +71,7 @@ namespace DurakClassLibrary
 
         #region CONSTRUCTORS
 
-        public Card(Rank rank = Rank.Ace, Suit suit = Suit.Heart)
+        public Card(Rank rank = Rank.Ace, Suit suit = Suit.Hearts)
         {
             this.myRank = rank;
             this.mySuit = suit;

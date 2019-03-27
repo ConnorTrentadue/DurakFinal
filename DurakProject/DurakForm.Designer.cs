@@ -141,9 +141,9 @@
             // 
             this.pnlPlayerHand.BackColor = System.Drawing.Color.Transparent;
             this.pnlPlayerHand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPlayerHand.Location = new System.Drawing.Point(218, 496);
+            this.pnlPlayerHand.Location = new System.Drawing.Point(218, 493);
             this.pnlPlayerHand.Name = "pnlPlayerHand";
-            this.pnlPlayerHand.Size = new System.Drawing.Size(654, 105);
+            this.pnlPlayerHand.Size = new System.Drawing.Size(654, 108);
             this.pnlPlayerHand.TabIndex = 14;
             // 
             // pnlComputerHand
@@ -152,7 +152,7 @@
             this.pnlComputerHand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlComputerHand.Location = new System.Drawing.Point(218, 7);
             this.pnlComputerHand.Name = "pnlComputerHand";
-            this.pnlComputerHand.Size = new System.Drawing.Size(654, 105);
+            this.pnlComputerHand.Size = new System.Drawing.Size(654, 108);
             this.pnlComputerHand.TabIndex = 15;
             // 
             // pnlDiscard

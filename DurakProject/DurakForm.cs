@@ -78,7 +78,7 @@ namespace DurakProject
             durakDeck.Shuffle();
 
             // Set the deck image to a card back image
-            pbDeck.Image = durakDeck.ElementAt(0).GetCardImage();
+            pbDeck.Image = durakDeck.ElementAt(1).GetCardImage();
 
             // Show the number of cards in the deck
             //lblCardsRemaining.Text = cards.CardsRemaining.ToString();

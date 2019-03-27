@@ -78,10 +78,10 @@ namespace DurakProject
             durakDeck.Shuffle();
 
             // Set the deck image to a card back image
-            pbDeck.Image = durakDeck.ElementAt(1).GetCardImage();
+            pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
 
             // Show the number of cards in the deck
-            //lblCardsRemaining.Text = cards.CardsRemaining.ToString();
+            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
 
             //deal 12 cards, (6 each) to the players.
             //alternate the cards into each player's hand

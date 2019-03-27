@@ -67,6 +67,9 @@ namespace DurakClassLibrary
         #endregion
 
         #region METHODS
+
+        public int CardsRemaining { get; }
+
         public void Shuffle()
         {
             // create temp card array
@@ -129,6 +132,25 @@ namespace DurakClassLibrary
             cards.RemoveAt(0);
 
             return card;
+        }
+
+        /// <summary>
+        /// Method to create a method to test Expanding
+        /// </summary>
+        /// <param name="cardNum"></param>
+        /// <returns></returns>
+        public Card GetCard(int cardNum)
+        {
+            if (cardNum >= 0 && cardNum <= 51)
+            {
+                if ((cardNum == 51) && (LastCardDrawn != null))
+                    //Call the custom event handler when last card is drawn
+                    LastCardDrawn(this, EventArgs.Empty);
+                return cards[cardNum];
+            }
+            else
+                //throw new CardOutOfRangeException((Cards)cards.Clone());
+                throw new ArgumentOutOfRangeException();
         }
 
         /// <summary>

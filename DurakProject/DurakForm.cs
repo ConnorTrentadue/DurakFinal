@@ -154,7 +154,7 @@ namespace DurakProject
                 // and suit more easily.
 
                 // Align the "first" card (which is the last control in the collection)
-                panelHand.Controls[myCount - 1].Top = POP;
+                //panelHand.Controls[myCount - 1].Top = POP;
                 System.Diagnostics.Debug.Write(panelHand.Controls[myCount - 1].Top.ToString() + "\n");
                 panelHand.Controls[myCount - 1].Left = startPoint;
 
@@ -162,7 +162,7 @@ namespace DurakProject
                 for (int index = myCount - 2; index >= 0; index--)
                 {
                     // Align the current card
-                    panelHand.Controls[index].Top = POP;
+                    //panelHand.Controls[index].Top = POP;
                     panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
                 }
             }

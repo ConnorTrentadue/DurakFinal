@@ -11,9 +11,9 @@ namespace DurakClassLibrary
 {
     public enum Suit : byte
     {
-        Club,
-        Diamond,
-        Heart,
-        Spade
+        Clubs,
+        Diamonds,
+        Hearts,
+        Spades
     }
 }

@@ -43,31 +43,6 @@ namespace DurakProject
             // pbDeck.Image = (new Card()).GetCardImage();
         }
 
-        private void lblGameNumber_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblRoundNumber_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblWins_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblTies_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblLosses_Click(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// New game clears out previous game session.  Creates a new deck and deals 6 cards to each player.
         /// </summary>

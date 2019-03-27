@@ -8,11 +8,13 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DurakClassLibrary
 {
-    public class Deck : ICloneable
+    public class Deck : List<Card>, ICloneable
     {
         
         #region CONSTUCTORS
@@ -117,17 +119,6 @@ namespace DurakClassLibrary
             }
 
             return empty;
-        }
-
-        //DrawCard provides a new card object from the deck
-        public Card DrawCard()
-        {
-            Card card;
-
-            card = cards.ElementAt(0);
-            cards.RemoveAt(0);
-
-            return card;
         }
 
         /// <summary>

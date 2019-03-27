@@ -141,7 +141,7 @@ namespace DurakClassLibrary
 
             if (!faceUp)
             {
-                imageName = "Back";
+                imageName = "Back_Colour";
             }
             else
             {

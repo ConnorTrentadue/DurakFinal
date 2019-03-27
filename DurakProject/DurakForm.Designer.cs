@@ -57,6 +57,7 @@
             this.btnNewGame.TabIndex = 6;
             this.btnNewGame.Text = "New Game";
             this.btnNewGame.UseVisualStyleBackColor = true;
+            this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click);
             // 
             // btnForfeit
             // 
@@ -78,7 +79,6 @@
             this.lblGameNumber.Size = new System.Drawing.Size(48, 13);
             this.lblGameNumber.TabIndex = 8;
             this.lblGameNumber.Text = "Game #:";
-            this.lblGameNumber.Click += new System.EventHandler(this.lblGameNumber_Click);
             // 
             // lblRoundNumber
             // 
@@ -90,7 +90,6 @@
             this.lblRoundNumber.Size = new System.Drawing.Size(52, 13);
             this.lblRoundNumber.TabIndex = 9;
             this.lblRoundNumber.Text = "Round #:";
-            this.lblRoundNumber.Click += new System.EventHandler(this.lblRoundNumber_Click);
             // 
             // lblWins
             // 
@@ -102,7 +101,6 @@
             this.lblWins.Size = new System.Drawing.Size(34, 13);
             this.lblWins.TabIndex = 10;
             this.lblWins.Text = "Wins:";
-            this.lblWins.Click += new System.EventHandler(this.lblWins_Click);
             // 
             // lblTies
             // 
@@ -114,7 +112,6 @@
             this.lblTies.Size = new System.Drawing.Size(30, 13);
             this.lblTies.TabIndex = 11;
             this.lblTies.Text = "Ties:";
-            this.lblTies.Click += new System.EventHandler(this.lblTies_Click);
             // 
             // lblCardsRemaining
             // 
@@ -137,7 +134,6 @@
             this.lblLosses.Size = new System.Drawing.Size(43, 13);
             this.lblLosses.TabIndex = 13;
             this.lblLosses.Text = "Losses:";
-            this.lblLosses.Click += new System.EventHandler(this.lblLosses_Click);
             // 
             // pnlPlayerHand
             // 

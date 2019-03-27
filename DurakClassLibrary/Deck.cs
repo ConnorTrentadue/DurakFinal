@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.Linq;
 
 namespace DurakClassLibrary
 {
@@ -116,6 +117,17 @@ namespace DurakClassLibrary
             }
 
             return empty;
+        }
+
+        //DrawCard provides a new card object from the deck
+        public Card DrawCard()
+        {
+            Card card;
+
+            card = cards.ElementAt(0);
+            cards.RemoveAt(0);
+
+            return card;
         }
 
         /// <summary>

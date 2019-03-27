@@ -80,6 +80,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CardBox\CardBox.csproj">
+      <Project>{be7338b8-23df-4d40-b23c-9462696c2529}</Project>
+      <Name>CardBox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DurakClassLibrary\DurakClassLibrary.csproj">
       <Project>{927387b7-a549-4428-b375-7efa91564817}</Project>
       <Name>DurakClassLibrary</Name>

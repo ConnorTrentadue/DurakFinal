@@ -13,20 +13,20 @@
  * 
  **/
 
+using DurakClassLibrary;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DurakProject
 {
     public partial class frmDurak : Form
     {
+
+        static private Size baseSize = new Size(75, 108);
+
+        private Deck newDeck = new Deck();
+
         public frmDurak()
         {
             InitializeComponent();
@@ -42,29 +42,13 @@ namespace DurakProject
             //pnlDeck.BackgroundImage = new Card()).GetCardImage();
         }
 
-        private void lblGameNumber_Click(object sender, EventArgs e)
+        private void btnNewGame_Click(object sender, EventArgs e)
         {
+            newDeck.Shuffle();
 
-        }
+            Card card = new Card();
 
-        private void lblRoundNumber_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblWins_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblTies_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblLosses_Click(object sender, EventArgs e)
-        {
-
+            card = newDeck.DrawCard();
         }
     }
 }

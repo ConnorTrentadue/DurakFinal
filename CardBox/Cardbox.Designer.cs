@@ -48,6 +48,7 @@
             this.Controls.Add(this.pbMyPictureBox);
             this.Name = "CardBox";
             this.Size = new System.Drawing.Size(75, 108);
+            this.Load += new System.EventHandler(this.Cardbox_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbMyPictureBox)).EndInit();
             this.ResumeLayout(false);
 

@@ -227,7 +227,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDurak";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Durak Game";
             this.Load += new System.EventHandler(this.frmDurak_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).EndInit();

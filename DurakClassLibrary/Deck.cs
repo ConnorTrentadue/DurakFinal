@@ -8,10 +8,13 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace DurakClassLibrary
 {
-    public class Deck : ICloneable
+    public class Deck : List<Card>, ICloneable
     {
         
         #region CONSTUCTORS

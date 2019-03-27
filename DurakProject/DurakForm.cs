@@ -14,13 +14,10 @@
  **/
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using DurakClassLibrary;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace DurakProject
@@ -39,7 +36,7 @@ namespace DurakProject
             /// </summary>
 
             // Set the deck image to a card back image
-            //pnlDeck.BackgroundImage = new Card()).GetCardImage();
+            // pbDeck.Image = (new Card()).GetCardImage();
         }
 
         private void lblGameNumber_Click(object sender, EventArgs e)
@@ -65,6 +62,38 @@ namespace DurakProject
         private void lblLosses_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// New game clears out previous game session.  Creates a new deck and deals 6 cards to each player.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNewGame_Click(object sender, EventArgs e)
+        {
+            // create a new deck
+            Deck durakDeck = new Deck();
+            
+            // shuffle the new deck.
+            durakDeck.Shuffle();
+
+            // Set the deck image to a card back image
+            pbDeck.Image = durakDeck.ElementAt(0).GetCardImage();
+
+            // Show the number of cards in the deck
+            //lblCardsRemaining.Text = cards.CardsRemaining.ToString();
+
+            //deal 12 cards, (6 each) to the players.
+            //alternate the cards into each player's hand
+
+            // set the image of the trump card
+            pbTrumpCard.Image = (new Card()).GetCardImage();
+            pbTrumpIndicator.Image = (new Card()).GetCardImage();
+        }
+
+        private void btnForfeit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

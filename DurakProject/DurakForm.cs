@@ -86,7 +86,7 @@ namespace DurakProject
             trumpCard.FaceUp = true;
             pnlTrumpCard.Controls.Add(aTrumpCardbox);
             MessageBox.Show(trumpCard.ToString());
-            Suit trumpSuit = durakDeck.GetCard(0).Suit;
+            Suit trumpSuit = trumpCard.Suit;
             // set the image of the trump card
             //pnlTrumpCard.Image = trumpCard.GetCardImage();
             //pnlTrumpIndicator.Image = pbTrumpCard.Image;

@@ -28,7 +28,7 @@ namespace DurakProject
         /// <summary>
         /// The amount, in points, that CardBox controls are enlarged when hovered over. 
         /// </summary>
-        private const int POP = 25;
+        private const int POP = 0;
 
         static private Size regularSize = new Size(75, 108);
         #endregion

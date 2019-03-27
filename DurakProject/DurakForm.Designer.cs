@@ -141,18 +141,18 @@
             // 
             this.pnlPlayerHand.BackColor = System.Drawing.Color.Transparent;
             this.pnlPlayerHand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPlayerHand.Location = new System.Drawing.Point(218, 493);
+            this.pnlPlayerHand.Location = new System.Drawing.Point(218, 492);
             this.pnlPlayerHand.Name = "pnlPlayerHand";
-            this.pnlPlayerHand.Size = new System.Drawing.Size(654, 108);
+            this.pnlPlayerHand.Size = new System.Drawing.Size(654, 110);
             this.pnlPlayerHand.TabIndex = 14;
             // 
             // pnlComputerHand
             // 
             this.pnlComputerHand.BackColor = System.Drawing.Color.Transparent;
             this.pnlComputerHand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlComputerHand.Location = new System.Drawing.Point(218, 7);
+            this.pnlComputerHand.Location = new System.Drawing.Point(218, 6);
             this.pnlComputerHand.Name = "pnlComputerHand";
-            this.pnlComputerHand.Size = new System.Drawing.Size(654, 108);
+            this.pnlComputerHand.Size = new System.Drawing.Size(654, 110);
             this.pnlComputerHand.TabIndex = 15;
             // 
             // pnlDiscard
@@ -179,7 +179,7 @@
             this.pnlPlayArea.BackColor = System.Drawing.Color.Transparent;
             this.pnlPlayArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlPlayArea.Controls.Add(this.pbTrumpIndicator);
-            this.pnlPlayArea.Location = new System.Drawing.Point(219, 118);
+            this.pnlPlayArea.Location = new System.Drawing.Point(219, 120);
             this.pnlPlayArea.Name = "pnlPlayArea";
             this.pnlPlayArea.Size = new System.Drawing.Size(652, 368);
             this.pnlPlayArea.TabIndex = 19;

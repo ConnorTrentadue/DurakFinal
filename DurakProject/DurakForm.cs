@@ -55,6 +55,9 @@ namespace DurakProject
         /// <param name="e"></param>
         private void btnNewGame_Click(object sender, EventArgs e)
         {
+            pnlPlayerHand.Controls.Clear();
+            pnlComputerHand.Controls.Clear();
+
             // create a new deck
             Deck durakDeck = new Deck();
             Card card = new Card();

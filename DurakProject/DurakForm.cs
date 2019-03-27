@@ -82,12 +82,14 @@ namespace DurakProject
 
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
+            CardBox aTrumpCardbox = new CardBox(trumpCard);
+            pnlTrumpCard.Controls.Add(aTrumpCardbox);
             //trumpCard.FaceUp = true;
             MessageBox.Show(trumpCard.ToString());
             //Suit trumpSuit = durakDeck.GetCard(0).Suit;
             // set the image of the trump card
-            pbTrumpCard.Image = trumpCard.GetCardImage();
-            pbTrumpIndicator.Image = pbTrumpCard.Image;
+            //pnlTrumpCard.Image = trumpCard.GetCardImage();
+            //pnlTrumpIndicator.Image = pbTrumpCard.Image;
         }
 
         private void btnForfeit_Click(object sender, EventArgs e)

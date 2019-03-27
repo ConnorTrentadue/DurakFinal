@@ -170,7 +170,8 @@
             this.pbTrumpIndicator.BackColor = System.Drawing.Color.Transparent;
             this.pbTrumpIndicator.Location = new System.Drawing.Point(3, 3);
             this.pbTrumpIndicator.Name = "pbTrumpIndicator";
-            this.pbTrumpIndicator.Size = new System.Drawing.Size(36, 33);
+            this.pbTrumpIndicator.Size = new System.Drawing.Size(36, 36);
+            this.pbTrumpIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbTrumpIndicator.TabIndex = 0;
             this.pbTrumpIndicator.TabStop = false;
             // 
@@ -190,6 +191,7 @@
             this.pbDeck.Location = new System.Drawing.Point(894, 247);
             this.pbDeck.Name = "pbDeck";
             this.pbDeck.Size = new System.Drawing.Size(75, 108);
+            this.pbDeck.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbDeck.TabIndex = 20;
             this.pbDeck.TabStop = false;
             // 
@@ -199,6 +201,7 @@
             this.pbTrumpCard.Location = new System.Drawing.Point(991, 247);
             this.pbTrumpCard.Name = "pbTrumpCard";
             this.pbTrumpCard.Size = new System.Drawing.Size(75, 108);
+            this.pbTrumpCard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbTrumpCard.TabIndex = 0;
             this.pbTrumpCard.TabStop = false;
             // 

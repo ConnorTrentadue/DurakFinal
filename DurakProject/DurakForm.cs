@@ -65,8 +65,12 @@ namespace DurakProject
             //deal 12 cards, (6 each) to the players.
             //alternate the cards into each player's hand
 
+            // set the trump suit for this game.
+            Card trumpCard = durakDeck.DrawCard();
+            //trumpCard.FaceUp = true;
+            Suit trumpSuit = durakDeck.GetCard(0).Suit;
             // set the image of the trump card
-            pbTrumpCard.Image = (new Card()).GetCardImage();
+            pbTrumpCard.Image = durakDeck.GetCard(0).GetCardImage();
             pbTrumpIndicator.Image = pbTrumpCard.Image;
         }
 

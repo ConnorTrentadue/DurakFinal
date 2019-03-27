@@ -121,6 +121,16 @@ namespace DurakClassLibrary
             return empty;
         }
 
+        public Card DrawCard()
+        {
+            Card card;
+
+            card = cards.ElementAt(0);
+            cards.RemoveAt(0);
+
+            return card;
+        }
+
         /// <summary>
         /// Method to create a method to test Expanding
         /// </summary>

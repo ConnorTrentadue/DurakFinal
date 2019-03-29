@@ -86,6 +86,7 @@ namespace DurakProject
                 }
                 else
                 {
+                    //card.FaceUp = true;  //uncomment this to enable AI cards faceUp
                     CardBox aCardBox = new CardBox(card);
                     pnlComputerHand.Controls.Add(aCardBox);
                 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDurak));
             this.btnNewGame = new System.Windows.Forms.Button();
             this.btnForfeit = new System.Windows.Forms.Button();
             this.lblGameNumber = new System.Windows.Forms.Label();
@@ -207,7 +206,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImage = global::DurakProject.Properties.Resources.WoodTexture1024;
             this.ClientSize = new System.Drawing.Size(1091, 606);
             this.Controls.Add(this.pnlTrumpCard);
             this.Controls.Add(this.pbDeck);

@@ -59,5 +59,15 @@ namespace DurakProject.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WoodTexture1024 {
+            get {
+                object obj = ResourceManager.GetObject("WoodTexture1024", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

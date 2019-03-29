@@ -39,8 +39,9 @@
             this.pbMyPictureBox.Name = "pbMyPictureBox";
             this.pbMyPictureBox.Size = new System.Drawing.Size(75, 108);
             this.pbMyPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbMyPictureBox.TabIndex = 1;
+            this.pbMyPictureBox.TabIndex = 0;
             this.pbMyPictureBox.TabStop = false;
+            this.pbMyPictureBox.Click += new System.EventHandler(this.pbMyPictureBox_Click);
             // 
             // CardBox
             // 

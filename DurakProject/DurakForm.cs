@@ -30,6 +30,14 @@ namespace DurakProject
         /// </summary>
         private const int POP = 0;
 
+        //declare a trumpSuit  to hold trump suit values
+        Suit trumpSuit = Suit.Clubs;
+        // declare a cardRank  to hold card rank values
+        Rank cardRank = Rank.Ace;
+
+        //declare a cardSuit to hold card suit values
+        Suit cardSuit = Suit.Clubs;
+
         static private Size regularSize = new Size(75, 108);
         #endregion
 
@@ -74,21 +82,23 @@ namespace DurakProject
 
             //deal 12 cards, (6 each) to the players.
             //alternate the cards into each player's hand
-            for(int i = 1; i <= 12 /* * playerCount */; i++)
+            for (int i = 1; i <= 12 /* * playerCount */; i++)
             {
                 card = durakDeck.DrawCard();
 
-                if(i % 2 == 0)
+                if (i % 2 == 0)
                 {
                     card.FaceUp = true;
-                    CardBox aCardBox = new CardBox(card);
-                    pnlPlayerHand.Controls.Add(aCardBox);
+                    CardBox playerCardBox = new CardBox(card);
+                    //wire the click event to the cardbox
+                    playerCardBox.Click += CardBox_Click;
+                    pnlPlayerHand.Controls.Add(playerCardBox);
                 }
                 else
                 {
                     card.FaceUp = true;  //uncomment this to enable AI cards faceUp
-                    CardBox aCardBox = new CardBox(card);
-                    pnlComputerHand.Controls.Add(aCardBox);
+                    CardBox computerCardBox = new CardBox(card);
+                    pnlComputerHand.Controls.Add(computerCardBox);
                 }
             }
 
@@ -99,10 +109,10 @@ namespace DurakProject
             Card trumpCard = durakDeck.DrawCard();
             CardBox aTrumpCardbox = new CardBox(trumpCard);
             trumpCard.FaceUp = true;
-            
+
             pnlTrumpCard.Controls.Add(aTrumpCardbox);
             //MessageBox.Show(trumpCard.ToString());
-            Suit trumpSuit = trumpCard.Suit;
+            trumpSuit = trumpCard.Suit;
             // set the image of the trump card
             //pnlTrumpCard.Image = trumpCard.GetCardImage();
             //pnlTrumpIndicator.Image = pbTrumpCard.Image;
@@ -110,8 +120,31 @@ namespace DurakProject
 
         private void btnForfeit_Click(object sender, EventArgs e)
         {
+            //close the program
             this.Close();
         }
+
+
+        #region CARDBOX EVENT HANDLERS
+
+        public void CardBox_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show("It works!");
+            //convert the sender
+            CardBox aCardBox = sender as CardBox;
+
+            //remove from player hand
+            pnlPlayerHand.Controls.Remove(aCardBox);
+            //add the card to the play area
+            //requires location mapping
+            pnlPlayArea.Controls.Add(aCardBox);
+
+            in
+            
+        }
+
+        #endregion
+
 
         /// <summary>
         /// Repositions the cards in a panel so that they are evenly distributed in the area available.

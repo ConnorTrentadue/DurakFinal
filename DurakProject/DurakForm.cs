@@ -139,7 +139,7 @@ namespace DurakProject
             //requires location mapping
             pnlPlayArea.Controls.Add(aCardBox);
 
-            in
+            
             
         }
 

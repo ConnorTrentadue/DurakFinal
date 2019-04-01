@@ -25,5 +25,12 @@ namespace DurakClassLibrary
         /// <param name="name"></param>
         /// <param name="difficulty"></param>
         public ComputerPlayer(string name, int difficulty) : base (name) { AiDifficulty = difficulty; }
+
+        /*
+        public void MakeNormalPlay(Card playerCard)
+        {
+            if(playerCard.Suit == )
+        }
+        */
     }
 }

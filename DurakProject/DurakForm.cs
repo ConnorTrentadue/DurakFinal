@@ -30,6 +30,27 @@ namespace DurakProject
         /// </summary>
         private const int POP = 0;
 
+        //Seeding random number generator
+        static Random randomNumber = new Random();
+
+        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves.
+
+        //Declares new computer player
+        ComputerPlayer newAI;
+
+        //Declares new human player
+        Player newPlayer;
+
+        //Computer names array
+        string[] computerNames = new string[] 
+        {"Salvatore", "Leigh", "Wilmer", "Max",
+         "Fredric", "Clifford", "Isiah", "Lucio",
+         "Jess", "Leonard", "Marth", "Reginia",
+         "Sharri", "Madonna", "Wilhemina", "Jennie",
+         "Joanne", "Hermila", "Violette", "Trina"};
+
+        string playerName = "THE MAN";
+            
         //declare a trumpSuit  to hold trump suit values
         Suit trumpSuit = Suit.Clubs;
         // declare a cardRank  to hold card rank values
@@ -66,6 +87,20 @@ namespace DurakProject
             pnlComputerHand.Controls.Clear();
             pnlPlayerHand.Controls.Clear();
             pnlTrumpCard.Controls.Clear();
+            pnlPlayArea.Controls.Clear(); 
+            pnlDiscard.Controls.Clear();
+
+            int someNumber = randomNumber.Next(1, 20);
+
+            //MessageBox.Show(someNumber.ToString());
+
+            //Instantiate new computer player based on selected difficulty (w/ random name)
+            newAI = new ComputerPlayer(computerNames[someNumber], difficultyChoice);
+            newPlayer = new Player(playerName); //playerName is a test name. We need to add a form that pops up at 
+                                                //newgame click that prompts for player name and then stores the entered value
+                                                //At this point we also need to add a form pop-up that prompts for difficulty
+            lblAIName.Text = newAI.Name;
+            lblPlayerName.Text = newPlayer.Name;
 
             // create a new deck
             Deck durakDeck = new Deck();
@@ -116,6 +151,8 @@ namespace DurakProject
             // set the image of the trump card
             //pnlTrumpCard.Image = trumpCard.GetCardImage();
             //pnlTrumpIndicator.Image = pbTrumpCard.Image;
+
+            //lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString(); //NOTE: This line isn't working correctly but, it should be
         }
 
         private void btnForfeit_Click(object sender, EventArgs e)
@@ -139,8 +176,8 @@ namespace DurakProject
             //requires location mapping
             pnlPlayArea.Controls.Add(aCardBox);
 
-            
-            
+            //Calls computer player method to make a move based on the card passed
+            //MakeNormalPlay(this); 
         }
 
         #endregion

@@ -43,6 +43,8 @@
             this.pnlPlayArea = new System.Windows.Forms.Panel();
             this.pbDeck = new System.Windows.Forms.PictureBox();
             this.pnlTrumpCard = new System.Windows.Forms.Panel();
+            this.lblAIName = new System.Windows.Forms.Label();
+            this.lblPlayerName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
             this.pnlPlayArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
@@ -51,7 +53,7 @@
             // btnNewGame
             // 
             this.btnNewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewGame.Location = new System.Drawing.Point(910, 12);
+            this.btnNewGame.Location = new System.Drawing.Point(923, 579);
             this.btnNewGame.Name = "btnNewGame";
             this.btnNewGame.Size = new System.Drawing.Size(75, 23);
             this.btnNewGame.TabIndex = 6;
@@ -62,7 +64,7 @@
             // btnForfeit
             // 
             this.btnForfeit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnForfeit.Location = new System.Drawing.Point(1004, 12);
+            this.btnForfeit.Location = new System.Drawing.Point(1004, 579);
             this.btnForfeit.Name = "btnForfeit";
             this.btnForfeit.Size = new System.Drawing.Size(75, 23);
             this.btnForfeit.TabIndex = 7;
@@ -75,7 +77,7 @@
             this.lblGameNumber.AutoSize = true;
             this.lblGameNumber.BackColor = System.Drawing.Color.Transparent;
             this.lblGameNumber.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblGameNumber.Location = new System.Drawing.Point(12, 509);
+            this.lblGameNumber.Location = new System.Drawing.Point(12, 9);
             this.lblGameNumber.Name = "lblGameNumber";
             this.lblGameNumber.Size = new System.Drawing.Size(48, 13);
             this.lblGameNumber.TabIndex = 8;
@@ -86,7 +88,7 @@
             this.lblRoundNumber.AutoSize = true;
             this.lblRoundNumber.BackColor = System.Drawing.Color.Transparent;
             this.lblRoundNumber.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblRoundNumber.Location = new System.Drawing.Point(12, 526);
+            this.lblRoundNumber.Location = new System.Drawing.Point(12, 26);
             this.lblRoundNumber.Name = "lblRoundNumber";
             this.lblRoundNumber.Size = new System.Drawing.Size(52, 13);
             this.lblRoundNumber.TabIndex = 9;
@@ -97,7 +99,7 @@
             this.lblWins.AutoSize = true;
             this.lblWins.BackColor = System.Drawing.Color.Transparent;
             this.lblWins.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblWins.Location = new System.Drawing.Point(12, 543);
+            this.lblWins.Location = new System.Drawing.Point(12, 43);
             this.lblWins.Name = "lblWins";
             this.lblWins.Size = new System.Drawing.Size(34, 13);
             this.lblWins.TabIndex = 10;
@@ -108,7 +110,7 @@
             this.lblTies.AutoSize = true;
             this.lblTies.BackColor = System.Drawing.Color.Transparent;
             this.lblTies.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblTies.Location = new System.Drawing.Point(12, 560);
+            this.lblTies.Location = new System.Drawing.Point(12, 60);
             this.lblTies.Name = "lblTies";
             this.lblTies.Size = new System.Drawing.Size(30, 13);
             this.lblTies.TabIndex = 11;
@@ -130,7 +132,7 @@
             this.lblLosses.AutoSize = true;
             this.lblLosses.BackColor = System.Drawing.Color.Transparent;
             this.lblLosses.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblLosses.Location = new System.Drawing.Point(12, 576);
+            this.lblLosses.Location = new System.Drawing.Point(12, 76);
             this.lblLosses.Name = "lblLosses";
             this.lblLosses.Size = new System.Drawing.Size(43, 13);
             this.lblLosses.TabIndex = 13;
@@ -201,6 +203,30 @@
             this.pnlTrumpCard.Size = new System.Drawing.Size(75, 108);
             this.pnlTrumpCard.TabIndex = 21;
             // 
+            // lblAIName
+            // 
+            this.lblAIName.AutoSize = true;
+            this.lblAIName.BackColor = System.Drawing.Color.Transparent;
+            this.lblAIName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAIName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblAIName.Location = new System.Drawing.Point(878, 52);
+            this.lblAIName.Name = "lblAIName";
+            this.lblAIName.Size = new System.Drawing.Size(0, 24);
+            this.lblAIName.TabIndex = 22;
+            this.lblAIName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblPlayerName
+            // 
+            this.lblPlayerName.AutoSize = true;
+            this.lblPlayerName.BackColor = System.Drawing.Color.Transparent;
+            this.lblPlayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayerName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblPlayerName.Location = new System.Drawing.Point(112, 537);
+            this.lblPlayerName.Name = "lblPlayerName";
+            this.lblPlayerName.Size = new System.Drawing.Size(0, 24);
+            this.lblPlayerName.TabIndex = 23;
+            this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // frmDurak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -208,6 +234,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
             this.BackgroundImage = global::DurakProject.Properties.Resources.WoodTexture1024;
             this.ClientSize = new System.Drawing.Size(1091, 606);
+            this.Controls.Add(this.lblPlayerName);
+            this.Controls.Add(this.lblAIName);
             this.Controls.Add(this.pnlTrumpCard);
             this.Controls.Add(this.pbDeck);
             this.Controls.Add(this.pnlPlayArea);
@@ -252,6 +280,8 @@
         private System.Windows.Forms.Panel pnlPlayArea;
         private System.Windows.Forms.PictureBox pbDeck;
         private System.Windows.Forms.Panel pnlTrumpCard;
+        private System.Windows.Forms.Label lblAIName;
+        private System.Windows.Forms.Label lblPlayerName;
     }
 }
 

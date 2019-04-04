@@ -30,6 +30,9 @@ namespace DurakProject
         /// </summary>
         private const int POP = 0;
 
+        //Tracks how many times a player has "attacked"
+        int playerAttackCounter = 0;
+
         //Seeding random number generator
         static Random randomNumber = new Random();
 
@@ -88,7 +91,7 @@ namespace DurakProject
             pnlPlayerHand.Controls.Clear();
             pnlTrumpCard.Controls.Clear();
             pnlPlayArea.Controls.Clear(); 
-            pnlDiscard.Controls.Clear();
+            pnlDiscard.Controls.Clear();            
 
             int someNumber = randomNumber.Next(1, 20);
 
@@ -176,12 +179,10 @@ namespace DurakProject
             //requires location mapping
             pnlPlayArea.Controls.Add(aCardBox);
 
+            playerAttackCounter++;
             //Calls computer player method to make a move based on the card passed
-            //MakeNormalPlay(this); 
+            //MakeNormalPlay(aCardBox, playerAttackCounter); 
         }
-
-        #endregion
-
 
         /// <summary>
         /// Repositions the cards in a panel so that they are evenly distributed in the area available.
@@ -241,6 +242,49 @@ namespace DurakProject
                     //panelHand.Controls[index].Top = POP;
                     panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
                 }
+            }
+        }
+
+        #endregion
+
+        public void MakeNormalPlay(CardBox cardBox, int playCount, int duplicateCards = 0)
+        {
+            bool playMade = false;
+
+            switch(playCount)
+            {
+                case 1:
+                    
+                    foreach (CardBox card in pnlComputerHand)
+                    {
+                        if(card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
+                        {
+                            pnlComputerHand.Controls.Remove(card);
+                            pnlPlayArea.Controls.Add(card);
+                            i += 100;
+                            playMade = true;
+                        }
+                    }
+
+                    if(!playMade)
+                    {
+                        pnlPlayArea.Controls.Remove(cardBox);
+                        pnlComputerHand.Controls.Add(cardBox);
+                    }
+
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                default:
+                    break;
             }
         }
     }

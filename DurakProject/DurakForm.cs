@@ -255,8 +255,9 @@ namespace DurakProject
             {
                 case 1:
                     
-                    foreach (CardBox card in pnlComputerHand)
+                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
                     {
+                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
                         if(card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
                         {
                             pnlComputerHand.Controls.Remove(card);

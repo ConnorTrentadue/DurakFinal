@@ -44,6 +44,8 @@ namespace DurakProject
         //Declares new human player
         Player newPlayer;
 
+        Deck durakDeck;
+
         //Computer names array
         string[] computerNames = new string[]
         {"Salvatore", "Leigh", "Wilmer", "Max",
@@ -106,7 +108,7 @@ namespace DurakProject
             lblPlayerName.Text = newPlayer.Name;
 
             // create a new deck
-            Deck durakDeck = new Deck();
+            durakDeck = new Deck();
             Card card = new Card();
 
             // shuffle the new deck.
@@ -182,8 +184,8 @@ namespace DurakProject
                 //requires location mapping
                 //MessageBox.Show("Card Removed!");
                 pnlPlayArea.Controls.Add(aCardBox);
-                pnlDiscard.Controls.Add(aCardBox);
-                MessageBox.Show(pnlDiscard.Controls.Count.ToString());
+                //pnlDiscard.Controls.Add(aCardBox);
+                //MessageBox.Show(aCardBox.ToString() + " was added");
 
                 //MessageBox.Show("Card Added!");
                 playerAttackCounter++;
@@ -233,8 +235,6 @@ namespace DurakProject
                         validPlay = false;
 
                     }
-
-
                 }
 
             }
@@ -243,6 +243,11 @@ namespace DurakProject
                 validPlay = true;
                 MessageBox.Show(aCardBox.ToString() + " is not a valid card");
             }
+            if (pnlPlayerHand.Controls.Count == 0)
+            {
+                RedrawCards();
+            }
+
         }
 
         /// <summary>
@@ -312,226 +317,8 @@ namespace DurakProject
         {
             bool playMade = false;
 
-            switch (playCount)
-            {
-                case 1:
-
-                    //logic to add a defend card from computer hand
-                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                    {
-                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                        if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
-                        {
-                            
-                            pnlComputerHand.Controls.Remove(card);
-                            //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
-
-                            // remove a cllick event from a card in the playArea
-                            //RemoveEvent(card);
-                            i += 100;
-                            playMade = true;
-                            RealignCards(pnlPlayArea);
-                        }
-                    }
-
-                    // check for attack end.
-                    if (playMade == false)
-                    {
-                        //MessageBox.Show("PlayNot made");
-                        pnlPlayArea.Controls.Remove(cardBox);
-                        //flip the card before entering computer hand
-                        cardBox.FaceUp = false;
-                        pnlComputerHand.Controls.Add(cardBox);
-                        RealignCards(pnlComputerHand);
-                        //reset the attack counter
-                        playerAttackCounter = 0;
-
-
-                    }
-
-                    break;
-                case 2:
-                    //logic to add a defend card from computer hand
-                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                    {
-                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                        if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
-                        {
-                            pnlComputerHand.Controls.Remove(card);
-                            //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
-                            i += 100;
-                            playMade = true;
-                        }
-                    }
-
-                    // check for attack end.
-                    if (playMade == false)
-                    {
-                        //MessageBox.Show("Play Not made");
-                        for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
-                        {
-                            //debugging for card indexes on table.
-                            //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                            CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                            pnlPlayArea.Controls.Remove(card);
-                            //flip the card before entering computer hand
-                            card.FaceUp = false;
-                            pnlComputerHand.Controls.Add(card);
-                            RealignCards(pnlComputerHand);
-                            RealignCards(pnlPlayArea);
-                            playerAttackCounter = 0;
-                        }
-                    }
-
-                    break;
-                case 3:
-                    //logic to add a defend card from computer hand
-                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                    {
-                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                        if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
-                        {
-                            pnlComputerHand.Controls.Remove(card);
-                            //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
-                            i += 100;
-                            playMade = true;
-                        }
-                    }
-
-                    // check for attack end.
-                    if (playMade == false)
-                    {
-                        for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
-                        {
-                            //debugging for card indexes on table.
-                            //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                            CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                            pnlPlayArea.Controls.Remove(card);
-                            //flip the card before entering computer hand
-                            card.FaceUp = false;
-                            pnlComputerHand.Controls.Add(card);
-                            RealignCards(pnlComputerHand);
-                            RealignCards(pnlPlayArea);
-                            playerAttackCounter = 0;
-                        }
-
-                    }
-
-                    break;
-                case 4:
-                    //logic to add a defend card from computer hand
-                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                    {
-                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                        if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
-                        {
-                            pnlComputerHand.Controls.Remove(card);
-                            //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
-                            i += 100;
-                            playMade = true;
-                        }
-                    }
-
-                    // check for attack end.
-                    if (playMade == false)
-                    {
-                        for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
-                        {
-                            //debugging for card indexes on table.
-                            //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                            CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                            pnlPlayArea.Controls.Remove(card);
-                            //flip the card before entering computer hand
-                            card.FaceUp = false;
-                            pnlComputerHand.Controls.Add(card);
-                            RealignCards(pnlComputerHand);
-                            RealignCards(pnlPlayArea);
-                            playerAttackCounter = 0;
-                        }
-
-                    }
-                    break;
-                case 5:
-                    //logic to add a defend card from computer hand
-                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                    {
-                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                        if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
-                        {
-                            pnlComputerHand.Controls.Remove(card);
-                            //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
-                            i += 100;
-                            playMade = true;
-                        }
-                    }
-
-                    // check for attack end.
-                    if (playMade == false)
-                    {
-                        for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
-                        {
-                            //debugging for card indexes on table.
-                            //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                            CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                            pnlPlayArea.Controls.Remove(card);
-                            //flip the card before entering computer hand
-                            card.FaceUp = false;
-                            pnlComputerHand.Controls.Add(card);
-                            RealignCards(pnlComputerHand);
-                            RealignCards(pnlPlayArea);
-                            playerAttackCounter = 0;
-                        }
-
-                    }
-                    break;
-                case 6:
-                    //logic to add a defend card from computer hand
-                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                    {
-                        CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                        if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
-                        {
-                            pnlComputerHand.Controls.Remove(card);
-                            //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
-                            i += 100;
-                            playMade = true;
-                        }
-                    }
-
-                    // check for attack end.
-                    if (playMade == false)
-                    {
-                        for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
-                        {
-                            //debugging for card indexes on table.
-                            //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                            CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                            pnlPlayArea.Controls.Remove(card);
-                            //flip the card before entering computer hand
-                            card.FaceUp = false;
-                            pnlComputerHand.Controls.Add(card);
-                            RealignCards(pnlComputerHand);
-                            RealignCards(pnlPlayArea);
-                            playerAttackCounter = 0;
-                        }
-
-                    }
-                    break;
-                default:
-                    break;
-            }
+            //apply logic to the card added to the table.
+            ComputerLogic(cardBox, playMade);
 
         }
         // Method to unwire cardbox click events
@@ -552,12 +339,130 @@ namespace DurakProject
         {
             //send cards to discard pile
             for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
+            {
+                CardBox card = (CardBox)pnlPlayArea.Controls[i];
+                pnlPlayArea.Controls.Remove(card);
+                pnlDiscard.Controls.Add(card);
+                pnlDiscard.Controls.SetChildIndex(card, 0);
+                //MessageBox.Show(card.ToString() + " Added to the discard pile");
+                RealignCards(pnlDiscard);
+                RealignCards(pnlPlayerHand);
+                RealignCards(pnlComputerHand);
+            }
+            
+
+            //fill the player's hands with cards
+            RedrawCards();
+
+        }
+
+        public void ComputerLogic(CardBox cardBox, bool playMade)
+        {
+
+            //logic to add a defend card from computer hand
+            for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
+            {
+                CardBox card = (CardBox)pnlComputerHand.Controls[i];
+                if (card.Suit == cardBox.Suit || card.Suit == trumpSuit)
                 {
+                    //card.Rank > cardBox.Rank
+                    if (card.Suit == trumpSuit)
+                    {
+                        if (cardBox.Suit == trumpSuit && card.Rank > cardBox.Rank)
+                        {
+                            //if (card.Rank > cardBox.Rank)
+                            //{
+                            pnlComputerHand.Controls.Remove(card);
+                            //flip the card as it is played
+                            card.FaceUp = true;
+                            pnlPlayArea.Controls.Add(card);
+
+                            // remove a cllick event from a card in the playArea
+                            //RemoveEvent(card);
+                            i += 100;
+                            playMade = true;
+                            RealignCards(pnlPlayArea);
+                        }
+                    }
+
+                    else if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
+                    {
+                        pnlComputerHand.Controls.Remove(card);
+                        //flip the card as it is played
+                        card.FaceUp = true;
+                        pnlPlayArea.Controls.Add(card);
+
+                        // remove a cllick event from a card in the playArea
+                        //RemoveEvent(card);
+                        i += 100;
+                        playMade = true;
+                        RealignCards(pnlPlayArea);
+                    }
+                }
+            }
+
+            // check for attack end.
+            if (playMade == false)
+            {
+                ////MessageBox.Show("PlayNot made");
+                //pnlPlayArea.Controls.Remove(cardBox);
+                ////flip the card before entering computer hand
+                //cardBox.FaceUp = false;
+                //pnlComputerHand.Controls.Add(cardBox);
+                //RealignCards(pnlComputerHand);
+                ////reset the attack counter
+                //playerAttackCounter = 0;
+
+
+                for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
+                {
+                    //debugging for card indexes on table.
+                    //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
                     CardBox card = (CardBox)pnlPlayArea.Controls[i];
                     pnlPlayArea.Controls.Remove(card);
-                    pnlDiscard.Controls.Add(card);
-                    RealignCards(pnlPlayerHand);
+                    //flip the card before entering computer hand
+                    card.FaceUp = false;
+                    pnlComputerHand.Controls.Add(card);
                     RealignCards(pnlComputerHand);
+                    RealignCards(pnlPlayArea);
+                    playerAttackCounter = 0;
+                }
+
+            }
+
+        }
+
+        public void RedrawCards()
+        {
+            int playerHandCount = pnlPlayerHand.Controls.Count;
+            for (int i = 1; i <= (6 - playerHandCount); i++)
+            {
+                Card card = new Card();
+                card = durakDeck.DrawCard();
+
+                card.FaceUp = true;
+                CardBox playerCardBox = new CardBox(card);
+                //wire the click event to the cardbox
+                AddClickEvent(playerCardBox);
+                pnlPlayerHand.Controls.Add(playerCardBox);
+                RealignCards(pnlPlayerHand);
+                //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
+            }
+            int computerHandCount = pnlComputerHand.Controls.Count;
+            if (pnlComputerHand.Controls.Count < 6)
+            {
+                for (int i = 1; i <= (6 - computerHandCount); i++)
+                {
+                    Card card = new Card();
+                    card = durakDeck.DrawCard();
+
+                    // card.FaceUp = true;
+                    CardBox playerCardBox = new CardBox(card);
+                    //add card to AI hand
+                    pnlComputerHand.Controls.Add(playerCardBox);
+                    RealignCards(pnlComputerHand);
+
+                }
             }
         }
     }

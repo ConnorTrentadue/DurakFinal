@@ -30,7 +30,7 @@ namespace DurakClassLibrary
                 myCard = value;
                 UpdateCardImage(); //updates the card image.
             }
-            get { return Card; }
+            get { return myCard; }
         }
 
 

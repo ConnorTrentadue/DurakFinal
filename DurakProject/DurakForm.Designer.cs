@@ -45,6 +45,7 @@
             this.pnlTrumpCard = new System.Windows.Forms.Panel();
             this.lblAIName = new System.Windows.Forms.Label();
             this.lblPlayerName = new System.Windows.Forms.Label();
+            this.btnEndAttack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
             this.pnlPlayArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
@@ -227,6 +228,16 @@
             this.lblPlayerName.TabIndex = 23;
             this.lblPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // btnEndAttack
+            // 
+            this.btnEndAttack.Location = new System.Drawing.Point(137, 579);
+            this.btnEndAttack.Name = "btnEndAttack";
+            this.btnEndAttack.Size = new System.Drawing.Size(75, 23);
+            this.btnEndAttack.TabIndex = 24;
+            this.btnEndAttack.Text = "End Attack";
+            this.btnEndAttack.UseVisualStyleBackColor = true;
+            this.btnEndAttack.Click += new System.EventHandler(this.btnEndAttack_Click);
+            // 
             // frmDurak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -234,6 +245,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
             this.BackgroundImage = global::DurakProject.Properties.Resources.WoodTexture1024;
             this.ClientSize = new System.Drawing.Size(1091, 606);
+            this.Controls.Add(this.btnEndAttack);
             this.Controls.Add(this.lblPlayerName);
             this.Controls.Add(this.lblAIName);
             this.Controls.Add(this.pnlTrumpCard);
@@ -282,6 +294,7 @@
         private System.Windows.Forms.Panel pnlTrumpCard;
         private System.Windows.Forms.Label lblAIName;
         private System.Windows.Forms.Label lblPlayerName;
+        private System.Windows.Forms.Button btnEndAttack;
     }
 }
 

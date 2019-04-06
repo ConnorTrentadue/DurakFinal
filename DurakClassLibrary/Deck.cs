@@ -70,7 +70,7 @@ namespace DurakClassLibrary
         /// <summary>
         /// CardsRemaining property gets the cards left in the deck.
         /// </summary>
-        public int CardsRemaining { get { return this.Count(); } }
+        public int CardsRemaining { get { return cards.Count(); } }
 
         public void Shuffle()
         {

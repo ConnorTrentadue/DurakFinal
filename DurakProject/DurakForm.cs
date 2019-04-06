@@ -110,9 +110,11 @@ namespace DurakProject
             // create a new deck
             durakDeck = new Deck();
             Card card = new Card();
+            //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
             // shuffle the new deck.
             durakDeck.Shuffle();
+            //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
             // Set the deck image to a card back image
             pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
@@ -241,11 +243,11 @@ namespace DurakProject
             if (validPlay == false)
             {
                 validPlay = true;
-                MessageBox.Show(aCardBox.ToString() + " is not a valid card");
+                // MessageBox.Show(aCardBox.ToString() + " is not a valid card");
             }
             if (pnlPlayerHand.Controls.Count == 0)
             {
-                RedrawCards();
+                RedrawCards(durakDeck);
             }
 
         }
@@ -349,16 +351,15 @@ namespace DurakProject
                 RealignCards(pnlPlayerHand);
                 RealignCards(pnlComputerHand);
             }
-            
+
 
             //fill the player's hands with cards
-            RedrawCards();
+            RedrawCards(durakDeck);
 
         }
 
         public void ComputerLogic(CardBox cardBox, bool playMade)
         {
-
             //logic to add a defend card from computer hand
             for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
             {
@@ -427,41 +428,70 @@ namespace DurakProject
                     RealignCards(pnlPlayArea);
                     playerAttackCounter = 0;
                 }
-
             }
-
         }
 
-        public void RedrawCards()
+        public void RedrawCards(Deck durakDeck)
         {
-            int playerHandCount = pnlPlayerHand.Controls.Count;
-            for (int i = 1; i <= (6 - playerHandCount); i++)
+            // Check that there are cards in the deck
+            if (durakDeck.CardsRemaining >= 0)
             {
-                Card card = new Card();
-                card = durakDeck.DrawCard();
+                //MessageBox.Show(durakDeck.CardsRemaining.ToString());
+                //Store the amount of cards currently in the player and AI hand
+                int playerHandCount = pnlPlayerHand.Controls.Count;
+                int computerHandCount = pnlComputerHand.Controls.Count;
 
-                card.FaceUp = true;
-                CardBox playerCardBox = new CardBox(card);
-                //wire the click event to the cardbox
-                AddClickEvent(playerCardBox);
-                pnlPlayerHand.Controls.Add(playerCardBox);
-                RealignCards(pnlPlayerHand);
-                //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
-            }
-            int computerHandCount = pnlComputerHand.Controls.Count;
-            if (pnlComputerHand.Controls.Count < 6)
-            {
-                for (int i = 1; i <= (6 - computerHandCount); i++)
+                // for each card less than 6 in a player hand
+                for (int i = 1; i <= (6 - playerHandCount); i++)
                 {
                     Card card = new Card();
-                    card = durakDeck.DrawCard();
+                    if (durakDeck.CardsRemaining <= 0)
+                    {
+                        i += 100;
+                    }
+                    else
+                    {
+                        //draw a card
+                        card = durakDeck.DrawCard();
+                        // adjsut the cards label showing how many cards are left in the deck
+                        lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+                        //set the card faceup for a player hand
+                        card.FaceUp = true;
+                        CardBox playerCardBox = new CardBox(card);
+                        //wire the click event to the cardbox
+                        AddClickEvent(playerCardBox);
+                        //add the card to the hand and realign the hand
+                        pnlPlayerHand.Controls.Add(playerCardBox);
+                        RealignCards(pnlPlayerHand);
+                        //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
+                    }
 
-                    // card.FaceUp = true;
-                    CardBox playerCardBox = new CardBox(card);
-                    //add card to AI hand
-                    pnlComputerHand.Controls.Add(playerCardBox);
-                    RealignCards(pnlComputerHand);
-
+                }
+                
+                // if there are less cards in the AI hand
+                if (pnlComputerHand.Controls.Count < 6)
+                {
+                    // for each card less than 6 in the AI hand
+                    for (int i = 1; i <= (6 - computerHandCount); i++)
+                    {
+                        Card card = new Card();
+                        if (durakDeck.CardsRemaining <= 0)
+                        {
+                            i += 100;
+                        }
+                        else
+                        {
+                            //draw a card
+                            card = durakDeck.DrawCard();
+                            // adjsut the cards label showing how many cards are left in the deck
+                            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+                            // card.FaceUp = true;  //not required for AI hands use for debugging
+                            CardBox playerCardBox = new CardBox(card);
+                            //add card to AI hand and realign the hand
+                            pnlComputerHand.Controls.Add(playerCardBox);
+                            RealignCards(pnlComputerHand);
+                        }
+                    }
                 }
             }
         }

@@ -43,7 +43,8 @@ namespace DurakProject
 
         //Declares new human player
         Player newPlayer;
-
+        
+        // create a default durak Deck
         Deck durakDeck;
 
         //Computer names array
@@ -52,9 +53,13 @@ namespace DurakProject
          "Fredric", "Clifford", "Isiah", "Lucio",
          "Jess", "Leonard", "Marth", "Reginia",
          "Sharri", "Madonna", "Wilhemina", "Jennie",
-         "Joanne", "Hermila", "Violette", "Trina"};
+         "Joanne", "Hermila", "Violette", "Trina", 
+         "Ray", "Shaun"};
 
         string playerName = "THE MAN";
+
+        // sets a defautl state for if a player is attacking or defending.
+        bool playerAttack = false;
 
         //declare a trumpSuit  to hold trump suit values
         Suit trumpSuit = Suit.Clubs;
@@ -160,10 +165,13 @@ namespace DurakProject
             // Display remaining cards after the deal
             lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString(); 
             // begin game-play flow.
-            // Begin Comptuer Attack Phase
-            ComputerAttack();
+            // Begin Attack or Phase based on random determination
+            playerAttack = false; //toggle to force a player or AI attack on first turn
+            if (playerAttack != true)
+            {
+                ComputerAttack();
+            }
         }
-
         private void btnForfeit_Click(object sender, EventArgs e)
         {
             //close the program

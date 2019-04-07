@@ -143,23 +143,24 @@ namespace DurakProject
                     pnlComputerHand.Controls.Add(computerCardBox);
                 }
             }
-
+            //realign both player and commputer hand
             RealignCards(pnlPlayerHand);
             RealignCards(pnlComputerHand);
 
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
             CardBox aTrumpCardbox = new CardBox(trumpCard);
+            
+            //draw the card to the trump panel face up
             trumpCard.FaceUp = true;
-
             pnlTrumpCard.Controls.Add(aTrumpCardbox);
             //MessageBox.Show(trumpCard.ToString());
             trumpSuit = trumpCard.Suit;
-            // set the image of the trump card
-            //pnlTrumpCard.Image = trumpCard.GetCardImage();
-            //pnlTrumpIndicator.Image = pbTrumpCard.Image;
 
-            //lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString(); //NOTE: This line isn't working correctly but, it should be
+            // Display remaining cards after the deal
+            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString(); 
+            // begin game-play flow.
+            ComputerAttack();
         }
 
         private void btnForfeit_Click(object sender, EventArgs e)
@@ -173,10 +174,12 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("It works!");
             //convert the sender
             CardBox aCardBox = sender as CardBox;
+            MessageBox.Show(aCardBox.ToString() + " was clicked");
             bool validPlay = true;
+
+
 
             if (pnlPlayArea.Controls.Count == 0)
             {
@@ -319,8 +322,10 @@ namespace DurakProject
         {
             bool playMade = false;
 
+            
+
             //apply logic to the card added to the table.
-            ComputerLogic(cardBox, playMade);
+            ComputerDefend(cardBox, playMade);
 
         }
         // Method to unwire cardbox click events
@@ -333,10 +338,12 @@ namespace DurakProject
         // Method to wire cardbox click events
         public void AddClickEvent(CardBox card)
         {
-            //remove the event handler 
+            //add the event handler 
             card.Click += CardBox_Click;
+            //MessageBox.Show(card.ToString() + " enabled.");
         }
 
+        // Method to handle End Attack button click
         private void btnEndAttack_Click(object sender, EventArgs e)
         {
             //send cards to discard pile
@@ -358,7 +365,73 @@ namespace DurakProject
 
         }
 
-        public void ComputerLogic(CardBox cardBox, bool playMade)
+        // logic for computer on attack, player on defense
+        public void ComputerAttack()
+        {
+            bool playMade = false;
+
+            // render player hand unclickable since
+            //foreach (CardBox playerCard in (CardBox)pnlPlayerHand)
+            for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+            {
+                CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                RemoveClickEvent(card);
+            } 
+
+            //logic to add first card from computer hand (no attack logic applied)
+            for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
+            {
+                CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
+                pnlComputerHand.Controls.Remove(computerCard);
+                //flip the card as it is played
+                computerCard.FaceUp = true;
+                pnlPlayArea.Controls.Add(computerCard);
+
+                
+                MessageBox.Show("There are " + pnlPlayerHand.Controls.Count + " player cards in hand ");
+                //determine which cards are playable by the player 
+                for (int j = 0; j < pnlPlayerHand.Controls.Count; j++)
+                {
+                    CardBox playerCard = (CardBox)pnlPlayerHand.Controls[j];
+
+                    //player card suit matches the AI card suit or the player card is a tump
+                    if (playerCard.Suit == computerCard.Suit || playerCard.Suit == trumpSuit)
+                    {
+                        //if the player card is trump
+                        if (playerCard.Suit == trumpSuit)
+                        {
+                            //if the AI card is trump and that card is higher rank than an AI card
+                            if (computerCard.Suit == trumpSuit && playerCard.Rank > computerCard.Rank)
+                            {
+                                AddClickEvent(playerCard);
+                                MessageBox.Show(playerCard.ToString() + " is clickable.");
+                            }
+                            //else if the player card is trump and AI card is not trump
+                            else if (playerCard.Suit == trumpSuit && computerCard.Suit != trumpSuit)
+                            {
+                                AddClickEvent(playerCard);
+                                MessageBox.Show(playerCard.ToString() + " is clickable.");
+                            }
+                        }
+
+                        // else if the suit is the same and the player's card is greater than the AI card.
+                        else if (playerCard.Suit == computerCard.Suit && playerCard.Rank > computerCard.Rank)
+                        {
+                                AddClickEvent(playerCard);
+                                MessageBox.Show(playerCard.ToString() + " is clickable.");
+                        }                       
+                    } 
+                    else
+                            MessageBox.Show(playerCard.ToString() + " can not be clicked.");
+                }  
+                    // flags the loop to exit after a card is played
+                    i += 100;
+                    playMade = true;
+                    RealignCards(pnlPlayArea);
+            }  
+        }
+        //Method for Player on attack, computer on defense
+        public void ComputerDefend(CardBox cardBox, bool playMade)
         {
             //logic to add a defend card from computer hand
             for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
@@ -378,7 +451,7 @@ namespace DurakProject
                             card.FaceUp = true;
                             pnlPlayArea.Controls.Add(card);
 
-                            // remove a cllick event from a card in the playArea
+                            // remove a click event from a card in the playArea
                             //RemoveEvent(card);
                             i += 100;
                             playMade = true;
@@ -393,7 +466,7 @@ namespace DurakProject
                         card.FaceUp = true;
                         pnlPlayArea.Controls.Add(card);
 
-                        // remove a cllick event from a card in the playArea
+                        // remove a click event from a card in the playArea
                         //RemoveEvent(card);
                         i += 100;
                         playMade = true;
@@ -405,7 +478,7 @@ namespace DurakProject
             // check for attack end.
             if (playMade == false)
             {
-                ////MessageBox.Show("PlayNot made");
+                ////MessageBox.Show("Play Not made");
                 //pnlPlayArea.Controls.Remove(cardBox);
                 ////flip the card before entering computer hand
                 //cardBox.FaceUp = false;

@@ -160,6 +160,7 @@ namespace DurakProject
             // Display remaining cards after the deal
             lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString(); 
             // begin game-play flow.
+            // Begin Comptuer Attack Phase
             ComputerAttack();
         }
 

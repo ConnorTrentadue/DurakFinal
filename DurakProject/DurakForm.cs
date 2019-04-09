@@ -387,6 +387,7 @@ namespace DurakProject
         {
             bool playMade = false;
 
+            btnEndAttack.Visible = true;
             //AI attack logic
             //ComputerAttack(playMade);
 
@@ -442,6 +443,8 @@ namespace DurakProject
 
             bool playMade = false;
             bool validPlay = false;
+
+            btnEndAttack.Visible = false;
             // render player hand unclickable before attack cards are played
             //foreach (CardBox playerCard in (CardBox)pnlPlayerHand)
             for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)

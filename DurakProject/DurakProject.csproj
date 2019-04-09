@@ -89,6 +89,10 @@
       <Project>{927387b7-a549-4428-b375-7efa91564817}</Project>
       <Name>DurakClassLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StatsLibrary\StatsLibrary.csproj">
+      <Project>{4da37e56-a479-4757-8cb3-5a5e5f3e08e2}</Project>
+      <Name>StatsLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

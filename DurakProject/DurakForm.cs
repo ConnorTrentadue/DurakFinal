@@ -21,6 +21,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using StatsLibrary;
 
 namespace DurakProject
 {
@@ -48,6 +49,12 @@ namespace DurakProject
 
         // create a default durak Deck
         Deck durakDeck;
+
+        // create reference to the log form
+        frmLog frmLog;
+
+        // create PlayerStats object
+        PlayerStats playerStats;
 
         //Computer names array
         string[] computerNames = new string[]
@@ -85,7 +92,9 @@ namespace DurakProject
         /// </summary>
         private void frmDurak_Load(object sender, EventArgs e)
         {
-            
+            // initialize form log ( change to whatever button we want to make the log come from )
+            frmLog = new frmLog();
+            frmLog.Show();
         }
 
         /// <summary>
@@ -97,8 +106,17 @@ namespace DurakProject
         {
             //prompt the user for their name
             //if name exists in the log-file
-                //pull statistics from statistics log file.
+            //pull statistics from statistics log file.
             //else store their name and continue 
+
+
+            // Writes to the log screen, which writes to the text file when the form is closed
+            frmLog.WriteToLog("New Game started");
+            playerStats = Stats.ReadStats();
+
+            // Example to get stats
+            playerStats.gamesPlayed++;
+            lblGameNumber.Text += playerStats.gamesPlayed;
 
             //clear any objects on the table.
             pnlComputerHand.Controls.Clear();
@@ -188,6 +206,10 @@ namespace DurakProject
         private void btnForfeit_Click(object sender, EventArgs e)
         {
             //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
+            // Closes log form and writes to file
+            frmLog.Close();
+            Stats.WriteStats(playerStats);
+
             this.Close();
         }
 

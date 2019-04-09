@@ -179,5 +179,7 @@ namespace DurakClassLibrary
         }
 
         #endregion
+
+        
     }
 }

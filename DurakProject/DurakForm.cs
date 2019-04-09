@@ -74,19 +74,18 @@ namespace DurakProject
         static private Size regularSize = new Size(75, 108);
         #endregion
 
+        #region FORM EVENTS AND HANDLERS
         public frmDurak()
         {
             InitializeComponent();
+            
         }
-
+        /// <summary>
+        /// Default form load
+        /// </summary>
         private void frmDurak_Load(object sender, EventArgs e)
         {
-            /// <summary>
-            /// Initializes the card dealer/deck on form Load.
-            /// </summary>
-
-            // Set the deck image to a card back image
-            // pbDeck.Image = (new Card()).GetCardImage();
+            
         }
 
         /// <summary>
@@ -96,13 +95,19 @@ namespace DurakProject
         /// <param name="e"></param>
         private void btnNewGame_Click(object sender, EventArgs e)
         {
+            //prompt the user for their name
+            //if name exists in the log-file
+                //pull statistics from statistics log file.
+            //else store their name and continue 
+
+            //clear any objects on the table.
             pnlComputerHand.Controls.Clear();
             pnlPlayerHand.Controls.Clear();
             pnlTrumpCard.Controls.Clear();
             pnlPlayArea.Controls.Clear();
             pnlDiscard.Controls.Clear();
 
-
+            //ranomdizer for first player selection
             int someNumber = randomNumber.Next(1, 20);
 
             //MessageBox.Show(someNumber.ToString());
@@ -151,6 +156,7 @@ namespace DurakProject
                     pnlComputerHand.Controls.Add(computerCardBox);
                 }
             }
+
             //realign both player and commputer hand
             RealignCards(pnlPlayerHand);
             RealignCards(pnlComputerHand);
@@ -167,10 +173,11 @@ namespace DurakProject
 
             // Display remaining cards after the deal
             lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
-            // begin game-play flow.
+
+            // ******* Begin game-play flow. *********
             // Begin Attack or Phase based on random determination
             playerAttack = false; //toggle to force a player or AI attack on first turn
-            if (playerAttack != true)
+            if (playerAttack != true)  //if not true, AI attacks first.
             {
                 ComputerAttack(playerAttackCounter);
             }
@@ -184,6 +191,7 @@ namespace DurakProject
             this.Close();
         }
 
+        #endregion
 
         #region CARDBOX EVENT HANDLERS
 
@@ -351,6 +359,8 @@ namespace DurakProject
 
         #endregion
 
+        #region METHODS
+        //starts a normal play where the player is attacking and AI is defending
         public void MakeNormalPlay(CardBox cardBox, int playCount, int duplicateCards = 0)
         {
             bool playMade = false;
@@ -362,6 +372,7 @@ namespace DurakProject
             ComputerDefend(cardBox, playMade);
 
         }
+        
         // Method to unwire cardbox click events
         public void RemoveClickEvent(CardBox card)
         {
@@ -414,14 +425,17 @@ namespace DurakProject
             for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
             {
                 CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                card.BorderStyle = BorderStyle.None;  //clear any border on cards in player hand.
                 RemoveClickEvent(card);
             }
+            // clear any borders from the playArea cards
             for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
             {
                 CardBox card = (CardBox)pnlPlayArea.Controls[i];
                 card.BorderStyle = BorderStyle.None;
             }
 
+            // if playarea is empty begin attack
             if (pnlPlayArea.Controls.Count <= 0)
             {
                 //logic to add first card from computer hand (no attack logic applied)
@@ -430,10 +444,10 @@ namespace DurakProject
                     CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
                     if (pnlPlayArea.Controls.Count <= 0)
                     {
-                        //play the card in the computer hand
-                        pnlComputerHand.Controls.Remove(computerCard);
                         //flip the card as it is played
                         computerCard.FaceUp = true;
+                        //play the card in the computer hand
+                        pnlComputerHand.Controls.Remove(computerCard);
                         pnlPlayArea.Controls.Add(computerCard);
                         computerCard.BorderStyle = BorderStyle.Fixed3D;
 
@@ -447,6 +461,8 @@ namespace DurakProject
                                 //debugging for card indexes on table.
                                 //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
                                 CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                                // remove border from the card if it still has one.
+                                card.BorderStyle = BorderStyle.None;
                                 pnlPlayArea.Controls.Remove(card);
                                 //flip the card before entering computer hand
                                 //card.FaceUp = false;
@@ -454,9 +470,6 @@ namespace DurakProject
                                 RealignCards(pnlPlayerHand);
                                 RealignCards(pnlPlayArea);
                                 playerAttackCounter = 0;
- 
-                                //pnlPlayArea.Controls.Remove(card);
-                                //pnlDiscard.Controls.Add(card);
                                 
                             }
                         }
@@ -494,18 +507,24 @@ namespace DurakProject
                             //uncomment to show validation of playable card
                             //MessageBox.Show(computerCard.ToString() + " vs >> " + validCardCheck.ToString() + "\n" + computerCard.ToString() + " is playable");
                             validPlay = true;
-                            i += 100; // end the examination loop
-                            playAreaIndex += 100;
-                            //remove from player hand
-                            pnlComputerHand.Controls.Remove(computerCard);
-                            //add the card to the play area
-                            computerCard.FaceUp = true;
-                            computerCard.BorderStyle = BorderStyle.Fixed3D;
-                            pnlPlayArea.Controls.Add(computerCard);
 
+                            //debug to display when each individual card is unplayable by the AI
+                            if (validPlay == true)
+                                {
+                                computerCard.FaceUp = true; //set chosen card face up.
+                                MessageBox.Show(computerCard.ToString() + " is playable");
+                                i += 100; // end the examination loop
+                                playAreaIndex += 100;
+                                //remove from player hand
+                                pnlComputerHand.Controls.Remove(computerCard);
+                                computerCard.BorderStyle = BorderStyle.Fixed3D;
+                                pnlPlayArea.Controls.Add(computerCard);
 
-                            playerAttackCounter++;
-                            //MessageBox.Show("Attacker Counter +1!");
+                                playerAttackCounter++;
+                                //MessageBox.Show("Attacker Counter +1!");
+                                }
+
+                            
 
                             //realign computer hand
                             RealignCards(pnlComputerHand);
@@ -513,14 +532,14 @@ namespace DurakProject
                             //determine which player cards can be played to defend an attack
                             if (validPlayerDefense(computerCard) == false)
                             {
-                                MessageBox.Show("You can not mount a defense");
-                                MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.");
+                                MessageBox.Show(pnlPlayArea.Controls.Count + 
+                                    " cards on table. \nYou can not mount a defense");
                                 //for all cards on the table, pick them up
                                 for (int k = (pnlPlayArea.Controls.Count - 1); k > -1; k--)
-                                {
-                                    //debugging for card indexes on table.
-                                    MessageBox.Show("Picking up card at index " + k);
+                                { 
                                     CardBox card = (CardBox)pnlPlayArea.Controls[k];
+                                    //debugging for card indexes on table.
+                                    MessageBox.Show("Picking up " + card + " at index " + k);
                                     pnlPlayArea.Controls.Remove(card);
                                     //flip the card before entering computer hand
                                     //card.FaceUp = false;
@@ -537,18 +556,11 @@ namespace DurakProject
                             {
                                 //validPlay = true;
                                 i += 100;
-                                MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
+                                MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + 
+                                    " cards, attempt a defense. ");
                             }
-                            computerCard.BorderStyle = BorderStyle.None;
+                            //computerCard.BorderStyle = BorderStyle.None;
                         }
-                        //debug to display when each individual card is unplayable by the AI
-                        //else if (computerCard.Rank != validCardCheck.Rank)
-                        //{
-                        //    MessageBox.Show(computerCard.ToString() + " vs >> " + validCardCheck.ToString() + "\n" + computerCard.ToString() + " is not playable");
-                        //    //validPlay = false;
-                        //}
-                        if (validPlay == true)
-                            MessageBox.Show(computerCard.ToString() + " is playable");
                     }
                     
                 }
@@ -564,6 +576,8 @@ namespace DurakProject
                     for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
                     {
                         CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                        // remove border from the card if it still has one.
+                        card.BorderStyle = BorderStyle.None;
                         pnlPlayArea.Controls.Remove(card);
                         pnlDiscard.Controls.Add(card);
                         pnlDiscard.Controls.SetChildIndex(card, 0);
@@ -571,6 +585,7 @@ namespace DurakProject
                         RealignCards(pnlDiscard);
                         RealignCards(pnlPlayerHand);
                         RealignCards(pnlComputerHand);
+                        
                     }
 
                     RedrawCards(durakDeck, playerAttack); // draw cards to fill hand
@@ -587,13 +602,23 @@ namespace DurakProject
                 playMade = true;
                 RealignCards(pnlPlayArea);
             }
-            // if the hand is empty, redraw
+            
+            // if the AI hand is empty, redraw and check for win
+            if (pnlComputerHand.Controls.Count == 0)
+            {
+                RedrawCards(durakDeck, playerAttack);
+                WinCheck(durakDeck);
+            }
+
+            // if the playerhand is empty, redraw and check for win
             if (pnlPlayerHand.Controls.Count == 0)
             {
                 RedrawCards(durakDeck, playerAttack);
+                WinCheck(durakDeck);
             }
-
+            
         }
+
         //Method for Player on attack, computer on defense
         public void ComputerDefend(CardBox cardBox, bool playMade)
         {
@@ -666,6 +691,7 @@ namespace DurakProject
             }
         }
 
+        //Method to determine which cards are valid when defending
         public bool validPlayerDefense(CardBox computerCard)
         {
             bool canPlay = false;
@@ -714,6 +740,7 @@ namespace DurakProject
             return canPlay;
         }
 
+        //Method to redraw cards into player hands
         public void RedrawCards(Deck durakDeck, bool playerAttack)
         {
             // Check that there are cards in the deck
@@ -827,10 +854,35 @@ namespace DurakProject
 
                     }
                 }
-
-
-
             }
+            else //there are no cards in the deck.
+                WinCheck(durakDeck);
         }
+
+        /// <summary>
+        /// Method to check to see if a player has won the game
+        /// </summary>
+        /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
+        public void WinCheck(Deck durakDeck)
+        {
+            if (durakDeck.CardsRemaining == 0)
+            {
+                if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count == 0)
+                {
+                    MessageBox.Show("You're a fool! \n" + newAI.Name + "has won.");
+                }
+                else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
+                {
+                    MessageBox.Show("You're a fool! \n" + newPlayer.Name + "has won.");
+                }
+                else
+                {
+                    MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
+                }
+            }
+            //else no win condition found.  Keep playing.
+        }
+
+        #endregion
     }
 }

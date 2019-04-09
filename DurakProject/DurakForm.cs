@@ -455,8 +455,8 @@ namespace DurakProject
                                 RealignCards(pnlPlayArea);
                                 playerAttackCounter = 0;
  
-                                pnlPlayArea.Controls.Remove(card);
-                                pnlDiscard.Controls.Add(card);
+                                //pnlPlayArea.Controls.Remove(card);
+                                //pnlDiscard.Controls.Add(card);
                                 
                             }
                         }
@@ -527,10 +527,11 @@ namespace DurakProject
                                     pnlPlayerHand.Controls.Add(card);
                                     RealignCards(pnlPlayerHand);
                                     RealignCards(pnlPlayArea);
-                                    ComputerAttack(playerAttackCounter);
+                                    //ComputerAttack(playerAttackCounter);
                                 }
                                 i += 100; // end the examination loop
                                 playAreaIndex += 100;
+                                ComputerAttack(playerAttackCounter);
                             }
                             else
                             {

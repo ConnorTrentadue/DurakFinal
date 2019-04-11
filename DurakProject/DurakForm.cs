@@ -39,7 +39,15 @@ namespace DurakProject
         //Seeding random number generator
         static Random randomNumber = new Random();
 
+        //*************************
+        //*************************
+        //*************************
         int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
+        //*************************
+        //*************************
+        //*************************
+
+
 
         //Declares new computer player
         ComputerPlayer newAI;
@@ -87,6 +95,7 @@ namespace DurakProject
             InitializeComponent();
 
         }
+
         /// <summary>
         /// Default form load
         /// </summary>
@@ -207,6 +216,7 @@ namespace DurakProject
                 ComputerAttack(playerAttackCounter);
             }
         }
+
         /// <summary>
         /// Forfet game clears out the game session, assumes a loss and logs statistics
         /// </summary>
@@ -225,19 +235,10 @@ namespace DurakProject
         /// </summary>
         private void btnPickUp_Click(object sender, EventArgs e)
         {
-            // call pick up cards method
-            for (int i = (pnlPlayArea.Controls.Count -1); i > -1; i--)
-            {
-                //RemoveClickEvent play area cards and give them to the player
-                //MessageBox.Show(i.ToString());
-                CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                pnlPlayArea.Controls.Remove(card);
-                pnlPlayerHand.Controls.Add(card);
-                RealignCards(pnlPlayerHand);
-            }
+            PickUpCards(ref pnlPlayerHand, true);
             ComputerAttack(playerAttackCounter);
-            
-            
+
+
         }
 
         #endregion
@@ -419,6 +420,10 @@ namespace DurakProject
             //ComputerAttack(playMade);
 
             //apply logic to the card added to the table.
+            //determine AI difficulty
+            if (difficultyChoice == 3)
+                HardAiDefense();
+
             ComputerDefend(cardBox, playMade);
 
         }
@@ -736,7 +741,7 @@ namespace DurakProject
                     CardBox card = (CardBox)pnlPlayArea.Controls[i];
                     pnlPlayArea.Controls.Remove(card);
                     //flip the card before entering computer hand
-                    card.FaceUp = false;
+                    card.FaceUp = true;
                     pnlComputerHand.Controls.Add(card);
                     RealignCards(pnlComputerHand);
                     RealignCards(pnlPlayArea);
@@ -1002,17 +1007,139 @@ namespace DurakProject
         /// <summary>
         /// 
         /// </summary>
-        public void HardAi()
+        public void HardAiDefense()
         {
             //check last index added to the play area
             CardBox lastCard = (CardBox)pnlPlayArea.Controls[(pnlPlayArea.Controls.Count - 1)];
+            List<CardBox> validPlays = new List<CardBox>(); // stores all playable cards for AI defense
+            List<int> validIndexes = new List<int>();
+            const int HIGH_PLAY = 42; //value of cards in the playarea
+
             // look at AI hand 
-            for (int i = (pnlComputerHand.Controls.Count-1); i > -1; i--)
+            for (int i = (pnlComputerHand.Controls.Count - 1); i > -1; i--)
             {
-                //
+                CardBox card = (CardBox)pnlComputerHand.Controls[i];
+
+                // if card is trump, played Card is not trump and the lastCard played is a face card
+                if (card.Suit == trumpSuit && lastCard.Suit != trumpSuit && (int)lastCard.Rank > 10)
+                {
+                    //if card is less than 4 rank values apart from the lastCard played
+                    if ((int)card.Rank < ((int)lastCard.Rank - 4))
+                    {
+                        //create a temp card to index 0 to store the AI card played
+                        //reorder the AI hand so index 0 will be the played card
+                        TempHand(i);
+                    }
+                    else if ((int)card.Rank > ((int)lastCard.Rank - 4))
+                    {
+                        int cardSum = 0;  // total value of playArea
+                        for (int playIndex = (pnlPlayArea.Controls.Count - 1); playIndex > -1; playIndex--)
+                        {
+                            CardBox rankCheck = (CardBox)pnlPlayArea.Controls[playIndex];
+                            cardSum += (int)rankCheck.Rank;
+                        }
+                        if (cardSum > HIGH_PLAY)
+                        {
+                            PickUpCards(ref pnlComputerHand, true); // pick up cards in players
+                            i += 100; // end defense logic
+                        }
+
+                    }
+                }
+
+                //if card value is lower than played card
+                else if (card.Rank > lastCard.Rank)
+                {
+                    // store the card in the validPlays list
+                    validPlays.Add(card);
+                    validIndexes.Add(i);
+
+                }
+            }
+            // check if the validPlays has more than 1 card
+            if (validPlays.Count > 1)
+            {
+                for (int listIndex = 0; listIndex < (validPlays.Count - 1); listIndex++)
+                {
+                    CardBox card = validPlays[0];
+                    // check for array out of bounds exception
+                    if ((listIndex + 1) < validPlays.Count)
+                    {
+                        CardBox cardCompare = validPlays[listIndex + 1];
+                        //if the card compared is smaller, set the card to index 0
+                        if ((int)card.Rank > (int)cardCompare.Rank)
+                        {
+                            TempHand(validIndexes[0]);
+                        }
+                        else //sort the hand
+                            TempHand(validIndexes[listIndex + 1]);
+                    }
+                }
+            }
+            else if (validPlays.Count == 1)
+            {
+                TempHand(validIndexes[0]);
 
             }
+        }
 
+        /// <summary>
+        /// Pick up the cards from the play area
+        /// </summary>
+        /// <param name="hand"></param>
+        /// <param name="flipped"></param>
+        public void PickUpCards(ref Panel hand, bool flipped)
+        {
+            // call pick up cards method
+            for (int i = (pnlPlayArea.Controls.Count - 1); i > -1; i--)
+            {
+                //RemoveClickEvent play area cards and give them to the player
+                //MessageBox.Show(i.ToString());
+                CardBox card = (CardBox)pnlPlayArea.Controls[i];
+                pnlPlayArea.Controls.Remove(card);
+                card.FaceUp = flipped; //  changes the flip value of the card based on the bool passed.
+                hand.Controls.Add(card);
+                RealignCards(pnlPlayerHand);
+            }
+        }
+
+
+        /// <summary>
+        /// Creates a temporary hand for card ordering
+        /// </summary>
+        /// <param name="index"></param>
+        public void TempHand(int index)
+        {
+            //create a temp hand
+            List<CardBox> tempHand = new List<CardBox>();
+
+            for (int i = (pnlComputerHand.Controls.Count - 1); i > -1; i--)
+            {
+                CardBox cardBox = (CardBox)pnlComputerHand.Controls[i];
+                tempHand.Add(cardBox);
+            }
+
+            if (pnlComputerHand.Controls.Count > 0)  //if there are cards in the hand
+            {
+                //empty the hand
+                for (int k = (pnlComputerHand.Controls.Count - 1); k > -1; k--)
+                {
+                    CardBox tempCard = (CardBox)pnlComputerHand.Controls[k];
+                    pnlComputerHand.Controls.Remove(tempCard);
+                }
+            }
+            MessageBox.Show(tempHand.Count.ToString());
+            CardBox transferCard = tempHand[index];
+
+            tempHand.Remove(transferCard);
+            pnlComputerHand.Controls.Add(transferCard);
+            // populate the rest of the hand
+            for (int j = (tempHand.Count - 1); j > -1; j--)
+            {
+                CardBox swapCard = tempHand[j];
+                tempHand.Remove(swapCard);
+                pnlComputerHand.Controls.Add(swapCard);
+            }
         }
 
         #endregion

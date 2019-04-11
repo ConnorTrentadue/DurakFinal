@@ -39,7 +39,7 @@ namespace DurakProject
         //Seeding random number generator
         static Random randomNumber = new Random();
 
-        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves.
+        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
 
         //Declares new computer player
         ComputerPlayer newAI;
@@ -85,7 +85,7 @@ namespace DurakProject
         public frmDurak()
         {
             InitializeComponent();
-            
+
         }
         /// <summary>
         /// Default form load
@@ -109,13 +109,15 @@ namespace DurakProject
             //pull statistics from statistics log file.
             //else store their name and continue 
 
+            //enable buttons if they were not visible
+            btnForfeit.Visible = true;
 
             // Writes to the log screen, which writes to the text file when the form is closed
             frmLog.WriteToLog("New Game started");
             playerStats = Stats.ReadStats();
 
             // Example to get stats
-            playerStats.gamesPlayed++;
+            //playerStats.gamesPlayed++;
             lblGameNumber.Text += playerStats.gamesPlayed;
 
             //clear any objects on the table.
@@ -148,6 +150,7 @@ namespace DurakProject
             //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
             // Set the deck image to a card back image
+            pbDeck.Visible = true;
             pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
 
             // Show the number of cards in the deck
@@ -194,7 +197,11 @@ namespace DurakProject
 
             // ******* Begin game-play flow. *********
             // Begin Attack or Phase based on random determination
-            playerAttack = false; //toggle to force a player or AI attack on first turn
+            int whoGoesFirst = randomNumber.Next(1, 10);
+            if (whoGoesFirst % 2 == 0)
+                playerAttack = true; // player goes first
+            else
+                playerAttack = false; // AI goes first
             if (playerAttack != true)  //if not true, AI attacks first.
             {
                 ComputerAttack(playerAttackCounter);
@@ -211,6 +218,26 @@ namespace DurakProject
             Stats.WriteStats(playerStats);
 
             this.Close();
+        }
+
+        /// <summary>
+        /// Button to allow the pickup of cards when the player is defending
+        /// </summary>
+        private void btnPickUp_Click(object sender, EventArgs e)
+        {
+            // call pick up cards method
+            for (int i = (pnlPlayArea.Controls.Count -1); i > -1; i--)
+            {
+                //RemoveClickEvent play area cards and give them to the player
+                //MessageBox.Show(i.ToString());
+                CardBox card = (CardBox)pnlPlayArea.Controls[i];
+                pnlPlayArea.Controls.Remove(card);
+                pnlPlayerHand.Controls.Add(card);
+                RealignCards(pnlPlayerHand);
+            }
+            ComputerAttack(playerAttackCounter);
+            
+            
         }
 
         #endregion
@@ -395,7 +422,7 @@ namespace DurakProject
             ComputerDefend(cardBox, playMade);
 
         }
-        
+
         // Method to unwire cardbox click events
         public void RemoveClickEvent(CardBox card)
         {
@@ -466,7 +493,8 @@ namespace DurakProject
                 //logic to add first card from computer hand (no attack logic applied)
                 for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
                 {
-                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
+                    //MessageBox.Show("index play " + i);
+                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
                     if (pnlPlayArea.Controls.Count <= 0)
                     {
                         //flip the card as it is played
@@ -495,7 +523,7 @@ namespace DurakProject
                                 RealignCards(pnlPlayerHand);
                                 RealignCards(pnlPlayArea);
                                 playerAttackCounter = 0;
-                                
+
                             }
                         }
                         else
@@ -517,8 +545,9 @@ namespace DurakProject
                 //logic to add card from computer hand (no attack logic applied)
                 for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
                 {
+                    //MessageBox.Show("index ELSE play " + i);
                     //bool validPlay = false;
-                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
+                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
                     CardBox validCardCheck = new CardBox();
 
                     //iterate through each card in the playArea
@@ -535,7 +564,7 @@ namespace DurakProject
 
                             //debug to display when each individual card is unplayable by the AI
                             if (validPlay == true)
-                                {
+                            {
                                 computerCard.FaceUp = true; //set chosen card face up.
                                 MessageBox.Show(computerCard.ToString() + " is playable");
                                 i += 100; // end the examination loop
@@ -547,9 +576,9 @@ namespace DurakProject
 
                                 playerAttackCounter++;
                                 //MessageBox.Show("Attacker Counter +1!");
-                                }
+                            }
 
-                            
+
 
                             //realign computer hand
                             RealignCards(pnlComputerHand);
@@ -557,11 +586,11 @@ namespace DurakProject
                             //determine which player cards can be played to defend an attack
                             if (validPlayerDefense(computerCard) == false)
                             {
-                                MessageBox.Show(pnlPlayArea.Controls.Count + 
+                                MessageBox.Show(pnlPlayArea.Controls.Count +
                                     " cards on table. \nYou can not mount a defense");
                                 //for all cards on the table, pick them up
                                 for (int k = (pnlPlayArea.Controls.Count - 1); k > -1; k--)
-                                { 
+                                {
                                     CardBox card = (CardBox)pnlPlayArea.Controls[k];
                                     //debugging for card indexes on table.
                                     MessageBox.Show("Picking up " + card + " at index " + k);
@@ -581,13 +610,13 @@ namespace DurakProject
                             {
                                 //validPlay = true;
                                 i += 100;
-                                MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + 
+                                MessageBox.Show("You have " + pnlPlayerHand.Controls.Count +
                                     " cards, attempt a defense. ");
                             }
                             //computerCard.BorderStyle = BorderStyle.None;
                         }
                     }
-                    
+
                 }
 
                 // The computer can not make another valid play
@@ -610,7 +639,7 @@ namespace DurakProject
                         RealignCards(pnlDiscard);
                         RealignCards(pnlPlayerHand);
                         RealignCards(pnlComputerHand);
-                        
+
                     }
 
                     RedrawCards(durakDeck, playerAttack); // draw cards to fill hand
@@ -627,7 +656,7 @@ namespace DurakProject
                 playMade = true;
                 RealignCards(pnlPlayArea);
             }
-            
+
             // if the AI hand is empty, redraw and check for win
             if (pnlComputerHand.Controls.Count == 0)
             {
@@ -641,7 +670,7 @@ namespace DurakProject
                 RedrawCards(durakDeck, playerAttack);
                 WinCheck(durakDeck);
             }
-            
+
         }
 
         //Method for Player on attack, computer on defense
@@ -785,6 +814,16 @@ namespace DurakProject
                         Card card = new Card();
                         if (durakDeck.CardsRemaining <= 0)
                         {
+                            pbDeck.Visible = false;
+                            if (pnlTrumpCard.Controls.Count > 0)
+                            {
+                                CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
+                                pnlTrumpCard.Controls.Remove(trumpCard);
+                                pnlPlayerHand.Controls.Add(trumpCard);
+                            }
+                            else if (pnlTrumpCard.Controls.Count == 0)
+                                WinCheck(durakDeck);
+
                             i += 100;
                         }
                         else
@@ -811,6 +850,15 @@ namespace DurakProject
                         Card card = new Card();
                         if (durakDeck.CardsRemaining <= 0)
                         {
+                            pbDeck.Visible = false;
+                            if (pnlTrumpCard.Controls.Count > 0)
+                            {
+                                CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
+                                pnlTrumpCard.Controls.Remove(trumpCard);
+                                pnlComputerHand.Controls.Add(trumpCard);
+                            }
+                            else if (pnlTrumpCard.Controls.Count == 0)
+                                WinCheck(durakDeck);
                             i += 100;
                         }
                         else
@@ -836,6 +884,16 @@ namespace DurakProject
                         Card card = new Card();
                         if (durakDeck.CardsRemaining <= 0)
                         {
+                            pbDeck.Visible = false;
+                            if (pnlTrumpCard.Controls.Count > 0)
+                            {
+                                CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
+                                pnlTrumpCard.Controls.Remove(trumpCard);
+                                pnlComputerHand.Controls.Add(trumpCard);
+                            }
+                            else if (pnlTrumpCard.Controls.Count == 0)
+                                WinCheck(durakDeck);
+
                             i += 100;
                         }
                         else
@@ -858,6 +916,16 @@ namespace DurakProject
                         Card card = new Card();
                         if (durakDeck.CardsRemaining <= 0)
                         {
+                            pbDeck.Visible = false;
+                            if (pnlTrumpCard.Controls.Count > 0)
+                            {
+                                CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
+                                pnlTrumpCard.Controls.Remove(trumpCard);
+                                pnlPlayerHand.Controls.Add(trumpCard);
+                            }
+                            else if (pnlTrumpCard.Controls.Count == 0)
+                                WinCheck(durakDeck);
+
                             i += 100;
                         }
                         else
@@ -892,22 +960,63 @@ namespace DurakProject
         {
             if (durakDeck.CardsRemaining == 0)
             {
-                if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count == 0)
+                if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
                 {
                     MessageBox.Show("You're a fool! \n" + newAI.Name + "has won.");
+                    for (int i = pnlPlayerHand.Controls.Count; i > -1; i--)
+                    {
+                        CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
+                        RemoveClickEvent(cardBox);
+                    }
+                    btnEndAttack.Visible = false;  // should already be not visible, but set it anyway
+                    btnForfeit.Visible = false;
+                    //track stats
+
                 }
                 else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
                 {
-                    MessageBox.Show("You're a fool! \n" + newPlayer.Name + "has won.");
+                    MessageBox.Show(newAI.Name + "is the fool! \n" + newPlayer.Name + "has won.");
+                    btnEndAttack.Visible = false;
+                    btnForfeit.Visible = false;
+                    //track stats
                 }
                 else
                 {
                     MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
+                    if (pnlPlayerHand.Controls.Count > 0)
+                    {
+                        for (int i = pnlPlayerHand.Controls.Count; i > -1; i--)
+                        {
+                            CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
+                            RemoveClickEvent(cardBox);
+                        }
+                    }
+                    btnEndAttack.Visible = false;
+                    btnForfeit.Visible = false;
+                    //track stats
                 }
             }
             //else no win condition found.  Keep playing.
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void HardAi()
+        {
+            //check last index added to the play area
+            CardBox lastCard = (CardBox)pnlPlayArea.Controls[(pnlPlayArea.Controls.Count - 1)];
+            // look at AI hand 
+            for (int i = (pnlComputerHand.Controls.Count-1); i > -1; i--)
+            {
+                //
+
+            }
+
+        }
+
         #endregion
+
+
     }
 }

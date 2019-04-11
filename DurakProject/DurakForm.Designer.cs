@@ -46,6 +46,7 @@
             this.lblAIName = new System.Windows.Forms.Label();
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.btnEndAttack = new System.Windows.Forms.Button();
+            this.btnPickUp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
             this.pnlPlayArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
@@ -234,6 +235,16 @@
             this.btnEndAttack.UseVisualStyleBackColor = true;
             this.btnEndAttack.Click += new System.EventHandler(this.btnEndAttack_Click);
             // 
+            // btnPickUp
+            // 
+            this.btnPickUp.Location = new System.Drawing.Point(59, 579);
+            this.btnPickUp.Name = "btnPickUp";
+            this.btnPickUp.Size = new System.Drawing.Size(75, 23);
+            this.btnPickUp.TabIndex = 25;
+            this.btnPickUp.Text = "Pick Up";
+            this.btnPickUp.UseVisualStyleBackColor = true;
+            this.btnPickUp.Click += new System.EventHandler(this.btnPickUp_Click);
+            // 
             // frmDurak
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -241,6 +252,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
             this.BackgroundImage = global::DurakProject.Properties.Resources.WoodTexture1024;
             this.ClientSize = new System.Drawing.Size(1091, 606);
+            this.Controls.Add(this.btnPickUp);
             this.Controls.Add(this.btnEndAttack);
             this.Controls.Add(this.lblPlayerName);
             this.Controls.Add(this.lblAIName);
@@ -291,6 +303,7 @@
         private System.Windows.Forms.Label lblAIName;
         private System.Windows.Forms.Label lblPlayerName;
         private System.Windows.Forms.Button btnEndAttack;
+        private System.Windows.Forms.Button btnPickUp;
     }
 }
 

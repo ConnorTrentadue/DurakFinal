@@ -716,6 +716,20 @@ namespace DurakProject
                             playMade = true;
                             RealignCards(pnlPlayArea);
                         }
+                        else if (card.Rank < cardBox.Rank)
+                        {
+                            pnlComputerHand.Controls.Remove(card);
+                            //flip the card as it is played
+                            card.FaceUp = true;
+                            pnlPlayArea.Controls.Add(card);
+
+                            // remove a click event from a card in the playArea
+                            //RemoveEvent(card);
+                            i += 100;
+                            playMade = true;
+                            RealignCards(pnlPlayArea);
+                        }
+
                     }
 
                     else if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
@@ -1026,6 +1040,7 @@ namespace DurakProject
             List<CardBox> validPlays = new List<CardBox>(); // stores all playable cards for AI defense
             List<int> validIndexes = new List<int>();
             const int HIGH_PLAY = 42; //value of cards in the playarea
+            bool endLogic = false;  //tracks if we continue processing logic
 
             // look at AI hand 
             for (int i = (pnlComputerHand.Controls.Count - 1); i > -1; i--)
@@ -1035,9 +1050,11 @@ namespace DurakProject
                 // if card is trump, played Card is not trump and the lastCard played is a face card
                 if (card.Suit == trumpSuit && lastCard.Suit != trumpSuit && (int)lastCard.Rank > 10)
                 {
-                    //if card is less than 4 rank values apart from the lastCard played
-                    if ((int)card.Rank < ((int)lastCard.Rank - 4))
+                    MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
+                    //if card is less than 4 rank values apart from the lastCard played - card can be playedy
+                    if ((int)card.Rank <= ((int)lastCard.Rank - 3))
                     {
+                        MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                         //create a temp card to index 0 to store the AI card played
                         //reorder the AI hand so index 0 will be the played card
                         //TempHand(i);
@@ -1045,9 +1062,11 @@ namespace DurakProject
                         validPlays.Add(card);
                         validIndexes.Add(i);
                     }
-                    else if ((int)card.Rank > ((int)lastCard.Rank - 4))
+                    // is the card in hand a 3 point difference from the card on the table
+                    else if ((int)card.Rank >= ((int)lastCard.Rank + 3))
                     {
-                        int cardSum = 0;  // total value of playArea
+                        // total value of playArea to determine if the playArea is to be picked up
+                        int cardSum = 0;
                         for (int playIndex = (pnlPlayArea.Controls.Count - 1); playIndex > -1; playIndex--)
                         {
                             CardBox rankCheck = (CardBox)pnlPlayArea.Controls[playIndex];
@@ -1056,15 +1075,17 @@ namespace DurakProject
                         if (cardSum > HIGH_PLAY)
                         {
                             PickUpCards(ref pnlComputerHand, true); // pick up cards in players
-                            //i += 100; // end defense logic
-                            break;
+                            i -= 100; // end defense logic
+                            //end the loop
+                            //endLogic = true;
+                            //break;
                         }
 
                     }
                 }
-
-                //if card value is lower than played card
-                else if (card.Rank > lastCard.Rank)
+                // Card in hand is not a trump
+                //if card value is higher than played card
+                else if (card.Rank > lastCard.Rank && card.Suit == lastCard.Suit)
                 {
                     // store the card in the validPlays list
                     validPlays.Add(card);
@@ -1072,10 +1093,11 @@ namespace DurakProject
 
                 }
             }
+
             // check if the validPlays has more than 1 card
             if (validPlays.Count > 1)
             {
-                for (int listIndex = 0; listIndex < (validPlays.Count - 1); listIndex++)
+                for (int listIndex = 0; listIndex < validPlays.Count; listIndex++)
                 {
                     CardBox card = validPlays[0];
                     // check for array out of bounds exception

@@ -42,7 +42,7 @@ namespace DurakProject
         //*************************
         //*************************
         //*************************
-        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
+        int difficultyChoice = 3; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
         //*************************
         //*************************
         //*************************
@@ -93,7 +93,10 @@ namespace DurakProject
         public frmDurak()
         {
             InitializeComponent();
-
+            //Set the initial button controls
+            btnPickUp.Visible = false;
+            btnEndAttack.Visible = false;
+            btnForfeit.Visible = false;
         }
 
         /// <summary>
@@ -215,6 +218,11 @@ namespace DurakProject
             {
                 ComputerAttack(playerAttackCounter);
             }
+            else
+            {
+                btnEndAttack.Visible = true;
+            }
+
         }
 
         /// <summary>
@@ -476,7 +484,10 @@ namespace DurakProject
             bool playMade = false;
             bool validPlay = false;
 
+            //remove the btnEndAttack
             btnEndAttack.Visible = false;
+            //remove the btnPickup
+            btnPickUp.Visible = true;
             // render player hand unclickable before attack cards are played
             //foreach (CardBox playerCard in (CardBox)pnlPlayerHand)
             for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
@@ -681,6 +692,8 @@ namespace DurakProject
         //Method for Player on attack, computer on defense
         public void ComputerDefend(CardBox cardBox, bool playMade)
         {
+            //remove the btnPickup
+            btnPickUp.Visible = false;
             //logic to add a defend card from computer hand
             for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
             {
@@ -949,7 +962,6 @@ namespace DurakProject
                             RealignCards(pnlPlayerHand);
                             //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
                         }
-
                     }
                 }
             }
@@ -965,10 +977,25 @@ namespace DurakProject
         {
             if (durakDeck.CardsRemaining == 0)
             {
-                if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
+                if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count <= 0)
+                {
+                    MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
+                    if (pnlPlayerHand.Controls.Count > 0)
+                    {
+                        for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
+                        {
+                            CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
+                            RemoveClickEvent(cardBox);
+                        }
+                    }
+                    btnEndAttack.Visible = false;
+                    btnForfeit.Visible = false;
+                    //track stats
+                }
+                else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
                 {
                     MessageBox.Show("You're a fool! \n" + newAI.Name + "has won.");
-                    for (int i = pnlPlayerHand.Controls.Count; i > -1; i--)
+                    for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                     {
                         CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
                         RemoveClickEvent(cardBox);
@@ -985,21 +1012,6 @@ namespace DurakProject
                     btnForfeit.Visible = false;
                     //track stats
                 }
-                else
-                {
-                    MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
-                    if (pnlPlayerHand.Controls.Count > 0)
-                    {
-                        for (int i = pnlPlayerHand.Controls.Count; i > -1; i--)
-                        {
-                            CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
-                            RemoveClickEvent(cardBox);
-                        }
-                    }
-                    btnEndAttack.Visible = false;
-                    btnForfeit.Visible = false;
-                    //track stats
-                }
             }
             //else no win condition found.  Keep playing.
         }
@@ -1009,7 +1021,7 @@ namespace DurakProject
         /// </summary>
         public void HardAiDefense()
         {
-            //check last index added to the play area
+            // set a cardbox to the last index added to the play area
             CardBox lastCard = (CardBox)pnlPlayArea.Controls[(pnlPlayArea.Controls.Count - 1)];
             List<CardBox> validPlays = new List<CardBox>(); // stores all playable cards for AI defense
             List<int> validIndexes = new List<int>();
@@ -1028,7 +1040,10 @@ namespace DurakProject
                     {
                         //create a temp card to index 0 to store the AI card played
                         //reorder the AI hand so index 0 will be the played card
-                        TempHand(i);
+                        //TempHand(i);
+                        // store the card in the validPlays list
+                        validPlays.Add(card);
+                        validIndexes.Add(i);
                     }
                     else if ((int)card.Rank > ((int)lastCard.Rank - 4))
                     {
@@ -1112,34 +1127,42 @@ namespace DurakProject
         {
             //create a temp hand
             List<CardBox> tempHand = new List<CardBox>();
-
+            CardBox sourceCard = new CardBox();
+            //for each card in the hand
             for (int i = (pnlComputerHand.Controls.Count - 1); i > -1; i--)
             {
-                CardBox cardBox = (CardBox)pnlComputerHand.Controls[i];
-                tempHand.Add(cardBox);
+                //store the hand into the temporary hand
+                sourceCard = (CardBox)pnlComputerHand.Controls[i];
+                tempHand.Add(sourceCard);
             }
 
             if (pnlComputerHand.Controls.Count > 0)  //if there are cards in the hand
             {
-                //empty the hand
+                // empty the hand
                 for (int k = (pnlComputerHand.Controls.Count - 1); k > -1; k--)
                 {
-                    CardBox tempCard = (CardBox)pnlComputerHand.Controls[k];
-                    pnlComputerHand.Controls.Remove(tempCard);
+                    sourceCard = (CardBox)pnlComputerHand.Controls[k];
+                    pnlComputerHand.Controls.Remove(sourceCard);
                 }
             }
-            MessageBox.Show(tempHand.Count.ToString());
+            MessageBox.Show(tempHand.Count.ToString() + " cards in tempHand. " + pnlComputerHand.Controls.Count.ToString() + " computerHand");
             CardBox transferCard = tempHand[index];
+            MessageBox.Show(transferCard.ToString() + " will be shuffled to index 0.");
+            int tempHandSize = tempHand.Count;
 
             tempHand.Remove(transferCard);
             pnlComputerHand.Controls.Add(transferCard);
+            tempHandSize = tempHand.Count;
+            //MessageBox.Show(tempHandSize + " cards remain in tempHand ");
             // populate the rest of the hand
-            for (int j = (tempHand.Count - 1); j > -1; j--)
+            for (int j = (tempHandSize - 1); j > -1; j--)
             {
-                CardBox swapCard = tempHand[j];
-                tempHand.Remove(swapCard);
-                pnlComputerHand.Controls.Add(swapCard);
+                //MessageBox.Show("card from tempHand "+ j.ToString() + " index will be re-inserted");
+                transferCard = tempHand[j];
+                tempHand.Remove(transferCard);
+                pnlComputerHand.Controls.Add(transferCard);
             }
+            RealignCards(pnlComputerHand);
         }
 
         #endregion

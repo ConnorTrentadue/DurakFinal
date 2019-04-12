@@ -109,6 +109,46 @@ namespace DurakProject
             frmLog.Show();
         }
 
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuHelp_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuLog_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Begins a new game
+        /// </summary>
+        private void mnuNewGame_Click(object sender, EventArgs e)
+        {
+
+            btnNewGame_Click(sender, e);
+        }
+        /// <summary>
+        /// Forfeit a game
+        /// </summary>
+        private void mnuForfeit_Click(object sender, EventArgs e)
+        {
+            btnForfeit_Click(sender, e);
+        }
+
+        private void mnuClose_Click(object sender, EventArgs e)
+        {
+            //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
+            // Closes log form and writes to file
+            frmLog.Close();
+            Stats.WriteStats(playerStats);
+
+            Close();
+        }
+
         /// <summary>
         /// New game clears out previous game session.  Creates a new deck and deals 6 cards to each player.
         /// </summary>
@@ -235,7 +275,6 @@ namespace DurakProject
             frmLog.Close();
             Stats.WriteStats(playerStats);
 
-            this.Close();
         }
 
         /// <summary>
@@ -421,7 +460,7 @@ namespace DurakProject
         //starts a normal play where the player is attacking and AI is defending
         public void MakeNormalPlay(CardBox cardBox, int playCount, int duplicateCards = 0)
         {
-            bool playMade = false;
+            //bool playMade = false;
 
             btnEndAttack.Visible = true;
             //AI attack logic
@@ -432,7 +471,7 @@ namespace DurakProject
             if (difficultyChoice == 3)
                 HardAiDefense();
 
-            ComputerDefend(cardBox, playMade);
+            ComputerDefend(cardBox);
 
         }
 
@@ -507,7 +546,7 @@ namespace DurakProject
             if (pnlPlayArea.Controls.Count <= 0)
             {
                 //logic to add first card from computer hand (no attack logic applied)
-                for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
+                for (int i = pnlComputerHand.Controls.Count; i > -1; i--)
                 {
                     //MessageBox.Show("index play " + i);
                     CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
@@ -609,7 +648,7 @@ namespace DurakProject
                                 {
                                     CardBox card = (CardBox)pnlPlayArea.Controls[k];
                                     //debugging for card indexes on table.
-                                    MessageBox.Show("Picking up " + card + " at index " + k);
+                                    //MessageBox.Show("Picking up " + card + " at index " + k);
                                     pnlPlayArea.Controls.Remove(card);
                                     //flip the card before entering computer hand
                                     //card.FaceUp = false;
@@ -690,38 +729,41 @@ namespace DurakProject
         }
 
         //Method for Player on attack, computer on defense
-        public void ComputerDefend(CardBox cardBox, bool playMade)
+        public void ComputerDefend(CardBox playerCard)
         {
             //remove the btnPickup
             btnPickUp.Visible = false;
+            bool playMade = false;
             //logic to add a defend card from computer hand
             for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
             {
-                CardBox card = (CardBox)pnlComputerHand.Controls[i];
-                if (card.Suit == cardBox.Suit || card.Suit == trumpSuit)
+                CardBox aiCard = (CardBox)pnlComputerHand.Controls[i];
+                if (aiCard.Suit == playerCard.Suit /*playerCard*/ || aiCard.Suit == trumpSuit)
                 {
                     //card.Rank > cardBox.Rank
-                    if (card.Suit == trumpSuit)
+                    if (aiCard.Suit == trumpSuit)
                     {
-                        if (cardBox.Suit == trumpSuit && card.Rank > cardBox.Rank)
+                        if (playerCard.Suit == trumpSuit && aiCard.Rank > playerCard.Rank)
                         {
-                            pnlComputerHand.Controls.Remove(card);
+                            pnlComputerHand.Controls.Remove(aiCard);
+                            MessageBox.Show(aiCard.ToString() + " was played (if Trump valid)");
                             //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
+                            aiCard.FaceUp = true;
+                            pnlPlayArea.Controls.Add(aiCard);
 
                             // remove a click event from a card in the playArea
-                            //RemoveEvent(card);
+                            // RemoveEvent(card);
                             i += 100;
                             playMade = true;
                             RealignCards(pnlPlayArea);
                         }
-                        else if (card.Rank < cardBox.Rank)
+                        else if (aiCard.Rank < playerCard.Rank && playerCard.Suit != trumpSuit)
                         {
-                            pnlComputerHand.Controls.Remove(card);
+                            pnlComputerHand.Controls.Remove(aiCard);
+                            MessageBox.Show(aiCard.ToString() + " was played (ELSE trump valid)");
                             //flip the card as it is played
-                            card.FaceUp = true;
-                            pnlPlayArea.Controls.Add(card);
+                            aiCard.FaceUp = true;
+                            pnlPlayArea.Controls.Add(aiCard);
 
                             // remove a click event from a card in the playArea
                             //RemoveEvent(card);
@@ -732,12 +774,13 @@ namespace DurakProject
 
                     }
 
-                    else if (card.Suit == cardBox.Suit && card.Rank > cardBox.Rank)
+                    else if (aiCard.Suit == playerCard.Suit && aiCard.Rank > playerCard.Rank)
                     {
-                        pnlComputerHand.Controls.Remove(card);
+                        pnlComputerHand.Controls.Remove(aiCard);
+                        MessageBox.Show(aiCard.ToString() + " was played (ELSE not trump)");
                         //flip the card as it is played
-                        card.FaceUp = true;
-                        pnlPlayArea.Controls.Add(card);
+                        aiCard.FaceUp = true;
+                        pnlPlayArea.Controls.Add(aiCard);
 
                         // remove a click event from a card in the playArea
                         //RemoveEvent(card);
@@ -746,6 +789,7 @@ namespace DurakProject
                         RealignCards(pnlPlayArea);
                     }
                 }
+
             }
 
             // check for attack end.
@@ -1008,7 +1052,7 @@ namespace DurakProject
                 }
                 else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
                 {
-                    MessageBox.Show("You're a fool! \n" + newAI.Name + "has won.");
+                    MessageBox.Show("You're a fool! \n" + newAI.Name + " has won.");
                     for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                     {
                         CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1021,7 +1065,7 @@ namespace DurakProject
                 }
                 else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
                 {
-                    MessageBox.Show(newAI.Name + "is the fool! \n" + newPlayer.Name + "has won.");
+                    MessageBox.Show(newAI.Name + "is the fool! \n" + newPlayer.Name + " has won.");
                     btnEndAttack.Visible = false;
                     btnForfeit.Visible = false;
                     //track stats
@@ -1040,24 +1084,23 @@ namespace DurakProject
             List<CardBox> validPlays = new List<CardBox>(); // stores all playable cards for AI defense
             List<int> validIndexes = new List<int>();
             const int HIGH_PLAY = 42; //value of cards in the playarea
-            bool endLogic = false;  //tracks if we continue processing logic
+            //bool endLogic = false;  //tracks if we continue processing logic
 
             // look at AI hand 
             for (int i = (pnlComputerHand.Controls.Count - 1); i > -1; i--)
             {
                 CardBox card = (CardBox)pnlComputerHand.Controls[i];
 
+
+
                 // if card is trump, played Card is not trump and the lastCard played is a face card
                 if (card.Suit == trumpSuit && lastCard.Suit != trumpSuit && (int)lastCard.Rank > 10)
                 {
-                    MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
+                    //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                     //if card is less than 4 rank values apart from the lastCard played - card can be playedy
                     if ((int)card.Rank <= ((int)lastCard.Rank - 3))
                     {
-                        MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
-                        //create a temp card to index 0 to store the AI card played
-                        //reorder the AI hand so index 0 will be the played card
-                        //TempHand(i);
+                        //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                         // store the card in the validPlays list
                         validPlays.Add(card);
                         validIndexes.Add(i);
@@ -1076,20 +1119,41 @@ namespace DurakProject
                         {
                             PickUpCards(ref pnlComputerHand, true); // pick up cards in players
                             i -= 100; // end defense logic
-                            //end the loop
-                            //endLogic = true;
-                            //break;
                         }
 
                     }
                 }
                 // Card in hand is not a trump
                 //if card value is higher than played card
-                else if (card.Rank > lastCard.Rank && card.Suit == lastCard.Suit)
+                else /*if ((int)card.Rank > (int)lastCard.Rank && card.Suit == lastCard.Suit)*/
                 {
-                    // store the card in the validPlays list
-                    validPlays.Add(card);
-                    validIndexes.Add(i);
+                    //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
+                    //if card is less than 4 rank values apart from the lastCard played - card can be playedy
+                    if ((int)card.Rank > (int)lastCard.Rank && card.Suit == lastCard.Suit) 
+                    {
+                        //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
+                        // store the card in the validPlays list
+                        validPlays.Add(card);
+                        validIndexes.Add(i);
+                    }
+                    // is the card in hand a 3 point difference from the card on the table
+                    else if ((int)card.Rank < ((int)lastCard.Rank + 3))
+                    {
+                        // total value of playArea to determine if the playArea is to be picked up
+                        int cardSum = 0;
+                        for (int playIndex = (pnlPlayArea.Controls.Count - 1); playIndex > -1; playIndex--)
+                        {
+                            CardBox rankCheck = (CardBox)pnlPlayArea.Controls[playIndex];
+                            cardSum += (int)rankCheck.Rank;
+                        }
+                        if (cardSum > HIGH_PLAY)
+                        {
+                            PickUpCards(ref pnlComputerHand, true); // pick up cards in players
+                            i -= 100; // end defense logic
+
+                        }
+
+                    }
 
                 }
             }
@@ -1105,7 +1169,7 @@ namespace DurakProject
                     {
                         CardBox cardCompare = validPlays[listIndex + 1];
                         //if the card compared is smaller, set the card to index 0
-                        if ((int)card.Rank > (int)cardCompare.Rank)
+                        if ((int)card.Rank < (int)cardCompare.Rank)
                         {
                             TempHand(validIndexes[0]);
                         }
@@ -1151,8 +1215,9 @@ namespace DurakProject
             //create a temp hand
             List<CardBox> tempHand = new List<CardBox>();
             CardBox sourceCard = new CardBox();
+
             //for each card in the hand
-            for (int i = (pnlComputerHand.Controls.Count - 1); i > -1; i--)
+            for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
             {
                 //store the hand into the temporary hand
                 sourceCard = (CardBox)pnlComputerHand.Controls[i];
@@ -1168,7 +1233,6 @@ namespace DurakProject
                     pnlComputerHand.Controls.Remove(sourceCard);
                 }
             }
-            MessageBox.Show(tempHand.Count.ToString() + " cards in tempHand. " + pnlComputerHand.Controls.Count.ToString() + " computerHand");
             CardBox transferCard = tempHand[index];
             MessageBox.Show(transferCard.ToString() + " will be shuffled to index 0.");
             int tempHandSize = tempHand.Count;
@@ -1187,6 +1251,7 @@ namespace DurakProject
             }
             RealignCards(pnlComputerHand);
         }
+
 
         #endregion
 

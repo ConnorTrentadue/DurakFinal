@@ -1056,7 +1056,8 @@ namespace DurakProject
                         if (cardSum > HIGH_PLAY)
                         {
                             PickUpCards(ref pnlComputerHand, true); // pick up cards in players
-                            i += 100; // end defense logic
+                            //i += 100; // end defense logic
+                            break;
                         }
 
                     }

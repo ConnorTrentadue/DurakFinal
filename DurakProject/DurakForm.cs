@@ -166,7 +166,9 @@ namespace DurakProject
             // Writes to the log screen, which writes to the text file when the form is closed
             frmLog.WriteToLog("New Game started");
 
-            // Example to get stats
+            // Get stats
+            if (playerStats != null)
+                playerStats.gamesPlayed++;
             playerStats = Stats.ReadStats();
             lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
             lblWins.Text = "Wins: " + playerStats.wins;
@@ -686,6 +688,10 @@ namespace DurakProject
                 // The computer can not make another valid play
                 if (validPlay == false)
                 {
+                    //Swap player attack / pickup buttons at the end of thae phase.
+                    btnPickUp.Visible = false;
+                    btnEndAttack.Visible = true;
+
                     //validPlay = true;  //reset validPlay
                     MessageBox.Show("There are no valid plays for the Computer");
                     //i += 100;

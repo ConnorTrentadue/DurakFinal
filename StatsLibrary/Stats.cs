@@ -53,6 +53,8 @@ namespace StatsLibrary
                         string json = reader.ReadToEnd();
                         var serializer = new JavaScriptSerializer();
                         aPlayerStats = serializer.Deserialize<PlayerStats>(json);
+                        if (aPlayerStats == null)
+                            aPlayerStats = new PlayerStats();
                     }
                 }
             } else

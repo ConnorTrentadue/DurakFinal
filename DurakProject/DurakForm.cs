@@ -106,7 +106,6 @@ namespace DurakProject
         {
             // initialize form log ( change to whatever button we want to make the log come from )
             frmLog = new frmLog();
-            frmLog.Show();
         }
 
         private void mnuAbout_Click(object sender, EventArgs e)
@@ -121,7 +120,7 @@ namespace DurakProject
 
         private void mnuLog_Click(object sender, EventArgs e)
         {
-
+            frmLog.Show();
         }
         /// <summary>
         /// Begins a new game
@@ -166,11 +165,13 @@ namespace DurakProject
 
             // Writes to the log screen, which writes to the text file when the form is closed
             frmLog.WriteToLog("New Game started");
-            playerStats = Stats.ReadStats();
 
             // Example to get stats
-            //playerStats.gamesPlayed++;
-            lblGameNumber.Text += playerStats.gamesPlayed;
+            playerStats = Stats.ReadStats();
+            lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
+            lblWins.Text = "Wins: " + playerStats.wins;
+            lblLosses.Text = "Losses: " + playerStats.losses;
+            lblTies.Text = "Ties: " + playerStats.ties;
 
             //clear any objects on the table.
             pnlComputerHand.Controls.Clear();
@@ -313,6 +314,7 @@ namespace DurakProject
                 //realign player hand
                 RealignCards(pnlPlayerHand);
                 //remove the click event from the card as it enters the playarea
+                RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
                 ComputerAttack(playerAttackCounter);
@@ -334,6 +336,7 @@ namespace DurakProject
                     //realign player hand
                     RealignCards(pnlPlayerHand);
                     //remove the click event from the card as it enters the playarea
+                    RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
                     MakeNormalPlay(aCardBox, playerAttackCounter);
@@ -363,6 +366,7 @@ namespace DurakProject
                             aCardBox.Click -= CardBox_Click;
 
                             //remove the click event from the card as it enters the playarea
+                            RemoveBorder(aCardBox);
                             RemoveClickEvent(aCardBox);
 
                             MakeNormalPlay(aCardBox, playerAttackCounter);
@@ -548,51 +552,50 @@ namespace DurakProject
                 //logic to add first card from computer hand (no attack logic applied)
                 for (int i = pnlComputerHand.Controls.Count; i > -1; i--)
                 {
-                    if (pnlComputerHand.Controls.Count != 0)
-                    {                     //MessageBox.Show("index play " + i);
-                        CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
-                        if (pnlPlayArea.Controls.Count <= 0)
-                        {
-                            //flip the card as it is played
-                            computerCard.FaceUp = true;
-                            //play the card in the computer hand
-                            pnlComputerHand.Controls.Remove(computerCard);
-                            pnlPlayArea.Controls.Add(computerCard);
-                            computerCard.BorderStyle = BorderStyle.Fixed3D;
+                    //MessageBox.Show("index play " + i);
+                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
+                    if (pnlPlayArea.Controls.Count <= 0)
+                    {
+                        //flip the card as it is played
+                        computerCard.FaceUp = true;
+                        //play the card in the computer hand
+                        pnlComputerHand.Controls.Remove(computerCard);
+                        pnlPlayArea.Controls.Add(computerCard);
+                        computerCard.BorderStyle = BorderStyle.Fixed3D;
 
-                            //if no player cards can defend an attack
-                            if (validPlayerDefense(computerCard) == false)
+                        //if no player cards can defend an attack
+                        if (validPlayerDefense(computerCard) == false)
+                        {
+                            MessageBox.Show("You can not defend, take the card");
+                            //for all cards on the table, pick them up
+                            for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
                             {
-                                MessageBox.Show("You can not defend, take the card");
-                                //for all cards on the table, pick them up
-                                for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
-                                {
-                                    //debugging for card indexes on table.
-                                    //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                                    CardBox card = (CardBox)pnlPlayArea.Controls[j];
-                                    // remove border from the card if it still has one.
-                                    card.BorderStyle = BorderStyle.None;
-                                    pnlPlayArea.Controls.Remove(card);
-                                    //flip the card before entering computer hand
-                                    //card.FaceUp = false;
-                                    pnlPlayerHand.Controls.Add(card);
-                                    RealignCards(pnlPlayerHand);
-                                    RealignCards(pnlPlayArea);
-                                    playerAttackCounter = 0;
-                                }
+                                //debugging for card indexes on table.
+                                //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
+                                CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                                // remove border from the card if it still has one.
+                                card.BorderStyle = BorderStyle.None;
+                                pnlPlayArea.Controls.Remove(card);
+                                //flip the card before entering computer hand
+                                //card.FaceUp = false;
+                                pnlPlayerHand.Controls.Add(card);
+                                RealignCards(pnlPlayerHand);
+                                RealignCards(pnlPlayArea);
+                                playerAttackCounter = 0;
+
                             }
-                            else
-                            {
-                                //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
-                                i += 100;
-                            }
+                        }
+                        else
+                        {
+                            //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
+                            i += 100;
 
                         }
-                        // flag that a play was made and realign cards
-                        playMade = true;
-                        RealignCards(pnlPlayArea);
-                    }
 
+                    }
+                    // flag that a play was made and realign cards
+                    playMade = true;
+                    RealignCards(pnlPlayArea);
                 }
             }
             // if there are cards in the play area and cards remaining in the player hand
@@ -816,6 +819,7 @@ namespace DurakProject
                     //flip the card before entering computer hand
                     card.FaceUp = true;
                     pnlComputerHand.Controls.Add(card);
+                    RemoveBorder(card);
                     RealignCards(pnlComputerHand);
                     RealignCards(pnlPlayArea);
                     playerAttackCounter = 0;
@@ -842,6 +846,7 @@ namespace DurakProject
                         if (computerCard.Suit == trumpSuit && playerCard.Rank > computerCard.Rank)
                         {
                             AddClickEvent(playerCard);
+                            DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
                             canPlay = true;
@@ -850,6 +855,7 @@ namespace DurakProject
                         else if (playerCard.Suit == trumpSuit && computerCard.Suit != trumpSuit)
                         {
                             AddClickEvent(playerCard);
+                            DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
                             canPlay = true;
@@ -860,6 +866,7 @@ namespace DurakProject
                     else if (playerCard.Suit == computerCard.Suit && playerCard.Rank > computerCard.Rank)
                     {
                         AddClickEvent(playerCard);
+                        DrawBorder(playerCard);
                         //MessageBox.Show(playerCard.ToString() + " is clickable.");
                         //i += 100;
                         canPlay = true;
@@ -870,6 +877,24 @@ namespace DurakProject
                 //canPlay = false;
             }
             return canPlay;
+        }
+
+        private void DrawBorder(CardBox card)
+        {
+            if(card != null)
+            { 
+                card.BackgroundImageLayout = ImageLayout.Center;
+                card.BackColor = Color.FromArgb(99, 150, 232);
+                card.Padding = new Padding(3);
+            }
+        }
+
+        private void RemoveBorder(CardBox card)
+        {
+            if(card != null)
+            {
+                card.Padding = new Padding(0);
+            }
         }
 
         //Method to redraw cards into player hands
@@ -1131,7 +1156,7 @@ namespace DurakProject
                 {
                     //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                     //if card is less than 4 rank values apart from the lastCard played - card can be playedy
-                    if ((int)card.Rank > (int)lastCard.Rank && card.Suit == lastCard.Suit)
+                    if ((int)card.Rank > (int)lastCard.Rank && card.Suit == lastCard.Suit) 
                     {
                         //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                         // store the card in the validPlays list

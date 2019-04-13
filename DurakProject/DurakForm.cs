@@ -273,8 +273,8 @@ namespace DurakProject
         {
             //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
             // Closes log form and writes to file
-            frmLog.Close();
-            Stats.WriteStats(playerStats);
+            //frmLog.Close();
+            //Stats.WriteStats(playerStats);
 
         }
 
@@ -1078,6 +1078,7 @@ namespace DurakProject
                         }
                     }
                     btnEndAttack.Visible = false;
+                    btnPickUp.Visible = false;
                     btnForfeit.Visible = false;
                     //track stats
                 }
@@ -1090,6 +1091,7 @@ namespace DurakProject
                         RemoveClickEvent(cardBox);
                     }
                     btnEndAttack.Visible = false;  // should already be not visible, but set it anyway
+                    btnPickUp.Visible = false;
                     btnForfeit.Visible = false;
                     //track stats
 
@@ -1098,6 +1100,7 @@ namespace DurakProject
                 {
                     MessageBox.Show(newAI.Name + "is the fool! \n" + newPlayer.Name + " has won.");
                     btnEndAttack.Visible = false;
+                    btnPickUp.Visible = false;
                     btnForfeit.Visible = false;
                     //track stats
                 }

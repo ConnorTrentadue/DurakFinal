@@ -47,7 +47,7 @@ namespace DurakProject
         //*************************
         //*************************
 
-
+        int pickUpCounter = 0;
 
         //Declares new computer player
         ComputerPlayer newAI;
@@ -77,6 +77,8 @@ namespace DurakProject
 
         // sets a defautl state for if a player is attacking or defending.
         bool playerAttack = false;
+
+        bool winCheckPassed = false;
 
         //declare a trumpSuit  to hold trump suit values
         Suit trumpSuit;
@@ -286,8 +288,23 @@ namespace DurakProject
         private void btnPickUp_Click(object sender, EventArgs e)
         {
             PickUpCards(ref pnlPlayerHand, true);
-            ComputerAttack(playerAttackCounter);
 
+            if (pickUpCounter < 6)
+            {
+                ComputerAttack(playerAttackCounter);
+            }
+            else if (pickUpCounter == 6)
+            {
+                btnEndAttack.Visible = true;
+                btnPickUp.Visible = false;
+                playerAttack = true; //set player to attack phase
+                                     //render player hand to be clickable
+                for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
+                {
+                    CardBox card = (CardBox)pnlPlayerHand.Controls[j];
+                    AddClickEvent(card);
+                }
+            }
 
         }
 
@@ -576,6 +593,7 @@ namespace DurakProject
                             //if no player cards can defend an attack
                             if (validPlayerDefense(computerCard) == false)
                             {
+                                pickUpCounter++;
                                 MessageBox.Show("You can not defend, take the card");
                                 //for all cards on the table, pick them up
                                 for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
@@ -734,14 +752,7 @@ namespace DurakProject
             }
 
             // if the AI hand is empty, redraw and check for win
-            if (pnlComputerHand.Controls.Count == 0)
-            {
-                RedrawCards(durakDeck, playerAttack);
-                WinCheck(durakDeck);
-            }
-
-            // if the playerhand is empty, redraw and check for win
-            if (pnlPlayerHand.Controls.Count == 0)
+            if (pnlComputerHand.Controls.Count == 0 || pnlPlayerHand.Controls.Count == 0)
             {
                 RedrawCards(durakDeck, playerAttack);
                 WinCheck(durakDeck);
@@ -1085,48 +1096,55 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
-            if (durakDeck.CardsRemaining == 0)
+            if (winCheckPassed)
             {
-                if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count <= 0)
+                if (durakDeck.CardsRemaining == 0)
                 {
-                    MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
-                    if (pnlPlayerHand.Controls.Count > 0)
+                    if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count <= 0)
                     {
+                        winCheckPassed = true;
+                        MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
+                        if (pnlPlayerHand.Controls.Count > 0)
+                        {
+                            for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
+                            {
+                                CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
+                                RemoveClickEvent(cardBox);
+                            }
+                        }
+                        btnEndAttack.Visible = false;
+                        btnPickUp.Visible = false;
+                        btnForfeit.Visible = false;
+                        //track stats
+                    }
+                    else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
+                    {
+                        winCheckPassed = true;
+                        MessageBox.Show("You're a fool! \n" + newAI.Name + " has won.");
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
                             RemoveClickEvent(cardBox);
                         }
-                    }
-                    btnEndAttack.Visible = false;
-                    btnPickUp.Visible = false;
-                    btnForfeit.Visible = false;
-                    //track stats
-                }
-                else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
-                {
-                    MessageBox.Show("You're a fool! \n" + newAI.Name + " has won.");
-                    for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
-                    {
-                        CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
-                        RemoveClickEvent(cardBox);
-                    }
-                    btnEndAttack.Visible = false;  // should already be not visible, but set it anyway
-                    btnPickUp.Visible = false;
-                    btnForfeit.Visible = false;
-                    //track stats
+                        btnEndAttack.Visible = false;  // should already be not visible, but set it anyway
+                        btnPickUp.Visible = false;
+                        btnForfeit.Visible = false;
+                        //track stats
 
+                    }
+                    else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
+                    {
+                        winCheckPassed = true;
+                        MessageBox.Show(newAI.Name + " is the fool! \n" + newPlayer.Name + " has won.");
+                        btnEndAttack.Visible = false;
+                        btnPickUp.Visible = false;
+                        btnForfeit.Visible = false;
+                        //track stats
+                    }
                 }
-                else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
-                {
-                    MessageBox.Show(newAI.Name + " is the fool! \n" + newPlayer.Name + " has won.");
-                    btnEndAttack.Visible = false;
-                    btnPickUp.Visible = false;
-                    btnForfeit.Visible = false;
-                    //track stats
-                }
+                //else no win condition found.  Keep playing.
             }
-            //else no win condition found.  Keep playing.
+
         }
 
         /// <summary>
@@ -1247,6 +1265,7 @@ namespace DurakProject
         /// <param name="flipped"></param>
         public void PickUpCards(ref Panel hand, bool flipped)
         {
+            pickUpCounter++;
             // call pick up cards method
             for (int i = (pnlPlayArea.Controls.Count - 1); i > -1; i--)
             {

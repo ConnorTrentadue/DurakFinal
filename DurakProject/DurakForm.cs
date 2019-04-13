@@ -42,7 +42,7 @@ namespace DurakProject
         //*************************
         //*************************
         //*************************
-        int difficultyChoice = 3; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
+        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
         //*************************
         //*************************
         //*************************
@@ -79,12 +79,12 @@ namespace DurakProject
         bool playerAttack = false;
 
         //declare a trumpSuit  to hold trump suit values
-        Suit trumpSuit = Suit.Clubs;
+        Suit trumpSuit;
         // declare a cardRank  to hold card rank values
-        Rank cardRank = Rank.Ace;
+        //Rank cardRank = Rank.Ace;
 
         //declare a cardSuit to hold card suit values
-        Suit cardSuit = Suit.Clubs;
+        //Suit cardSuit = Suit.Clubs;
 
         static private Size regularSize = new Size(75, 108);
         #endregion
@@ -512,6 +512,12 @@ namespace DurakProject
                 RealignCards(pnlComputerHand);
             }
 
+            for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+            {
+                CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                card.BorderStyle = BorderStyle.None;  //clear any border on cards in player hand.
+                RemoveClickEvent(card);
+            }
             int playCount = 0;
             //fill the player's hands with cards
             RedrawCards(durakDeck, playerAttack);

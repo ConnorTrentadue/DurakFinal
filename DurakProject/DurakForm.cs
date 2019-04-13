@@ -92,6 +92,7 @@ namespace DurakProject
         #endregion
 
         #region FORM EVENTS AND HANDLERS
+
         public frmDurak()
         {
             InitializeComponent();
@@ -124,6 +125,7 @@ namespace DurakProject
         {
             frmLog.Show();
         }
+
         /// <summary>
         /// Begins a new game
         /// </summary>
@@ -132,6 +134,7 @@ namespace DurakProject
 
             btnNewGame_Click(sender, e);
         }
+
         /// <summary>
         /// Forfeit a game
         /// </summary>
@@ -140,6 +143,11 @@ namespace DurakProject
             btnForfeit_Click(sender, e);
         }
 
+        /// <summary>
+        /// Closes the program
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mnuClose_Click(object sender, EventArgs e)
         {
             //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
@@ -548,9 +556,12 @@ namespace DurakProject
         // logic for computer on attack, player on defense
         public void ComputerAttack(int playCount)
         {
-
             bool playMade = false;
             bool validPlay = false;
+
+            //Checks for Hard difficulty
+            if (difficultyChoice == 3)
+                HardAiAttack();
 
             //remove the btnEndAttack
             btnEndAttack.Visible = false;
@@ -580,7 +591,48 @@ namespace DurakProject
                     if (pnlComputerHand.Controls.Count != 0)
                     {
                         //MessageBox.Show("index play " + i);
-                        CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
+                        CardBox computerCard = new CardBox();
+
+                        // ------------------------------------------------ NEW CODE HERE ----------------------------------
+                        // -------------------------------------------------------------------------------------------------
+                        //Checks if Hard difficulty is selected
+                        if(difficultyChoice == 3)
+                        {
+                            //Loops through computer hand
+                            for (int m = 0; m < pnlComputerHand.Controls.Count; m++)
+                            {
+                                //Creates cardbox for each control in the computer hand for checking
+                                CardBox tempCard = (CardBox)pnlComputerHand.Controls[m];
+
+                                //Checks if the current card in the hand is trump
+                                if (tempCard.Suit == trumpSuit)
+                                {
+                                    //Checks that we're not looking at the last card in hand
+                                    if (m != pnlComputerHand.Controls.Count - 2)
+                                    {
+                                        //Sets the computers choice to the NEXT card in hand 
+                                        computerCard = (CardBox)pnlComputerHand.Controls[m + 1];
+                                    }
+                                    //Checks that we're looking at the last card in the hand
+                                    //All cards in hand were trump suit (WOW!) sets computer choice to LOWEST of the bunch
+                                    else if (m == pnlComputerHand.Controls.Count - 1)
+                                    {
+                                        //Sets the computer choice to the last card
+                                        computerCard = (CardBox)pnlComputerHand.Controls[0];
+                                    }
+                                }
+                                else // Break the loop
+                                    m += 100;
+                            }
+                        }
+                        else // Easy AI always plays the first card in hand
+                        {
+                            computerCard = (CardBox)pnlComputerHand.Controls[0];
+                        } 
+                        
+                        // --------------------------------------------- NEW CODE ENDS HERE ------------------------------------------
+                        // -----------------------------------------------------------------------------------------------------------
+
                         if (pnlPlayArea.Controls.Count <= 0)
                         {
                             //flip the card as it is played
@@ -1148,7 +1200,7 @@ namespace DurakProject
         }
 
         /// <summary>
-        /// 
+        /// Reshuffles the Computer Hand and places a "best" defense card in the "Card-to-be-played" index
         /// </summary>
         public void HardAiDefense()
         {
@@ -1255,6 +1307,43 @@ namespace DurakProject
             {
                 TempHand(validIndexes[0]);
 
+            }
+        }
+
+        /// <summary>
+        /// Reshuffles the computer hand and places the "best" attack card in the "Card-to-be-played" index
+        /// </summary>
+        public void HardAiAttack()
+        {
+            // Temporary hand to empty the computer hand into
+            List<CardBox> tempHand = new List<CardBox>();
+
+            for(int i = pnlComputerHand.Controls.Count - 1; i > -1; i--)
+            {
+                CardBox tempCard = (CardBox)pnlComputerHand.Controls[i];
+                MessageBox.Show("Moving " + tempCard.ToString() + " to temporary list.");
+                tempHand.Add(tempCard);
+            }
+
+            MessageBox.Show("Sorting List!");
+            // Sorts the temp hand into a new list by rank from lowest to highest 
+            // ONLY CHANGES THE INDEXES NOT THE PHYSICAL ORDER
+            List<CardBox> SortedList = tempHand.OrderBy(o => (int)o.Rank).ToList();
+
+            // Dumps the computer hand
+            for(int i = pnlComputerHand.Controls.Count- 1; i > -1; i--)
+            {
+                CardBox tempCard = (CardBox)pnlComputerHand.Controls[i];
+                //MessageBox.Show(tempCard.ToString());
+                pnlComputerHand.Controls.Remove(tempCard);
+            }
+
+            // Fills computer hand with re-indexed cards
+            for(int i = 0; i < SortedList.Count; i++)
+            {
+                CardBox tempCard = SortedList[i];
+                MessageBox.Show("Adding " + tempCard.ToString() + " to computer hand.");
+                pnlComputerHand.Controls.Add(tempCard);
             }
         }
 

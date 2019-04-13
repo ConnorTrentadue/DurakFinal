@@ -619,7 +619,7 @@ namespace DurakProject
                 {
                     //MessageBox.Show("index ELSE play " + i);
                     //bool validPlay = false;
-                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
+                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
                     CardBox validCardCheck = new CardBox();
 
                     //iterate through each card in the playArea
@@ -638,7 +638,7 @@ namespace DurakProject
                             if (validPlay == true)
                             {
                                 computerCard.FaceUp = true; //set chosen card face up.
-                                MessageBox.Show(computerCard.ToString() + " is playable");
+                                //MessageBox.Show(computerCard.ToString() + " is playable");
                                 i += 100; // end the examination loop
                                 playAreaIndex += 100;
                                 //remove from player hand
@@ -767,7 +767,7 @@ namespace DurakProject
                         if (playerCard.Suit == trumpSuit && aiCard.Rank > playerCard.Rank)
                         {
                             pnlComputerHand.Controls.Remove(aiCard);
-                            MessageBox.Show(aiCard.ToString() + " was played (if Trump valid)");
+                            //MessageBox.Show(aiCard.ToString() + " was played (if Trump valid)");
                             //flip the card as it is played
                             aiCard.FaceUp = true;
                             pnlPlayArea.Controls.Add(aiCard);
@@ -782,7 +782,7 @@ namespace DurakProject
                         else if (aiCard.Rank < playerCard.Rank && playerCard.Suit != trumpSuit)
                         {
                             pnlComputerHand.Controls.Remove(aiCard);
-                            MessageBox.Show(aiCard.ToString() + " was played (ELSE trump valid)");
+                            //MessageBox.Show(aiCard.ToString() + " was played (ELSE trump valid)");
                             //flip the card as it is played
                             aiCard.FaceUp = true;
                             pnlPlayArea.Controls.Add(aiCard);
@@ -800,7 +800,7 @@ namespace DurakProject
                     else if (aiCard.Suit == playerCard.Suit && aiCard.Rank > playerCard.Rank)
                     {
                         pnlComputerHand.Controls.Remove(aiCard);
-                        MessageBox.Show(aiCard.ToString() + " was played (ELSE not trump)");
+                        //MessageBox.Show(aiCard.ToString() + " was played (ELSE not trump)");
                         //flip the card as it is played
                         aiCard.FaceUp = true;
                         pnlPlayArea.Controls.Add(aiCard);
@@ -1289,7 +1289,7 @@ namespace DurakProject
                 }
             }
             CardBox transferCard = tempHand[index];
-            MessageBox.Show(transferCard.ToString() + " will be shuffled to index 0.");
+            //MessageBox.Show(transferCard.ToString() + " will be shuffled to index 0.");
             int tempHandSize = tempHand.Count;
 
             tempHand.Remove(transferCard);

@@ -548,49 +548,51 @@ namespace DurakProject
                 //logic to add first card from computer hand (no attack logic applied)
                 for (int i = pnlComputerHand.Controls.Count; i > -1; i--)
                 {
-                    //MessageBox.Show("index play " + i);
-                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
-                    if (pnlPlayArea.Controls.Count <= 0)
-                    {
-                        //flip the card as it is played
-                        computerCard.FaceUp = true;
-                        //play the card in the computer hand
-                        pnlComputerHand.Controls.Remove(computerCard);
-                        pnlPlayArea.Controls.Add(computerCard);
-                        computerCard.BorderStyle = BorderStyle.Fixed3D;
-
-                        //if no player cards can defend an attack
-                        if (validPlayerDefense(computerCard) == false)
+                    if (pnlComputerHand.Controls.Count != 0)
+                    {                     //MessageBox.Show("index play " + i);
+                        CardBox computerCard = (CardBox)pnlComputerHand.Controls[0];
+                        if (pnlPlayArea.Controls.Count <= 0)
                         {
-                            MessageBox.Show("You can not defend, take the card");
-                            //for all cards on the table, pick them up
-                            for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
+                            //flip the card as it is played
+                            computerCard.FaceUp = true;
+                            //play the card in the computer hand
+                            pnlComputerHand.Controls.Remove(computerCard);
+                            pnlPlayArea.Controls.Add(computerCard);
+                            computerCard.BorderStyle = BorderStyle.Fixed3D;
+
+                            //if no player cards can defend an attack
+                            if (validPlayerDefense(computerCard) == false)
                             {
-                                //debugging for card indexes on table.
-                                //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                                CardBox card = (CardBox)pnlPlayArea.Controls[j];
-                                // remove border from the card if it still has one.
-                                card.BorderStyle = BorderStyle.None;
-                                pnlPlayArea.Controls.Remove(card);
-                                //flip the card before entering computer hand
-                                //card.FaceUp = false;
-                                pnlPlayerHand.Controls.Add(card);
-                                RealignCards(pnlPlayerHand);
-                                RealignCards(pnlPlayArea);
-                                playerAttackCounter = 0;
-
+                                MessageBox.Show("You can not defend, take the card");
+                                //for all cards on the table, pick them up
+                                for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
+                                {
+                                    //debugging for card indexes on table.
+                                    //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
+                                    CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                                    // remove border from the card if it still has one.
+                                    card.BorderStyle = BorderStyle.None;
+                                    pnlPlayArea.Controls.Remove(card);
+                                    //flip the card before entering computer hand
+                                    //card.FaceUp = false;
+                                    pnlPlayerHand.Controls.Add(card);
+                                    RealignCards(pnlPlayerHand);
+                                    RealignCards(pnlPlayArea);
+                                    playerAttackCounter = 0;
+                                }
                             }
-                        }
-                        else
-                        {
-                            //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
-                            i += 100;
-                        }
+                            else
+                            {
+                                //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
+                                i += 100;
+                            }
 
+                        }
+                        // flag that a play was made and realign cards
+                        playMade = true;
+                        RealignCards(pnlPlayArea);
                     }
-                    // flag that a play was made and realign cards
-                    playMade = true;
-                    RealignCards(pnlPlayArea);
+
                 }
             }
             // if there are cards in the play area and cards remaining in the player hand
@@ -1129,7 +1131,7 @@ namespace DurakProject
                 {
                     //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                     //if card is less than 4 rank values apart from the lastCard played - card can be playedy
-                    if ((int)card.Rank > (int)lastCard.Rank && card.Suit == lastCard.Suit) 
+                    if ((int)card.Rank > (int)lastCard.Rank && card.Suit == lastCard.Suit)
                     {
                         //MessageBox.Show("comparing " + card.ToString() + " with " + lastCard.ToString());
                         // store the card in the validPlays list

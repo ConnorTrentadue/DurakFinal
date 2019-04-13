@@ -42,7 +42,7 @@ namespace DurakProject
         //*************************
         //*************************
         //*************************
-        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
+        int difficultyChoice = 3; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
         //*************************
         //*************************
         //*************************
@@ -585,13 +585,13 @@ namespace DurakProject
             // if playarea is empty begin attack
             if (pnlPlayArea.Controls.Count <= 0)
             {
+                CardBox computerCard = new CardBox();
                 //logic to add first card from computer hand (no attack logic applied)
                 for (int i = pnlComputerHand.Controls.Count; i > -1; i--)
                 {
                     if (pnlComputerHand.Controls.Count != 0)
                     {
                         //MessageBox.Show("index play " + i);
-                        CardBox computerCard = new CardBox();
 
                         // ------------------------------------------------ NEW CODE HERE ----------------------------------
                         // -------------------------------------------------------------------------------------------------

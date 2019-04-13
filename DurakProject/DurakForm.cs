@@ -756,7 +756,7 @@ namespace DurakProject
             btnPickUp.Visible = false;
             bool playMade = false;
             //logic to add a defend card from computer hand
-            for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
+            for (int i = 0; i < pnlComputerHand.Controls.Count && playMade != true; i++)
             {
                 CardBox aiCard = (CardBox)pnlComputerHand.Controls[i];
                 if (aiCard.Suit == playerCard.Suit /*playerCard*/ || aiCard.Suit == trumpSuit)
@@ -774,9 +774,10 @@ namespace DurakProject
 
                             // remove a click event from a card in the playArea
                             // RemoveEvent(card);
-                            i += 100;
+                            //i += 100;
                             playMade = true;
                             RealignCards(pnlPlayArea);
+                            //break;
                         }
                         else if (aiCard.Rank < playerCard.Rank && playerCard.Suit != trumpSuit)
                         {
@@ -788,9 +789,10 @@ namespace DurakProject
 
                             // remove a click event from a card in the playArea
                             //RemoveEvent(card);
-                            i += 100;
+                            //i += 100;
                             playMade = true;
                             RealignCards(pnlPlayArea);
+                            //break;
                         }
 
                     }
@@ -805,12 +807,15 @@ namespace DurakProject
 
                         // remove a click event from a card in the playArea
                         //RemoveEvent(card);
-                        i += 100;
+                        //i += 100;
                         playMade = true;
                         RealignCards(pnlPlayArea);
+                        //break;
                     }
                 }
-
+                //end the for loop
+                //if (playMade)
+                //    i += 100;
             }
 
             // check for attack end.
@@ -1114,7 +1119,7 @@ namespace DurakProject
                 }
                 else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
                 {
-                    MessageBox.Show(newAI.Name + "is the fool! \n" + newPlayer.Name + " has won.");
+                    MessageBox.Show(newAI.Name + " is the fool! \n" + newPlayer.Name + " has won.");
                     btnEndAttack.Visible = false;
                     btnPickUp.Visible = false;
                     btnForfeit.Visible = false;

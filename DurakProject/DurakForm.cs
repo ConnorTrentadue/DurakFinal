@@ -933,6 +933,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlPlayerHand.Controls.Add(trumpCard);
+                                RealignCards(pnlPlayerHand);
                             }
                             else if (pnlTrumpCard.Controls.Count == 0)
                                 WinCheck(durakDeck);
@@ -969,6 +970,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
+                                RealignCards(pnlComputerHand);
                             }
                             else if (pnlTrumpCard.Controls.Count == 0)
                                 WinCheck(durakDeck);
@@ -1003,6 +1005,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
+                                RealignCards(pnlComputerHand);
                             }
                             else if (pnlTrumpCard.Controls.Count == 0)
                                 WinCheck(durakDeck);
@@ -1035,6 +1038,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlPlayerHand.Controls.Add(trumpCard);
+                                RealignCards(pnlPlayerHand);
                             }
                             else if (pnlTrumpCard.Controls.Count == 0)
                                 WinCheck(durakDeck);

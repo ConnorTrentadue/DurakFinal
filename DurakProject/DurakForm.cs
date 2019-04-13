@@ -106,7 +106,6 @@ namespace DurakProject
         {
             // initialize form log ( change to whatever button we want to make the log come from )
             frmLog = new frmLog();
-            frmLog.Show();
         }
 
         private void mnuAbout_Click(object sender, EventArgs e)
@@ -121,7 +120,7 @@ namespace DurakProject
 
         private void mnuLog_Click(object sender, EventArgs e)
         {
-
+            frmLog.Show();
         }
         /// <summary>
         /// Begins a new game
@@ -166,11 +165,13 @@ namespace DurakProject
 
             // Writes to the log screen, which writes to the text file when the form is closed
             frmLog.WriteToLog("New Game started");
-            playerStats = Stats.ReadStats();
 
             // Example to get stats
-            //playerStats.gamesPlayed++;
-            lblGameNumber.Text += playerStats.gamesPlayed;
+            playerStats = Stats.ReadStats();
+            lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
+            lblWins.Text = "Wins: " + playerStats.wins;
+            lblLosses.Text = "Losses: " + playerStats.losses;
+            lblTies.Text = "Ties: " + playerStats.ties;
 
             //clear any objects on the table.
             pnlComputerHand.Controls.Clear();
@@ -313,6 +314,7 @@ namespace DurakProject
                 //realign player hand
                 RealignCards(pnlPlayerHand);
                 //remove the click event from the card as it enters the playarea
+                RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
                 ComputerAttack(playerAttackCounter);
@@ -334,6 +336,7 @@ namespace DurakProject
                     //realign player hand
                     RealignCards(pnlPlayerHand);
                     //remove the click event from the card as it enters the playarea
+                    RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
                     MakeNormalPlay(aCardBox, playerAttackCounter);
@@ -363,6 +366,7 @@ namespace DurakProject
                             aCardBox.Click -= CardBox_Click;
 
                             //remove the click event from the card as it enters the playarea
+                            RemoveBorder(aCardBox);
                             RemoveClickEvent(aCardBox);
 
                             MakeNormalPlay(aCardBox, playerAttackCounter);
@@ -585,6 +589,7 @@ namespace DurakProject
                         {
                             //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
                             i += 100;
+
                         }
 
                     }
@@ -814,6 +819,7 @@ namespace DurakProject
                     //flip the card before entering computer hand
                     card.FaceUp = true;
                     pnlComputerHand.Controls.Add(card);
+                    RemoveBorder(card);
                     RealignCards(pnlComputerHand);
                     RealignCards(pnlPlayArea);
                     playerAttackCounter = 0;
@@ -840,6 +846,7 @@ namespace DurakProject
                         if (computerCard.Suit == trumpSuit && playerCard.Rank > computerCard.Rank)
                         {
                             AddClickEvent(playerCard);
+                            DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
                             canPlay = true;
@@ -848,6 +855,7 @@ namespace DurakProject
                         else if (playerCard.Suit == trumpSuit && computerCard.Suit != trumpSuit)
                         {
                             AddClickEvent(playerCard);
+                            DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
                             canPlay = true;
@@ -858,6 +866,7 @@ namespace DurakProject
                     else if (playerCard.Suit == computerCard.Suit && playerCard.Rank > computerCard.Rank)
                     {
                         AddClickEvent(playerCard);
+                        DrawBorder(playerCard);
                         //MessageBox.Show(playerCard.ToString() + " is clickable.");
                         //i += 100;
                         canPlay = true;
@@ -868,6 +877,24 @@ namespace DurakProject
                 //canPlay = false;
             }
             return canPlay;
+        }
+
+        private void DrawBorder(CardBox card)
+        {
+            if(card != null)
+            { 
+                card.BackgroundImageLayout = ImageLayout.Center;
+                card.BackColor = Color.FromArgb(99, 150, 232);
+                card.Padding = new Padding(3);
+            }
+        }
+
+        private void RemoveBorder(CardBox card)
+        {
+            if(card != null)
+            {
+                card.Padding = new Padding(0);
+            }
         }
 
         //Method to redraw cards into player hands

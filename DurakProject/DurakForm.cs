@@ -157,13 +157,23 @@ namespace DurakProject
         }
 
         /// <summary>
-        /// New game clears out previous game session.  Creates a new deck and deals 6 cards to each player.
+        /// NEW GAME - Clear out previous game session, select difficulty
+        /// Creates a new deck and deals 6 cards to each player.
+        /// Determine who attacks first.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnNewGame_Click(object sender, EventArgs e)
         {
-            if(playerName == "")
+            //clear any existing att / pickup buttons
+            btnEndAttack.Visible = false;
+            btnPickUp.Visible = false;
+
+            //enable buttons if they were not visible
+            btnForfeit.Visible = true;
+
+            // If player has not entered a name have them do so
+            if (playerName == "")
             {
                 //prompt the user for their name
                 frmPlayerNameEntry namePrompt = new frmPlayerNameEntry();
@@ -179,22 +189,18 @@ namespace DurakProject
             //pull statistics from statistics log file.
             //else store their name and continue 
 
+
             //prompt the user for their choice of difficulty
             frmDifficultyChoice difficultyPrompt = new frmDifficultyChoice();
-
             if (difficultyPrompt.ShowDialog() == DialogResult.OK)
             {
                 difficultyChoice = difficultyPrompt.DifficultyValue;
             }
 
-
-            //enable buttons if they were not visible
-            btnForfeit.Visible = true;
-
             // Writes to the log screen, which writes to the text file when the form is closed
             frmLog.WriteToLog("New Game started");
 
-            // Get stats
+            // Get player existing stats
             if (playerStats != null)
                 playerStats.gamesPlayed++;
             playerStats = Stats.ReadStats();
@@ -213,13 +219,11 @@ namespace DurakProject
             //ranomdizer for first player selection
             int someNumber = randomNumber.Next(1, 20);
 
-            //MessageBox.Show(someNumber.ToString());
-
             //Instantiate new computer player based on selected difficulty (w/ random name)
             newAI = new ComputerPlayer(computerNames[someNumber], difficultyChoice);
-            newPlayer = new Player(playerName); //playerName is a test name. We need to add a form that pops up at 
-                                                //newgame click that prompts for player name and then stores the entered value
-                                                //At this point we also need to add a form pop-up that prompts for difficulty
+            newPlayer = new Player(playerName); //playerName is assigned from the user entry 
+
+            // set the label of the AI and Player names                                    
             lblAIName.Text = newAI.Name;
             lblPlayerName.Text = newPlayer.Name;
 
@@ -237,11 +241,11 @@ namespace DurakProject
             pbDeck.Image = durakDeck.GetCard(0).GetCardImage();
 
             // Show the number of cards in the deck
-            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+            lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
 
             //deal 12 cards, (6 each) to the players.
             //alternate the cards into each player's hand
-            for (int i = 1; i <= 12 /* * playerCount */; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 card = durakDeck.DrawCard();
 
@@ -268,23 +272,36 @@ namespace DurakProject
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
             CardBox aTrumpCardbox = new CardBox(trumpCard);
+            CardBox aTrumpIndicator = new CardBox(trumpCard);
+
 
             //draw the card to the trump panel face up
             trumpCard.FaceUp = true;
             pnlTrumpCard.Controls.Add(aTrumpCardbox);
-            //MessageBox.Show(trumpCard.ToString());
+            // assign the trump suit for the game
             trumpSuit = trumpCard.Suit;
 
+            // Set the trump image to the trump suit.
+            //string imageName = trumpSuit.ToString();
+            Image trumpImage = Properties.Resources.ResourceManager.GetObject(trumpSuit.ToString()) as Image;
+            pbTrumpIndicator.Image = trumpImage;
+            pbTrumpIndicator.BackColor = Color.White;
+            pbTrumpIndicator.BorderStyle = BorderStyle.Fixed3D;
+            lblTrumpIndicator.Text = trumpSuit.ToString();
+
             // Display remaining cards after the deal
-            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+            lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
 
             // ******* Begin game-play flow. *********
-            // Begin Attack or Phase based on random determination
-            int whoGoesFirst = randomNumber.Next(1, 10);
-            if (whoGoesFirst % 2 == 0)
-                playerAttack = true; // player goes first
-            else
-                playerAttack = false; // AI goes first
+            //// Begin Attack or Phase based on random determination
+            //int whoGoesFirst = randomNumber.Next(1, 10);
+            //if (whoGoesFirst % 2 == 0)
+            //    playerAttack = true; // player goes first
+            //else
+            //    playerAttack = false; // AI goes first
+
+            //decide whom take the first turn
+            PlayerFirst();
             if (playerAttack != true)  //if not true, AI attacks first.
             {
                 ComputerAttack(playerAttackCounter);
@@ -301,11 +318,11 @@ namespace DurakProject
         /// </summary>
         private void btnForfeit_Click(object sender, EventArgs e)
         {
-            //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
+            // Log the game as a loss for the player
+            // disable all player controls
             // Closes log form and writes to file
             //frmLog.Close();
             //Stats.WriteStats(playerStats);
-
         }
 
         /// <summary>
@@ -359,7 +376,7 @@ namespace DurakProject
                 //realign player hand
                 RealignCards(pnlPlayerHand);
                 //remove the click event from the card as it enters the playarea
-                RemoveBorder(aCardBox);
+                //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
                 ComputerAttack(playerAttackCounter);
@@ -381,7 +398,7 @@ namespace DurakProject
                     //realign player hand
                     RealignCards(pnlPlayerHand);
                     //remove the click event from the card as it enters the playarea
-                    RemoveBorder(aCardBox);
+                    //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
                     MakeNormalPlay(aCardBox, playerAttackCounter);
@@ -408,10 +425,11 @@ namespace DurakProject
 
                             //realign player hand
                             RealignCards(pnlPlayerHand);
-                            aCardBox.Click -= CardBox_Click;
+                            //aCardBox.Click -= CardBox_Click;
+                            RemoveClickEvent(aCardBox);
 
                             //remove the click event from the card as it enters the playarea
-                            RemoveBorder(aCardBox);
+                            //RemoveBorder(aCardBox);
                             RemoveClickEvent(aCardBox);
 
                             MakeNormalPlay(aCardBox, playerAttackCounter);
@@ -430,14 +448,40 @@ namespace DurakProject
                 if (validPlay == false)
                 {
                     validPlay = true;
-                    // MessageBox.Show(aCardBox.ToString() + " is not a valid card");
+                    //MessageBox.Show(aCardBox.ToString() + " is not a valid card");
                 }
                 if (pnlPlayerHand.Controls.Count == 0)
                 {
                     RedrawCards(durakDeck, playerAttack);
                 }
-            }
+                // revaluate click events
+                //MessageBox.Show("re-evaluate click events");  //debugging
+                for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+                {
+                    bool foundCard = false;
+                    CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
 
+                    for (int j = 0; j < pnlPlayArea.Controls.Count && !foundCard; j++)
+                    {
+                        CardBox validCardCheck = (CardBox)pnlPlayArea.Controls[j];
+                        // check cards in the playarea for valid rank
+                        //MessageBox.Show("evaluate " + playerCard.ToString() + " vs " + validCardCheck.ToString() );
+                        if ((int)playerCard.Rank != (int)validCardCheck.Rank)
+                        {
+                            //remove click event
+                            RemoveClickEvent(playerCard);
+                        }
+                        else
+                        {
+                            AddClickEvent(playerCard);
+                            foundCard = true;
+                            //MessageBox.Show("Valid card:  " + playerCard.ToString());
+                        }
+                        //MessageBox.Show("Index value is " + i); //debugging
+                    }
+                }
+
+            }
 
 
         }
@@ -530,6 +574,7 @@ namespace DurakProject
         {
             //remove the event handler 
             card.Click -= CardBox_Click;
+            RemoveBorder(card);
         }
 
         // Method to wire cardbox click events
@@ -537,6 +582,7 @@ namespace DurakProject
         {
             //add the event handler 
             card.Click += CardBox_Click;
+            DrawBorder(card);
             //MessageBox.Show(card.ToString() + " enabled.");
         }
 
@@ -550,17 +596,19 @@ namespace DurakProject
                 pnlPlayArea.Controls.Remove(card);
                 pnlDiscard.Controls.Add(card);
                 pnlDiscard.Controls.SetChildIndex(card, 0);
+                lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                 //MessageBox.Show(card.ToString() + " Added to the discard pile");
                 RealignCards(pnlDiscard);
                 RealignCards(pnlPlayerHand);
                 RealignCards(pnlComputerHand);
             }
 
+            // remove all click events
             for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
             {
                 CardBox card = (CardBox)pnlPlayerHand.Controls[i];
-                card.BorderStyle = BorderStyle.None;  //clear any border on cards in player hand.
                 RemoveClickEvent(card);
+                //RemoveBorder(card);
             }
             int playCount = 0;
             //fill the player's hands with cards
@@ -591,8 +639,8 @@ namespace DurakProject
             for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
             {
                 CardBox card = (CardBox)pnlPlayerHand.Controls[i];
-                card.BorderStyle = BorderStyle.None;  //clear any border on cards in player hand.
                 RemoveClickEvent(card);
+                //RemoveBorder(card);
             }
             // clear any borders from the playArea cards
             for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
@@ -676,11 +724,11 @@ namespace DurakProject
                                     //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
                                     CardBox card = (CardBox)pnlPlayArea.Controls[j];
                                     // remove border from the card if it still has one.
-                                    card.BorderStyle = BorderStyle.None;
+                                    RemoveBorder(card);
                                     pnlPlayArea.Controls.Remove(card);
-                                    //flip the card before entering computer hand
                                     //card.FaceUp = false;
                                     pnlPlayerHand.Controls.Add(card);
+                                    RemoveClickEvent(card);
                                     RealignCards(pnlPlayerHand);
                                     RealignCards(pnlPlayArea);
                                     playerAttackCounter = 0;
@@ -761,6 +809,7 @@ namespace DurakProject
                                     pnlPlayArea.Controls.Remove(card);
                                     //flip the card before entering computer hand
                                     //card.FaceUp = false;
+                                    RemoveBorder(card);
                                     pnlPlayerHand.Controls.Add(card);
                                     RealignCards(pnlPlayerHand);
                                     RealignCards(pnlPlayArea);
@@ -803,6 +852,7 @@ namespace DurakProject
                         pnlPlayArea.Controls.Remove(card);
                         pnlDiscard.Controls.Add(card);
                         pnlDiscard.Controls.SetChildIndex(card, 0);
+                        lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                         //MessageBox.Show(card.ToString() + " Added to the discard pile");
                         RealignCards(pnlDiscard);
                         RealignCards(pnlPlayerHand);
@@ -837,9 +887,11 @@ namespace DurakProject
         //Method for Player on attack, computer on defense
         public void ComputerDefend(CardBox playerCard)
         {
-            //remove the btnPickup
+            //ensure buttons are visible
             btnPickUp.Visible = false;
-            bool playMade = false;
+            btnEndAttack.Visible = true;
+
+            bool playMade = false; //bool to track if a play was made
             //logic to add a defend card from computer hand
             for (int i = 0; i < pnlComputerHand.Controls.Count && playMade != true; i++)
             {
@@ -871,7 +923,7 @@ namespace DurakProject
                             //flip the card as it is played
                             aiCard.FaceUp = true;
                             pnlPlayArea.Controls.Add(aiCard);
-
+                            // remove border
                             // remove a click event from a card in the playArea
                             //RemoveEvent(card);
                             //i += 100;
@@ -906,16 +958,6 @@ namespace DurakProject
             // check for attack end.
             if (playMade == false)
             {
-                ////MessageBox.Show("Play Not made");
-                //pnlPlayArea.Controls.Remove(cardBox);
-                ////flip the card before entering computer hand
-                //cardBox.FaceUp = false;
-                //pnlComputerHand.Controls.Add(cardBox);
-                //RealignCards(pnlComputerHand);
-                ////reset the attack counter
-                //playerAttackCounter = 0;
-
-
                 for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
                 {
                     //debugging for card indexes on table.
@@ -929,6 +971,12 @@ namespace DurakProject
                     RealignCards(pnlComputerHand);
                     RealignCards(pnlPlayArea);
                     playerAttackCounter = 0;
+                }
+                for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+                {
+                    //re-enable player clickable hand
+                    CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                    AddClickEvent(card);
                 }
             }
         }
@@ -952,7 +1000,7 @@ namespace DurakProject
                         if (computerCard.Suit == trumpSuit && playerCard.Rank > computerCard.Rank)
                         {
                             AddClickEvent(playerCard);
-                            DrawBorder(playerCard);
+                            //DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
                             canPlay = true;
@@ -961,7 +1009,7 @@ namespace DurakProject
                         else if (playerCard.Suit == trumpSuit && computerCard.Suit != trumpSuit)
                         {
                             AddClickEvent(playerCard);
-                            DrawBorder(playerCard);
+                            //DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
                             canPlay = true;
@@ -972,7 +1020,7 @@ namespace DurakProject
                     else if (playerCard.Suit == computerCard.Suit && playerCard.Rank > computerCard.Rank)
                     {
                         AddClickEvent(playerCard);
-                        DrawBorder(playerCard);
+                        //DrawBorder(playerCard);
                         //MessageBox.Show(playerCard.ToString() + " is clickable.");
                         //i += 100;
                         canPlay = true;
@@ -985,16 +1033,25 @@ namespace DurakProject
             return canPlay;
         }
 
+        /// <summary>
+        /// Draw a border on a card
+        /// </summary>
+        /// <param name="card">receives a card to </param>
         private void DrawBorder(CardBox card)
         {
             if (card != null)
             {
                 card.BackgroundImageLayout = ImageLayout.Center;
-                card.BackColor = Color.FromArgb(99, 150, 232);
+                card.BackColor = Color.FromArgb(237, 117, 4);
                 card.Padding = new Padding(3);
+
             }
         }
 
+        /// <summary>
+        /// Remove a border from a card
+        /// </summary>
+        /// <param name="card">Receives a card</param>
         private void RemoveBorder(CardBox card)
         {
             if (card != null)
@@ -1041,7 +1098,7 @@ namespace DurakProject
                             //draw a card
                             card = durakDeck.DrawCard();
                             // adjsut the cards label showing how many cards are left in the deck
-                            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+                            lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
                             //set the card faceup for a player hand
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
@@ -1077,7 +1134,7 @@ namespace DurakProject
                             //draw a card
                             card = durakDeck.DrawCard();
                             // adjsut the cards label showing how many cards are left in the deck
-                            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+                            lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
                             card.FaceUp = true;  //not required for AI hands, use only for debugging
                             CardBox cardBox = new CardBox(card);
                             //add card to AI hand and realign the hand
@@ -1113,7 +1170,7 @@ namespace DurakProject
                             //draw a card
                             card = durakDeck.DrawCard();
                             // adjsut the cards label showing how many cards are left in the deck
-                            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+                            lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
                             card.FaceUp = true;  //not required for AI hands, use only for debugging
                             CardBox cardBox = new CardBox(card);
                             //add card to AI hand and realign the hand
@@ -1146,7 +1203,7 @@ namespace DurakProject
                             //draw a card
                             card = durakDeck.DrawCard();
                             // adjsut the cards label showing how many cards are left in the deck
-                            lblCardsRemaining.Text = durakDeck.CardsRemaining.ToString();
+                            lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
                             //set the card faceup for a player hand
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
@@ -1184,6 +1241,7 @@ namespace DurakProject
                             {
                                 CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
                                 RemoveClickEvent(cardBox);
+                                //RemoveBorder(cardBox);
                             }
                         }
                         btnEndAttack.Visible = false;
@@ -1199,6 +1257,7 @@ namespace DurakProject
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
                             RemoveClickEvent(cardBox);
+                            //RemoveBorder(cardBox);
                         }
                         btnEndAttack.Visible = false;  // should already be not visible, but set it anyway
                         btnPickUp.Visible = false;
@@ -1343,11 +1402,11 @@ namespace DurakProject
             for (int i = pnlComputerHand.Controls.Count - 1; i > -1; i--)
             {
                 CardBox tempCard = (CardBox)pnlComputerHand.Controls[i];
-                MessageBox.Show("Moving " + tempCard.ToString() + " to temporary list.");
+                //MessageBox.Show("Moving " + tempCard.ToString() + " to temporary list.");
                 tempHand.Add(tempCard);
             }
 
-            MessageBox.Show("Sorting List!");
+            //MessageBox.Show("Sorting List!");
             // Sorts the temp hand into a new list by rank from lowest to highest 
             // ONLY CHANGES THE INDEXES NOT THE PHYSICAL ORDER
             List<CardBox> SortedList = tempHand.OrderBy(o => (int)o.Rank).ToList();
@@ -1364,7 +1423,7 @@ namespace DurakProject
             for (int i = 0; i < SortedList.Count; i++)
             {
                 CardBox tempCard = SortedList[i];
-                MessageBox.Show("Adding " + tempCard.ToString() + " to computer hand.");
+                //MessageBox.Show("Adding " + tempCard.ToString() + " to computer hand.");
                 pnlComputerHand.Controls.Add(tempCard);
             }
         }
@@ -1380,16 +1439,94 @@ namespace DurakProject
             // call pick up cards method
             for (int i = (pnlPlayArea.Controls.Count - 1); i > -1; i--)
             {
-                //RemoveClickEvent play area cards and give them to the player
+                //Pick up play area cards and give them to the player
                 //MessageBox.Show(i.ToString());
                 CardBox card = (CardBox)pnlPlayArea.Controls[i];
                 pnlPlayArea.Controls.Remove(card);
+                RemoveBorder(card);
                 card.FaceUp = flipped; //  changes the flip value of the card based on the bool passed.
                 hand.Controls.Add(card);
                 RealignCards(pnlPlayerHand);
             }
         }
 
+        /// <summary>
+        /// PlayerFirst() Logic to determine which player goes first 
+        /// </summary>
+        /// <returns>boolean</returns>
+        private bool PlayerFirst()
+        {
+            //declare two cardboxes for comparison
+            CardBox playerCard = (CardBox)pnlPlayerHand.Controls[0];
+            CardBox aiCard = (CardBox)pnlComputerHand.Controls[0];
+
+            //loop through the player hand for lowest trump card
+            for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+            {
+                CardBox tempCard = (CardBox)pnlPlayerHand.Controls[i];
+                //MessageBox.Show(tempCard.Suit + ": TempCard vs  Trump: " + trumpSuit);
+                if (tempCard.Suit == trumpSuit)
+                {
+                    //MessageBox.Show("passed.");
+
+                        if ((int)tempCard.Rank <= (int)playerCard.Rank && tempCard.Suit == trumpSuit)
+                        {
+                            playerCard = tempCard;
+                            //MessageBox.Show("Card is now " + playerCard.ToString());
+                        }
+                        else
+                            //MessageBox.Show(playerCard.ToString() + " was ranked lowest"); 
+                }
+            }
+            //MessageBox.Show(playerCard.ToString() + " was chosen");
+
+            //loop throught the AI hand for lowest trump card
+            for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
+            {
+                CardBox tempCard = (CardBox)pnlComputerHand.Controls[i];
+                if (tempCard.Suit == trumpSuit)
+                {
+                    //MessageBox.Show("passed.");
+
+                    if ((int)tempCard.Rank < (int)aiCard.Rank && tempCard.Suit == trumpSuit)
+                    {
+                        aiCard = tempCard;
+                        //MessageBox.Show("Card is now " + aiCard.ToString());
+                    }
+                    //else
+                        //MessageBox.Show(aiCard.ToString() + " was ranked higher");
+                }
+
+            }
+            //MessageBox.Show(aiCard.ToString() + " was chosen");
+
+            if (playerCard.Suit == trumpSuit && aiCard.Suit == trumpSuit)
+            {
+                if ((int)playerCard.Rank < (int)aiCard.Rank)
+                {
+                    playerAttack = true;
+                    MessageBox.Show(" Player goes first");
+                }
+                else
+                {
+                    playerAttack = false;
+                    MessageBox.Show("AI goes first");
+                }
+            }
+            else if (playerCard.Suit == trumpSuit && aiCard.Suit != trumpSuit)
+            {
+                playerAttack = true;
+                MessageBox.Show(" Player goes first");
+            }
+            else if (playerCard.Suit != trumpSuit && aiCard.Suit == trumpSuit)
+            {
+                playerAttack = false;
+                MessageBox.Show("AI goes first");
+            }
+            
+
+            return playerAttack;
+        }
 
         /// <summary>
         /// Creates a temporary hand for card ordering

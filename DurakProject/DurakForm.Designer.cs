@@ -49,14 +49,15 @@
             this.btnPickUp = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuLog = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNewGame = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuForfeit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblDiscard = new System.Windows.Forms.Label();
+            this.lblTrumpIndicator = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
-            this.pnlPlayArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -131,7 +132,7 @@
             // 
             this.lblCardsRemaining.BackColor = System.Drawing.Color.Transparent;
             this.lblCardsRemaining.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblCardsRemaining.Location = new System.Drawing.Point(891, 381);
+            this.lblCardsRemaining.Location = new System.Drawing.Point(894, 383);
             this.lblCardsRemaining.Name = "lblCardsRemaining";
             this.lblCardsRemaining.Size = new System.Drawing.Size(76, 21);
             this.lblCardsRemaining.TabIndex = 12;
@@ -176,7 +177,8 @@
             // pbTrumpIndicator
             // 
             this.pbTrumpIndicator.BackColor = System.Drawing.Color.Transparent;
-            this.pbTrumpIndicator.Location = new System.Drawing.Point(3, 3);
+            this.pbTrumpIndicator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pbTrumpIndicator.Location = new System.Drawing.Point(176, 151);
             this.pbTrumpIndicator.Name = "pbTrumpIndicator";
             this.pbTrumpIndicator.Size = new System.Drawing.Size(36, 36);
             this.pbTrumpIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -186,7 +188,6 @@
             // pnlPlayArea
             // 
             this.pnlPlayArea.BackColor = System.Drawing.Color.Transparent;
-            this.pnlPlayArea.Controls.Add(this.pbTrumpIndicator);
             this.pnlPlayArea.Location = new System.Drawing.Point(219, 151);
             this.pnlPlayArea.Name = "pnlPlayArea";
             this.pnlPlayArea.Size = new System.Drawing.Size(652, 368);
@@ -277,6 +278,29 @@
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "File";
             // 
+            // mnuNewGame
+            // 
+            this.mnuNewGame.Name = "mnuNewGame";
+            this.mnuNewGame.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
+            this.mnuNewGame.Size = new System.Drawing.Size(171, 22);
+            this.mnuNewGame.Text = "New Game";
+            this.mnuNewGame.Click += new System.EventHandler(this.mnuNewGame_Click);
+            // 
+            // mnuForfeit
+            // 
+            this.mnuForfeit.Name = "mnuForfeit";
+            this.mnuForfeit.Size = new System.Drawing.Size(171, 22);
+            this.mnuForfeit.Text = "Forfeit";
+            this.mnuForfeit.Click += new System.EventHandler(this.mnuForfeit_Click);
+            // 
+            // mnuClose
+            // 
+            this.mnuClose.Name = "mnuClose";
+            this.mnuClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.mnuClose.Size = new System.Drawing.Size(171, 22);
+            this.mnuClose.Text = "&Close";
+            this.mnuClose.Click += new System.EventHandler(this.mnuClose_Click);
+            // 
             // mnuLog
             // 
             this.mnuLog.Name = "mnuLog";
@@ -298,28 +322,27 @@
             this.mnuHelp.Text = "Help";
             this.mnuHelp.Click += new System.EventHandler(this.mnuHelp_Click);
             // 
-            // mnuNewGame
+            // lblDiscard
             // 
-            this.mnuNewGame.Name = "mnuNewGame";
-            this.mnuNewGame.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
-            this.mnuNewGame.Size = new System.Drawing.Size(180, 22);
-            this.mnuNewGame.Text = "New Game";
-            this.mnuNewGame.Click += new System.EventHandler(this.mnuNewGame_Click);
+            this.lblDiscard.BackColor = System.Drawing.Color.Transparent;
+            this.lblDiscard.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lblDiscard.Location = new System.Drawing.Point(115, 384);
+            this.lblDiscard.Name = "lblDiscard";
+            this.lblDiscard.Size = new System.Drawing.Size(76, 21);
+            this.lblDiscard.TabIndex = 27;
+            this.lblDiscard.Text = "Discarded:";
+            this.lblDiscard.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // mnuForfeit
+            // lblTrumpIndicator
             // 
-            this.mnuForfeit.Name = "mnuForfeit";
-            this.mnuForfeit.Size = new System.Drawing.Size(180, 22);
-            this.mnuForfeit.Text = "Forfeit";
-            this.mnuForfeit.Click += new System.EventHandler(this.mnuForfeit_Click);
-            // 
-            // mnuClose
-            // 
-            this.mnuClose.Name = "mnuClose";
-            this.mnuClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.mnuClose.Size = new System.Drawing.Size(180, 22);
-            this.mnuClose.Text = "&Close";
-            this.mnuClose.Click += new System.EventHandler(this.mnuClose_Click);
+            this.lblTrumpIndicator.AutoSize = true;
+            this.lblTrumpIndicator.BackColor = System.Drawing.Color.Transparent;
+            this.lblTrumpIndicator.ForeColor = System.Drawing.Color.White;
+            this.lblTrumpIndicator.Location = new System.Drawing.Point(178, 192);
+            this.lblTrumpIndicator.Name = "lblTrumpIndicator";
+            this.lblTrumpIndicator.Size = new System.Drawing.Size(0, 13);
+            this.lblTrumpIndicator.TabIndex = 28;
+            this.lblTrumpIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // frmDurak
             // 
@@ -328,6 +351,9 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(47)))), ((int)(((byte)(33)))));
             this.BackgroundImage = global::DurakProject.Properties.Resources.WoodTexture1024;
             this.ClientSize = new System.Drawing.Size(1091, 636);
+            this.Controls.Add(this.lblTrumpIndicator);
+            this.Controls.Add(this.lblDiscard);
+            this.Controls.Add(this.pbTrumpIndicator);
             this.Controls.Add(this.btnPickUp);
             this.Controls.Add(this.btnEndAttack);
             this.Controls.Add(this.lblPlayerName);
@@ -355,7 +381,6 @@
             this.Text = "Durak Game";
             this.Load += new System.EventHandler(this.frmDurak_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).EndInit();
-            this.pnlPlayArea.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -392,6 +417,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuLog;
         private System.Windows.Forms.ToolStripMenuItem mnuAbout;
         private System.Windows.Forms.ToolStripMenuItem mnuHelp;
+        private System.Windows.Forms.Label lblDiscard;
+        private System.Windows.Forms.Label lblTrumpIndicator;
     }
 }
 

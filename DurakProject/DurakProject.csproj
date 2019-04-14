@@ -112,9 +112,20 @@
       <Name>StatsLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\WoodTexture1024.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clubs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diamonds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Spades.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

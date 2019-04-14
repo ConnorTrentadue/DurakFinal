@@ -88,6 +88,7 @@
             this.Controls.Add(this.rbtnHardMode);
             this.Controls.Add(this.rbtnMediumMode);
             this.Controls.Add(this.rbtnEasyMode);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmDifficultyChoice";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Difficulty";

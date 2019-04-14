@@ -632,7 +632,10 @@ namespace DurakProject
                                     }
                                 }
                                 else // Break the loop
+                                {
+                                    computerCard = (CardBox)pnlComputerHand.Controls[0];
                                     m += 100;
+                                }
                             }
                         }
                         else // Easy AI always plays the first card in hand

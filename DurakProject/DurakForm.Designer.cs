@@ -132,7 +132,7 @@
             // 
             this.lblCardsRemaining.BackColor = System.Drawing.Color.Transparent;
             this.lblCardsRemaining.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblCardsRemaining.Location = new System.Drawing.Point(894, 383);
+            this.lblCardsRemaining.Location = new System.Drawing.Point(894, 385);
             this.lblCardsRemaining.Name = "lblCardsRemaining";
             this.lblCardsRemaining.Size = new System.Drawing.Size(76, 21);
             this.lblCardsRemaining.TabIndex = 12;
@@ -178,7 +178,7 @@
             // 
             this.pbTrumpIndicator.BackColor = System.Drawing.Color.Transparent;
             this.pbTrumpIndicator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pbTrumpIndicator.Location = new System.Drawing.Point(176, 151);
+            this.pbTrumpIndicator.Location = new System.Drawing.Point(137, 151);
             this.pbTrumpIndicator.Name = "pbTrumpIndicator";
             this.pbTrumpIndicator.Size = new System.Drawing.Size(36, 36);
             this.pbTrumpIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -326,7 +326,7 @@
             // 
             this.lblDiscard.BackColor = System.Drawing.Color.Transparent;
             this.lblDiscard.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblDiscard.Location = new System.Drawing.Point(115, 384);
+            this.lblDiscard.Location = new System.Drawing.Point(115, 387);
             this.lblDiscard.Name = "lblDiscard";
             this.lblDiscard.Size = new System.Drawing.Size(76, 21);
             this.lblDiscard.TabIndex = 27;
@@ -335,14 +335,16 @@
             // 
             // lblTrumpIndicator
             // 
-            this.lblTrumpIndicator.AutoSize = true;
+            this.lblTrumpIndicator.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblTrumpIndicator.BackColor = System.Drawing.Color.Transparent;
             this.lblTrumpIndicator.ForeColor = System.Drawing.Color.White;
-            this.lblTrumpIndicator.Location = new System.Drawing.Point(178, 192);
+            this.lblTrumpIndicator.Location = new System.Drawing.Point(119, 189);
             this.lblTrumpIndicator.Name = "lblTrumpIndicator";
-            this.lblTrumpIndicator.Size = new System.Drawing.Size(0, 13);
+            this.lblTrumpIndicator.Size = new System.Drawing.Size(73, 23);
             this.lblTrumpIndicator.TabIndex = 28;
-            this.lblTrumpIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTrumpIndicator.Text = "Trump";
+            this.lblTrumpIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblTrumpIndicator.Visible = false;
             // 
             // frmDurak
             // 

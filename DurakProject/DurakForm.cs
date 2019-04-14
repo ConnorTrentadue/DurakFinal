@@ -272,8 +272,6 @@ namespace DurakProject
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
             CardBox aTrumpCardbox = new CardBox(trumpCard);
-            CardBox aTrumpIndicator = new CardBox(trumpCard);
-
 
             //draw the card to the trump panel face up
             trumpCard.FaceUp = true;
@@ -281,33 +279,28 @@ namespace DurakProject
             // assign the trump suit for the game
             trumpSuit = trumpCard.Suit;
 
-            // Set the trump image to the trump suit.
-            //string imageName = trumpSuit.ToString();
+            // Set the trump image to the trump suit and its label
             Image trumpImage = Properties.Resources.ResourceManager.GetObject(trumpSuit.ToString()) as Image;
             pbTrumpIndicator.Image = trumpImage;
             pbTrumpIndicator.BackColor = Color.White;
             pbTrumpIndicator.BorderStyle = BorderStyle.Fixed3D;
             lblTrumpIndicator.Text = trumpSuit.ToString();
+            lblTrumpIndicator.Visible = true;
 
             // Display remaining cards after the deal
             lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
 
             // ******* Begin game-play flow. *********
-            //// Begin Attack or Phase based on random determination
-            //int whoGoesFirst = randomNumber.Next(1, 10);
-            //if (whoGoesFirst % 2 == 0)
-            //    playerAttack = true; // player goes first
-            //else
-            //    playerAttack = false; // AI goes first
-
             //decide whom take the first turn
             PlayerFirst();
             if (playerAttack != true)  //if not true, AI attacks first.
             {
+                MessageBox.Show(newAI.Name + " will go first");
                 ComputerAttack(playerAttackCounter);
             }
             else
             {
+                MessageBox.Show(newPlayer.Name + " will go first");
                 btnEndAttack.Visible = true;
             }
 
@@ -348,7 +341,6 @@ namespace DurakProject
                     AddClickEvent(card);
                 }
             }
-
         }
 
         #endregion
@@ -1057,6 +1049,7 @@ namespace DurakProject
             if (card != null)
             {
                 card.Padding = new Padding(0);
+                card.BorderStyle = BorderStyle.None;
             }
         }
 
@@ -1442,8 +1435,8 @@ namespace DurakProject
                 //Pick up play area cards and give them to the player
                 //MessageBox.Show(i.ToString());
                 CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                pnlPlayArea.Controls.Remove(card);
                 RemoveBorder(card);
+                pnlPlayArea.Controls.Remove(card);
                 card.FaceUp = flipped; //  changes the flip value of the card based on the bool passed.
                 hand.Controls.Add(card);
                 RealignCards(pnlPlayerHand);
@@ -1469,13 +1462,13 @@ namespace DurakProject
                 {
                     //MessageBox.Show("passed.");
 
-                        if ((int)tempCard.Rank <= (int)playerCard.Rank && tempCard.Suit == trumpSuit)
-                        {
-                            playerCard = tempCard;
-                            //MessageBox.Show("Card is now " + playerCard.ToString());
-                        }
-                        //else
-                            //MessageBox.Show(playerCard.ToString() + " was ranked lowest"); 
+                    if ((int)tempCard.Rank <= (int)playerCard.Rank && tempCard.Suit == trumpSuit)
+                    {
+                        playerCard = tempCard;
+                        //MessageBox.Show("Card is now " + playerCard.ToString());
+                    }
+                    //else
+                    //MessageBox.Show(playerCard.ToString() + " was ranked lowest"); 
                 }
             }
             //MessageBox.Show(playerCard.ToString() + " was chosen");
@@ -1494,7 +1487,7 @@ namespace DurakProject
                         //MessageBox.Show("Card is now " + aiCard.ToString());
                     }
                     //else
-                        //MessageBox.Show(aiCard.ToString() + " was ranked higher");
+                    //MessageBox.Show(aiCard.ToString() + " was ranked higher");
                 }
 
             }
@@ -1505,25 +1498,36 @@ namespace DurakProject
                 if ((int)playerCard.Rank < (int)aiCard.Rank)
                 {
                     playerAttack = true;
-                    MessageBox.Show(" Player goes first");
                 }
                 else
                 {
                     playerAttack = false;
-                    MessageBox.Show("AI goes first");
                 }
             }
             else if (playerCard.Suit == trumpSuit && aiCard.Suit != trumpSuit)
             {
                 playerAttack = true;
-                MessageBox.Show(" Player goes first");
             }
             else if (playerCard.Suit != trumpSuit && aiCard.Suit == trumpSuit)
             {
                 playerAttack = false;
-                MessageBox.Show("AI goes first");
+
             }
-            
+            else
+            {
+                //// No player has trump
+                int whoGoesFirst = randomNumber.Next(1, 10);   //randomizer since no player has trump
+                if (whoGoesFirst % 2 == 0)
+                {
+                    playerAttack = true;
+                }
+                else
+                {
+                    playerAttack = false; // AI goes first
+                }
+
+            }
+
 
             return playerAttack;
         }

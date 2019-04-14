@@ -372,6 +372,7 @@ namespace DurakProject
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
+                MessageBox.Show("player COunter " + playerAttackCounter.ToString());
                 ComputerAttack(playerAttackCounter);
             }
             else //player is attacking

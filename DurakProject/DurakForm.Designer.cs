@@ -136,7 +136,7 @@
             this.lblCardsRemaining.Name = "lblCardsRemaining";
             this.lblCardsRemaining.Size = new System.Drawing.Size(76, 21);
             this.lblCardsRemaining.TabIndex = 12;
-            this.lblCardsRemaining.Text = "Remaining: 0";
+            this.lblCardsRemaining.Text = "Remaining: ";
             this.lblCardsRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblLosses

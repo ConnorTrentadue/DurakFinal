@@ -179,6 +179,15 @@ namespace DurakProject
             //pull statistics from statistics log file.
             //else store their name and continue 
 
+            //prompt the user for their choice of difficulty
+            using (frmDifficultyChoice difficultyPrompt = new frmDifficultyChoice())
+            {
+                if (difficultyPrompt.ShowDialog() == DialogResult.OK)
+                {
+                    difficultyChoice = difficultyPrompt.DifficultyValue;
+                }
+            }
+
             //enable buttons if they were not visible
             btnForfeit.Visible = true;
 
@@ -1430,7 +1439,6 @@ namespace DurakProject
 
 
         #endregion
-
 
     }
 }

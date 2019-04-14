@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DifficultyChoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DifficultyChoice.Designer.cs">
+      <DependentUpon>DifficultyChoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="DurakForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +65,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DifficultyChoice.resx">
+      <DependentUpon>DifficultyChoice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DurakForm.resx">
       <DependentUpon>DurakForm.cs</DependentUpon>
     </EmbeddedResource>

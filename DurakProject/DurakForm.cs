@@ -1474,7 +1474,7 @@ namespace DurakProject
                             playerCard = tempCard;
                             //MessageBox.Show("Card is now " + playerCard.ToString());
                         }
-                        else
+                        //else
                             //MessageBox.Show(playerCard.ToString() + " was ranked lowest"); 
                 }
             }

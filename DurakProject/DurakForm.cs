@@ -74,7 +74,7 @@ namespace DurakProject
          "Joanne", "Hermila", "Violette", "Trina",
          "Ray", "Shaun"};
 
-        string playerName = "THE MAN";
+        string playerName = "";
 
         // sets a defautl state for if a player is attacking or defending.
         bool playerAttack = false;
@@ -166,9 +166,12 @@ namespace DurakProject
         /// <param name="e"></param>
         private void btnNewGame_Click(object sender, EventArgs e)
         {
-            //prompt the user for their name
-            using (frmPlayerNameEntry namePrompt = new frmPlayerNameEntry())
+            if(playerName == "")
             {
+                //prompt the user for their name
+                frmPlayerNameEntry namePrompt = new frmPlayerNameEntry();
+                //namePrompt.Show();
+
                 if (namePrompt.ShowDialog() == DialogResult.OK)
                 {
                     playerName = namePrompt.PlayerName;
@@ -180,13 +183,13 @@ namespace DurakProject
             //else store their name and continue 
 
             //prompt the user for their choice of difficulty
-            using (frmDifficultyChoice difficultyPrompt = new frmDifficultyChoice())
+            frmDifficultyChoice difficultyPrompt = new frmDifficultyChoice();
+
+            if (difficultyPrompt.ShowDialog() == DialogResult.OK)
             {
-                if (difficultyPrompt.ShowDialog() == DialogResult.OK)
-                {
-                    difficultyChoice = difficultyPrompt.DifficultyValue;
-                }
+                difficultyChoice = difficultyPrompt.DifficultyValue;
             }
+
 
             //enable buttons if they were not visible
             btnForfeit.Visible = true;
@@ -615,7 +618,7 @@ namespace DurakProject
                         // ------------------------------------------------ NEW CODE HERE ----------------------------------
                         // -------------------------------------------------------------------------------------------------
                         //Checks if Hard difficulty is selected
-                        if(difficultyChoice == 3)
+                        if (difficultyChoice == 3)
                         {
                             //Loops through computer hand
                             for (int m = 0; m < pnlComputerHand.Controls.Count; m++)
@@ -650,8 +653,8 @@ namespace DurakProject
                         else // Easy AI always plays the first card in hand
                         {
                             computerCard = (CardBox)pnlComputerHand.Controls[0];
-                        } 
-                        
+                        }
+
                         // --------------------------------------------- NEW CODE ENDS HERE ------------------------------------------
                         // -----------------------------------------------------------------------------------------------------------
 
@@ -1340,7 +1343,7 @@ namespace DurakProject
             // Temporary hand to empty the computer hand into
             List<CardBox> tempHand = new List<CardBox>();
 
-            for(int i = pnlComputerHand.Controls.Count - 1; i > -1; i--)
+            for (int i = pnlComputerHand.Controls.Count - 1; i > -1; i--)
             {
                 CardBox tempCard = (CardBox)pnlComputerHand.Controls[i];
                 MessageBox.Show("Moving " + tempCard.ToString() + " to temporary list.");
@@ -1353,7 +1356,7 @@ namespace DurakProject
             List<CardBox> SortedList = tempHand.OrderBy(o => (int)o.Rank).ToList();
 
             // Dumps the computer hand
-            for(int i = pnlComputerHand.Controls.Count- 1; i > -1; i--)
+            for (int i = pnlComputerHand.Controls.Count - 1; i > -1; i--)
             {
                 CardBox tempCard = (CardBox)pnlComputerHand.Controls[i];
                 //MessageBox.Show(tempCard.ToString());
@@ -1361,7 +1364,7 @@ namespace DurakProject
             }
 
             // Fills computer hand with re-indexed cards
-            for(int i = 0; i < SortedList.Count; i++)
+            for (int i = 0; i < SortedList.Count; i++)
             {
                 CardBox tempCard = SortedList[i];
                 MessageBox.Show("Adding " + tempCard.ToString() + " to computer hand.");

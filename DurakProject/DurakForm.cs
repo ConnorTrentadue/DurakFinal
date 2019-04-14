@@ -766,7 +766,7 @@ namespace DurakProject
                         RealignCards(pnlPlayArea);
                     }
                 }
-                // if the card a [0] was a high card end the turn
+                // if the card a [0] was a high card end the turn (can only happen duting hardAI)
                 if (highCard == true)
                 {
                     //Swap player attack / pickup buttons at the end of thae phase.

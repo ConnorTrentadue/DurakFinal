@@ -367,6 +367,7 @@ namespace DurakProject
 
                 //realign player hand
                 RealignCards(pnlPlayerHand);
+                RealignCards(pnlPlayArea);
                 //remove the click event from the card as it enters the playarea
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
@@ -389,6 +390,7 @@ namespace DurakProject
 
                     //realign player hand
                     RealignCards(pnlPlayerHand);
+                    RealignCards(pnlPlayArea);
                     //remove the click event from the card as it enters the playarea
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
@@ -410,6 +412,7 @@ namespace DurakProject
                             //requires location mapping
                             //MessageBox.Show("Card Removed!");
                             pnlPlayArea.Controls.Add(aCardBox);
+                            RealignCards(pnlPlayArea);
 
                             //MessageBox.Show("Card Added!");
                             playerAttackCounter++;
@@ -667,7 +670,7 @@ namespace DurakProject
                                 if (tempCard.Suit == trumpSuit)
                                 {
                                     //Checks that we're not looking at the last card in hand
-                                    if (m != pnlComputerHand.Controls.Count - 2)
+                                    if (m != pnlComputerHand.Controls.Count - 1)
                                     {
                                         //Sets the computers choice to the NEXT card in hand 
                                         computerCard = (CardBox)pnlComputerHand.Controls[m + 1];
@@ -703,6 +706,8 @@ namespace DurakProject
                             pnlComputerHand.Controls.Remove(computerCard);
                             pnlPlayArea.Controls.Add(computerCard);
                             computerCard.BorderStyle = BorderStyle.Fixed3D;
+                            RealignCards(pnlComputerHand);
+                            RealignCards(pnlPlayArea);
 
                             //if no player cards can defend an attack
                             if (validPlayerDefense(computerCard) == false)
@@ -782,10 +787,9 @@ namespace DurakProject
                                 //MessageBox.Show("Attacker Counter +1!");
                             }
 
-
-
                             //realign computer hand
                             RealignCards(pnlComputerHand);
+                            RealignCards(pnlPlayArea);
 
                             //determine which player cards can be played to defend an attack
                             if (validPlayerDefense(computerCard) == false)
@@ -1100,6 +1104,7 @@ namespace DurakProject
                             //add the card to the hand and realign the hand
                             pnlPlayerHand.Controls.Add(cardBox);
                             RealignCards(pnlPlayerHand);
+                            RealignCards(pnlPlayArea);
                             //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
                         }
 
@@ -1185,6 +1190,7 @@ namespace DurakProject
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlPlayerHand.Controls.Add(trumpCard);
                                 RealignCards(pnlPlayerHand);
+                                
                             }
                             else if (pnlTrumpCard.Controls.Count == 0)
                                 WinCheck(durakDeck);
@@ -1220,7 +1226,7 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
-            if (winCheckPassed)
+            if (winCheckPassed == false)
             {
                 if (durakDeck.CardsRemaining == 0)
                 {

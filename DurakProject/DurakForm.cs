@@ -340,6 +340,8 @@ namespace DurakProject
                     CardBox card = (CardBox)pnlPlayerHand.Controls[j];
                     AddClickEvent(card);
                 }
+
+                pickUpCounter = 0;
             }
         }
 
@@ -396,6 +398,7 @@ namespace DurakProject
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
+                    MessageBox.Show("Computer is playing a defense against a single card in play area");
                     MakeNormalPlay(aCardBox, playerAttackCounter);
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
@@ -426,17 +429,19 @@ namespace DurakProject
 
                             //remove the click event from the card as it enters the playarea
                             //RemoveBorder(aCardBox);
-                            RemoveClickEvent(aCardBox);
+                            //RemoveClickEvent(aCardBox);
 
                             MakeNormalPlay(aCardBox, playerAttackCounter);
 
                             //exit the for loop
-                            i += 111;
+                            MessageBox.Show("Breaking the computer defense loop that occurs when there is more than 1 card in play.");
+                            //i += 111;
+                            break;
                         }
                         else
                         {
                             validPlay = false;
-
+                            //break;
                         }
                     }
 

@@ -28,6 +28,7 @@ namespace DurakProject
     public partial class frmDurak : Form
     {
         #region FIELDS AND PROPERTIES
+
         /// <summary>
         /// The amount, in points, that CardBox controls are enlarged when hovered over. 
         /// </summary>
@@ -166,6 +167,14 @@ namespace DurakProject
         private void btnNewGame_Click(object sender, EventArgs e)
         {
             //prompt the user for their name
+            using (frmPlayerNameEntry namePrompt = new frmPlayerNameEntry())
+            {
+                if (namePrompt.ShowDialog() == DialogResult.OK)
+                {
+                    playerName = namePrompt.PlayerName;
+                }
+            }
+
             //if name exists in the log-file
             //pull statistics from statistics log file.
             //else store their name and continue 
@@ -488,6 +497,7 @@ namespace DurakProject
         #endregion
 
         #region METHODS
+
         //starts a normal play where the player is attacking and AI is defending
         public void MakeNormalPlay(CardBox cardBox, int playCount, int duplicateCards = 0)
         {

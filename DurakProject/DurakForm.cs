@@ -706,14 +706,13 @@ namespace DurakProject
                             computerCard = (CardBox)pnlComputerHand.Controls[0];
                         }
 
-                        // --------------------------------------------- NEW CODE ENDS HERE ------------------------------------------
-                        // -----------------------------------------------------------------------------------------------------------
-
                         // triggers if hardAI flags the next card playable as high.
                         if (highCard == true)
                         {
-                            i -= 100;  //end the loop to play cards
+                            i -= 100;  //end the loop that play cards
                         }
+                        // --------------------------------------------- NEW CODE ENDS HERE ------------------------------------------
+                        // -----------------------------------------------------------------------------------------------------------
                         //the card at 0 is not high, play as normal
                         else
                         {

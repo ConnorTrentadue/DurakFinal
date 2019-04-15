@@ -190,7 +190,7 @@
             this.pnlPlayArea.BackColor = System.Drawing.Color.Transparent;
             this.pnlPlayArea.Location = new System.Drawing.Point(219, 278);
             this.pnlPlayArea.Name = "pnlPlayArea";
-            this.pnlPlayArea.Size = new System.Drawing.Size(652, 241);
+            this.pnlPlayArea.Size = new System.Drawing.Size(652, 108);
             this.pnlPlayArea.TabIndex = 19;
             // 
             // pbDeck

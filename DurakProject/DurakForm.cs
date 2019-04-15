@@ -31,6 +31,10 @@ namespace DurakProject
         /// </summary>
         private const int POP = 0;
 
+        //Counters for repositioning the Play Area cards (These are used in the RepositionPlayedCards method)
+        private int repositionCounter = 0;
+        private int everyTwoCards = 0;
+
         //Tracks how many times a player has "attacked"
         int playerAttackCounter = 0;
         int aiAttackCounter = 0;
@@ -406,7 +410,7 @@ namespace DurakProject
 
                 //realign player hand
                 RealignCards(pnlPlayerHand);
-                RealignCards(pnlPlayArea);
+                RepositionPlayedCards(pnlPlayArea);
                 //remove the click event from the card as it enters the playarea
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
@@ -430,7 +434,7 @@ namespace DurakProject
 
                     //realign player hand
                     RealignCards(pnlPlayerHand);
-                    RealignCards(pnlPlayArea);
+                    RepositionPlayedCards(pnlPlayArea);
                     //remove the click event from the card as it enters the playarea
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
@@ -454,7 +458,7 @@ namespace DurakProject
                             //requires location mapping
                             //MessageBox.Show("Card Removed!");
                             pnlPlayArea.Controls.Add(aCardBox);
-                            RealignCards(pnlPlayArea);
+                            RepositionPlayedCards(pnlPlayArea);
 
                             //MessageBox.Show("Card Added!");
                             playerAttackCounter++;
@@ -630,20 +634,71 @@ namespace DurakProject
         /// <param name="playArea"></param>
         private void RepositionPlayedCards(Panel playArea)
         {
-            int everyTwoCards = 1;
-            int positionIndex = 50;
+            // Determine the number of cards/controls in the panel.
+            int myCount = playArea.Controls.Count;
 
-            for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i -= 2)
+            // If there are any cards in the panel
+            if (myCount > 0)
             {
-                if (everyTwoCards % 2 == 0)
+                // Determine how wide one card/control is.
+                int cardWidth = playArea.Controls[0].Width;
+
+                // Determine where the left-hand edge of a card/control placed 
+                // in the middle of the panel should be  
+                int startPoint = (playArea.Width - cardWidth) / 2;
+
+                // An offset for the remaining cards
+                int offset = 0;
+
+                // If there are more than one cards/controls in the panel
+                if (myCount > 1)
                 {
-                    positionIndex += 15;
+                    // Determine what the offset should be for each card based on the 
+                    // space available and the number of card/controls
+                    offset = (playArea.Width - cardWidth - 2 * POP) / (myCount - 1);
+
+                    // If the offset is bigger than the card/control width, i.e. there is lots of room, 
+                    // set the offset to the card width. The cards/controls will not overlap at all.
+                    if (offset > cardWidth)
+                        offset = cardWidth;
+
+                    // Determine width of all the cards/controls 
+                    int allCardsWidth = (myCount - 1) * offset + cardWidth;
+
+                    // Set the start point to where the left-hand edge of the "first" card should be.
+                    startPoint = (playArea.Width - allCardsWidth) / 2;
                 }
 
-                pnlPlayArea.Controls[i].Location = new Point(positionIndex, 100);
+                // Aligning the cards: Note that I align them in reserve order from how they
+                // are stored in the controls collection. This is so that cards on the left 
+                // appear underneath cards to the right. This allows the user to see the rank
+                // and suit more easily.
 
-                everyTwoCards++;
-            }
+                // Align the "first" card (which is the last control in the collection)
+                //panelHand.Controls[myCount - 1].Top = POP;
+                System.Diagnostics.Debug.Write(playArea.Controls[myCount - 1].Top.ToString() + "\n");
+                playArea.Controls[myCount - 1].Left = startPoint;
+
+                // for each of the remaining controls, in reverse order.
+                for (int index = myCount - 2; index >= 0; index--)
+                {
+                    everyTwoCards++;
+
+                    if (everyTwoCards == 2)
+                    {
+                        repositionCounter += 25;
+                    }
+                    // Align the current card
+                    //panelHand.Controls[index].Top = POP;
+                    playArea.Controls[index].Left = playArea.Controls[index + 1].Left + offset + repositionCounter;
+
+                    if (everyTwoCards == 2)
+                    {
+                        everyTwoCards = 0;
+                        repositionCounter = 0;
+                    }
+                }
+            }            
         }
 
         #endregion
@@ -844,7 +899,7 @@ namespace DurakProject
                                 pnlPlayArea.Controls.Add(computerCard);
                                 computerCard.BorderStyle = BorderStyle.Fixed3D;
                                 RealignCards(pnlComputerHand);
-                                RealignCards(pnlPlayArea);
+                                RepositionPlayedCards(pnlPlayArea);
 
                                 //if no player cards can defend an attack
                                 if (validPlayerDefense(computerCard) == false)
@@ -864,7 +919,7 @@ namespace DurakProject
                                         pnlPlayerHand.Controls.Add(card);
                                         RemoveClickEvent(card);
                                         RealignCards(pnlPlayerHand);
-                                        RealignCards(pnlPlayArea);
+                                        RepositionPlayedCards(pnlPlayArea);
                                         playerAttackCounter = 0;
 
                                     }
@@ -879,7 +934,7 @@ namespace DurakProject
                         }
                         // flag that a play was made and realign cards
                         playMade = true;
-                        RealignCards(pnlPlayArea);
+                        RepositionPlayedCards(pnlPlayArea);
                     }
                 }
 
@@ -965,7 +1020,7 @@ namespace DurakProject
 
                             //realign computer hand
                             RealignCards(pnlComputerHand);
-                            RealignCards(pnlPlayArea);
+                            RepositionPlayedCards(pnlPlayArea);
 
                             //determine which player cards can be played to defend an attack
                             if (validPlayerDefense(computerCard) == false)
@@ -984,7 +1039,7 @@ namespace DurakProject
                                     RemoveBorder(card);
                                     pnlPlayerHand.Controls.Add(card);
                                     RealignCards(pnlPlayerHand);
-                                    RealignCards(pnlPlayArea);
+                                    RepositionPlayedCards(pnlPlayArea);
                                     //ComputerAttack(playerAttackCounter);
                                 }
                                 i += 100; // end the examination loop
@@ -1047,7 +1102,7 @@ namespace DurakProject
                 }
                 // set boolean playMade successfully and realign the playArea
                 playMade = true;
-                RealignCards(pnlPlayArea);
+                RepositionPlayedCards(pnlPlayArea);
             }
 
 
@@ -1089,7 +1144,7 @@ namespace DurakProject
                             // RemoveEvent(card);
                             //i += 100;
                             playMade = true;
-                            RealignCards(pnlPlayArea);
+                            RepositionPlayedCards(pnlPlayArea);
                             //break;
                         }
                         else if (aiCard.Rank < playerCard.Rank && playerCard.Suit != trumpSuit)
@@ -1104,7 +1159,7 @@ namespace DurakProject
                             //RemoveEvent(card);
                             //i += 100;
                             playMade = true;
-                            RealignCards(pnlPlayArea);
+                            RepositionPlayedCards(pnlPlayArea);
                             //break;
                         }
 
@@ -1122,7 +1177,7 @@ namespace DurakProject
                         //RemoveEvent(card);
                         //i += 100;
                         playMade = true;
-                        RealignCards(pnlPlayArea);
+                        RepositionPlayedCards(pnlPlayArea);
                         //break;
                     }
                 }
@@ -1145,7 +1200,7 @@ namespace DurakProject
                     pnlComputerHand.Controls.Add(card);
                     RemoveBorder(card);
                     RealignCards(pnlComputerHand);
-                    RealignCards(pnlPlayArea);
+                    RepositionPlayedCards(pnlPlayArea);
                     playerAttackCounter = 0;
                 }
                 for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
@@ -1306,7 +1361,7 @@ namespace DurakProject
                             //add the card to the hand and realign the hand
                             pnlPlayerHand.Controls.Add(cardBox);
                             RealignCards(pnlPlayerHand);
-                            RealignCards(pnlPlayArea);
+                            RepositionPlayedCards(pnlPlayArea);
                             //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
                         }
 

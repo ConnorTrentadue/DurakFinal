@@ -351,9 +351,9 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
-
+            
             MessageBox.Show("CardBox_Click triggered");
-
+            
             //convert the sender
             CardBox aCardBox = sender as CardBox;
             RemoveClickEvent(aCardBox);
@@ -378,7 +378,7 @@ namespace DurakProject
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
-                MessageBox.Show("player Counter " + playerAttackCounter.ToString());
+                MessageBox.Show("player COunter " + playerAttackCounter.ToString());
                 ComputerAttack(playerAttackCounter);
             }
             else //player is attacking
@@ -407,7 +407,7 @@ namespace DurakProject
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
-                    MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count + " Cards on the table");
+                    MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count +" Cards on the table");
                     for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
                     {
                         MessageBox.Show("entering if (pnlPlayArea > 0), index is " + i);
@@ -462,7 +462,7 @@ namespace DurakProject
                 }
                 // revaluate click events
                 //MessageBox.Show("re-evaluate click events");  //debugging
-
+                
                 for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
                 {
                     CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
@@ -493,8 +493,6 @@ namespace DurakProject
                 }
 
             }
-            //if (playerAttackCounter >= 6)
-            //    btnEndAttack.PerformClick();
         }
 
         /// <summary>
@@ -943,7 +941,7 @@ namespace DurakProject
                 playMade = true;
                 RealignCards(pnlPlayArea);
             }
-
+           
 
             // if the AI hand is empty, redraw and check for win
             if (pnlComputerHand.Controls.Count == 0 || pnlPlayerHand.Controls.Count == 0)

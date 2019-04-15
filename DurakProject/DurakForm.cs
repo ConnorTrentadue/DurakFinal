@@ -351,6 +351,7 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("CardBox_Click triggered");
             //convert the sender
             CardBox aCardBox = sender as CardBox;
             //MessageBox.Show(aCardBox.ToString() + " was clicked");
@@ -403,9 +404,10 @@ namespace DurakProject
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
-
+                    MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count +" Cards on the table");
                     for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
                     {
+                        MessageBox.Show("entering if (pnlPlayArea > 0), index is " + i);
                         CardBox validCardCheck = (CardBox)pnlPlayArea.Controls[i];
                         // check cards in the playarea for valid rank
                         if (aCardBox.Rank == validCardCheck.Rank)
@@ -483,8 +485,6 @@ namespace DurakProject
                 }
 
             }
-
-
         }
 
         /// <summary>

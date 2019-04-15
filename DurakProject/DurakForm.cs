@@ -388,9 +388,6 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
-
-            //MessageBox.Show("CardBox_Click triggered");
-
             //convert the sender
             CardBox aCardBox = sender as CardBox;
             RemoveClickEvent(aCardBox);
@@ -711,7 +708,7 @@ namespace DurakProject
                         repositionCounter = 0;
                     }
                 }
-            }            
+            }
         }
 
         #endregion
@@ -928,7 +925,7 @@ namespace DurakProject
                                         // remove border from the card if it still has one.
                                         RemoveBorder(card);
                                         pnlPlayArea.Controls.Remove(card);
-                                        card.FaceUp = false;
+                                        //card.FaceUp = false;
                                         pnlPlayerHand.Controls.Add(card);
                                         RemoveClickEvent(card);
                                         FlipPlayerHand(pnlPlayerHand);
@@ -940,13 +937,13 @@ namespace DurakProject
                                 else
                                 {
                                     //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
-                                    i += 100;
+                                    i -= 100;
 
                                 }
                             }
                         }
                         // flag that a play was made and realign cards
-                        if(!highCard)
+                        if (!highCard)
                             playMade = true;
 
                         RealignCards(pnlPlayArea);
@@ -1499,7 +1496,7 @@ namespace DurakProject
                     }
                 }
             }
-            else //there are no cards in the deck.
+            else if (durakDeck.Count == 0 && pnlTrumpCard.Controls.Count == 0) //there are no cards in the deck.
                 WinCheck(durakDeck);
         }
 
@@ -1875,7 +1872,7 @@ namespace DurakProject
 
         private void FlipAiHand(Panel computerHand)
         {
-            for(int i = computerHand.Controls.Count - 1; i > -1; i--)
+            for (int i = computerHand.Controls.Count - 1; i > -1; i--)
             {
                 CardBox tempCard = (CardBox)computerHand.Controls[i];
 

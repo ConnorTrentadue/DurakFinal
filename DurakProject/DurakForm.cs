@@ -179,7 +179,7 @@ namespace DurakProject
             btnForfeit.Visible = true;
 
             // If player has not entered a name have them do so
-            if (playerName == "")
+            while (playerName == "")
             {
                 //prompt the user for their name
                 frmPlayerNameEntry namePrompt = new frmPlayerNameEntry();
@@ -189,6 +189,8 @@ namespace DurakProject
                 {
                     playerName = namePrompt.PlayerName;
                 }
+                if (playerName == "")
+                    MessageBox.Show("Please enter a name.");
             }
 
             //if name exists in the log-file
@@ -1506,7 +1508,7 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
-            MessageBox.Show("Calling win check...");
+            //MessageBox.Show("Calling win check...");
             if (winCheckPassed == false)
             {
                 if (durakDeck.CardsRemaining == 0)

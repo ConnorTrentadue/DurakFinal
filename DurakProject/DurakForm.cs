@@ -351,9 +351,11 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
+            
             MessageBox.Show("CardBox_Click triggered");
             //convert the sender
             CardBox aCardBox = sender as CardBox;
+            RemoveClickEvent(aCardBox);
             //MessageBox.Show(aCardBox.ToString() + " was clicked");
             bool validPlay = true;
 
@@ -459,9 +461,10 @@ namespace DurakProject
                 }
                 // revaluate click events
                 //MessageBox.Show("re-evaluate click events");  //debugging
+                bool foundCard = false;
                 for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
                 {
-                    bool foundCard = false;
+                    
                     CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
 
                     for (int j = 0; j < pnlPlayArea.Controls.Count && !foundCard; j++)

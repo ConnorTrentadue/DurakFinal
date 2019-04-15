@@ -480,6 +480,7 @@ namespace DurakProject
                         }
                         else
                         {
+                            MessageBox.Show("Click Event Added:  " + playerCard.ToString());
                             AddClickEvent(playerCard);
                             foundCard = true;
                             //MessageBox.Show("Valid card:  " + playerCard.ToString());

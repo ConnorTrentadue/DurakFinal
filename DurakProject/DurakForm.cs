@@ -42,7 +42,7 @@ namespace DurakProject
         //*************************
         //*************************
         //*************************
-        int difficultyChoice = 1; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
+        int difficultyChoice = 3; //Stores difficulty that player chooses and determines the AI's moves. (1, 2, or 3)
         //*************************
         //*************************
         //*************************
@@ -169,12 +169,6 @@ namespace DurakProject
             //if name exists in the log-file
             //pull statistics from statistics log file.
             //else store their name and continue 
-
-            //Load the form to set the AI difficulty
-
-
-            
-
 
             //enable buttons if they were not visible
             btnForfeit.Visible = true;
@@ -323,11 +317,6 @@ namespace DurakProject
         }
 
         #endregion
-
-        public void Difficulty_Click()
-        {
-
-        }
 
         #region CARDBOX EVENT HANDLERS
 

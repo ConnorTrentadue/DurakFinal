@@ -478,7 +478,7 @@ namespace DurakProject
                             //remove click event
                             RemoveClickEvent(playerCard);
                         }
-                        else
+                        else if((int)playerCard.Rank == (int)validCardCheck.Rank)
                         {
                             AddClickEvent(playerCard);
                             foundCard = true;

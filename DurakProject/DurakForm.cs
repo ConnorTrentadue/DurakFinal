@@ -152,6 +152,7 @@ namespace DurakProject
             //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
             // Closes log form and writes to file
             frmLog.Close();
+            playerStats.round = 0;
             Stats.WriteStats(playerStats);
 
             Close();
@@ -199,13 +200,18 @@ namespace DurakProject
             }
 
             // Writes to the log screen, which writes to the text file when the form is closed
-            frmLog.WriteToLog("New Game started");
+            frmLog.WriteToLog("\nNew Game started");
 
             // Get player existing stats
-            if (playerStats != null)
-                playerStats.gamesPlayed++;
             playerStats = Stats.ReadStats();
+            if (playerStats != null)
+            {
+                playerStats.gamesPlayed += 1;
+                playerStats.round += 1;
+            }
+
             lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
+            lblRoundNumber.Text = "Round #: " + playerStats.round;
             lblWins.Text = "Wins: " + playerStats.wins;
             lblLosses.Text = "Losses: " + playerStats.losses;
             lblTies.Text = "Ties: " + playerStats.ties;
@@ -226,7 +232,9 @@ namespace DurakProject
 
             // set the label of the AI and Player names                                    
             lblAIName.Text = newAI.Name;
-            lblPlayerName.Text = newPlayer.Name;
+            lblPlayerName.Text = newPlayer.Name.ToString();
+            playerStats.playerName = "\"" + newPlayer.Name.ToString() + "\"";
+
 
             // create a new deck
             durakDeck = new Deck();
@@ -316,7 +324,15 @@ namespace DurakProject
         private void btnForfeit_Click(object sender, EventArgs e)
         {
             // Log the game as a loss for the player
+
+            playerStats.losses += 1;
+            //frmLog.Close();
+            Stats.WriteStats(playerStats);
             // disable all player controls
+            btnForfeit.Visible = false;
+            mnuForfeit.Visible = false;
+            btnEndAttack.Visible = false;
+            btnPickUp.Visible = false;
             // Closes log form and writes to file
             //frmLog.Close();
             //Stats.WriteStats(playerStats);
@@ -617,7 +633,7 @@ namespace DurakProject
             int everyTwoCards = 1;
             int positionIndex = 50;
 
-            for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i-=2)
+            for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i -= 2)
             {
                 if (everyTwoCards % 2 == 0)
                 {
@@ -648,7 +664,7 @@ namespace DurakProject
             //determine AI difficulty
             if (difficultyChoice == 3)
                 HardAiDefense();
-            else if(difficultyChoice == 2)
+            else if (difficultyChoice == 2)
             {
                 int choiceNumber = randomNumber.Next(1, 3);
                 if (choiceNumber == 2)
@@ -1429,6 +1445,9 @@ namespace DurakProject
                     {
                         winCheckPassed = true;
                         MessageBox.Show("There is no fool?! \n\nGame has ended in a tie.");
+                        playerStats.ties += 1;
+                        lblTies.Text = "Ties: " + playerStats.ties;
+                        Stats.WriteStats(playerStats);
                         if (pnlPlayerHand.Controls.Count > 0)
                         {
                             for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
@@ -1447,6 +1466,9 @@ namespace DurakProject
                     {
                         winCheckPassed = true;
                         MessageBox.Show("You're a fool! \n\n" + newAI.Name + " has won.");
+                        playerStats.losses += 1;
+                        lblLosses.Text = "Wins: " + playerStats.losses;
+                        Stats.WriteStats(playerStats);
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1463,6 +1485,9 @@ namespace DurakProject
                     {
                         winCheckPassed = true;
                         MessageBox.Show(newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
+                        playerStats.wins += 1;
+                        lblWins.Text = "Wins: " + playerStats.wins;
+                        Stats.WriteStats(playerStats);
                         btnEndAttack.Visible = false;
                         btnPickUp.Visible = false;
                         btnForfeit.Visible = false;

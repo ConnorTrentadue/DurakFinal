@@ -11,11 +11,25 @@ namespace StatsLibrary
 
         #region FIELDS AND PROPERTIES
 
+        protected string myPlayerName;
+        public string playerName
+        {
+            get { return myPlayerName; }
+            set { myPlayerName = value; }
+        }
+
         protected int myGamesPlayed;
         public int gamesPlayed
         {
             get { return myGamesPlayed; }
             set { myGamesPlayed = value; }
+        }
+
+        protected int myRound;
+        public int round
+        {
+            get { return myRound; }
+            set { myRound = value; }
         }
 
         protected int myWins;
@@ -43,15 +57,19 @@ namespace StatsLibrary
 
         public PlayerStats()
         {
+            this.myPlayerName = "";
             this.myGamesPlayed = 0;
+            this.myRound = 0;
             this.myWins = 0;
             this.myLosses = 0;
             this.myTies = 0;
         }
 
-        public PlayerStats(int gamesPlayed, int wins, int losses, int ties)
+        public PlayerStats(string playerName, int gamesPlayed, int round, int wins, int losses, int ties)
         {
+            this.myPlayerName = playerName;
             this.myGamesPlayed = gamesPlayed;
+            this.myRound = round;
             this.myWins = wins;
             this.myLosses = losses;
             this.myTies = ties;
@@ -61,8 +79,10 @@ namespace StatsLibrary
         {
             StringBuilder jsonBuilder = new StringBuilder();
 
-            jsonBuilder.Append("{ \ngamesPlayed: @gamesPlayed, \nwins: @wins, \nlosses: @losses, \nties: @ties\n}");
-            jsonBuilder.Replace("@gamesPlayed", myGamesPlayed.ToString())
+            jsonBuilder.Append("{ \nplayerName: @playerName, \ngamesPlayed: @gamesPlayed, \nround: @round, \nwins: @wins, \nlosses: @losses, \nties: @ties\n}");
+            jsonBuilder.Replace("@playerName", myPlayerName.ToString())
+                .Replace("@gamesPlayed", myGamesPlayed.ToString())
+                .Replace("@round", myRound.ToString())
                 .Replace("@wins", myWins.ToString())
                 .Replace("@losses", myLosses.ToString())
                 .Replace("@ties", myTies.ToString());
@@ -74,8 +94,10 @@ namespace StatsLibrary
         {
             StringBuilder info = new StringBuilder();
 
-            info.Append("{ \ngamesPlayed: @gamesPlayed, \nwins: @wins, \nlosses: @losses, \nties: @ties\n}");
-            info.Replace("@gamesPlayed", myGamesPlayed.ToString())
+            info.Append("{\nplayerName: @playerName \ngamesPlayed: @gamesPlayed, \nround: @round, \nwins: @wins, \nlosses: @losses, \nties: @ties\n}");
+            info.Replace("@playerName", myPlayerName.ToString())
+                .Replace("@gamesPlayed", myGamesPlayed.ToString())
+                .Replace("@round", myRound.ToString())
                 .Replace("@wins", myWins.ToString())
                 .Replace("@losses", myLosses.ToString())
                 .Replace("@ties", myTies.ToString());

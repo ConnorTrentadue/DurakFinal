@@ -25,6 +25,7 @@ namespace StatsLibrary
                 if(player != null) {
                     writer.WriteLine(player.toJson());
                 }
+                writer.Close();
             }
         }
 
@@ -55,11 +56,12 @@ namespace StatsLibrary
                         aPlayerStats = serializer.Deserialize<PlayerStats>(json);
                         if (aPlayerStats == null)
                             aPlayerStats = new PlayerStats();
+                        reader.Close();
                     }
                 }
             } else
             {
-                aPlayerStats = new PlayerStats(0, 0, 0, 0);
+                aPlayerStats = new PlayerStats("", 0, 0, 0, 0, 0);
             }
 
 

@@ -480,6 +480,7 @@ namespace DurakProject
                         }
                         else if((int)playerCard.Rank == (int)validCardCheck.Rank)
                         {
+                            MessageBox.Show("Click Event Added:  " + playerCard.ToString());
                             AddClickEvent(playerCard);
                             foundCard = true;
                             //MessageBox.Show("Valid card:  " + playerCard.ToString());

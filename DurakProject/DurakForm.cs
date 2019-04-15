@@ -33,6 +33,7 @@ namespace DurakProject
 
         //Tracks how many times a player has "attacked"
         int playerAttackCounter = 0;
+        int aiAttackCounter = 0;
 
         //Seeding random number generator
         static Random randomNumber = new Random();
@@ -299,7 +300,7 @@ namespace DurakProject
             if (playerAttack != true)  //if not true, AI attacks first.
             {
                 MessageBox.Show(newAI.Name + " will go first");
-                ComputerAttack(playerAttackCounter);
+                ComputerAttack(aiAttackCounter);
             }
             else
             {
@@ -327,16 +328,19 @@ namespace DurakProject
         private void btnPickUp_Click(object sender, EventArgs e)
         {
             PickUpCards(ref pnlPlayerHand, true);
+            MessageBox.Show("Pickup Counter: " + pickUpCounter + "AI attack Counter: " + aiAttackCounter);
 
             if (pickUpCounter < 6)
             {
                 //if (difficultyChoice == 3)
                 //    HardAiAttack();
 
-                ComputerAttack(playerAttackCounter);
+                ComputerAttack(aiAttackCounter);
             }
-            else if (pickUpCounter == 6)
+            else if (pickUpCounter >= 6 && aiAttackCounter >= 6)
             {
+                MessageBox.Show("Pickup Counter: " + pickUpCounter + " & AI attack Counter: " + aiAttackCounter + " REACHED");
+                pickUpCounter = 0;
                 btnEndAttack.Visible = true;
                 btnPickUp.Visible = false;
                 playerAttack = true; //set player to attack phase
@@ -349,9 +353,13 @@ namespace DurakProject
                         AddClickEvent(card);
                     }
                 }
-
-                pickUpCounter = 0;
             }
+            else
+            {
+                MessageBox.Show("AI attack Counter: " + aiAttackCounter);
+                ComputerAttack(aiAttackCounter);
+            }
+
         }
 
         #endregion
@@ -377,7 +385,7 @@ namespace DurakProject
                 pnlPlayArea.Controls.Add(aCardBox);
 
                 //MessageBox.Show("Card Added!");
-                playerAttackCounter++;
+                //playerAttackCounter++;
                 //MessageBox.Show("Attacker Counter +1!");
 
                 //realign player hand
@@ -664,13 +672,13 @@ namespace DurakProject
                 RemoveClickEvent(card);
                 //RemoveBorder(card);
             }
-            int playCount = 0;
+            aiAttackCounter = 0;
             //fill the player's hands with cards
             RedrawCards(durakDeck, playerAttack);
             // set player to defending
             playerAttack = false;
             // switch to computer attack
-            ComputerAttack(playCount);
+            ComputerAttack(aiAttackCounter);
 
         }
 
@@ -782,6 +790,7 @@ namespace DurakProject
                                 computerCard.FaceUp = true;
                                 //play the card in the computer hand
                                 pnlComputerHand.Controls.Remove(computerCard);
+                                aiAttackCounter++;
                                 pnlPlayArea.Controls.Add(computerCard);
                                 computerCard.BorderStyle = BorderStyle.Fixed3D;
                                 RealignCards(pnlComputerHand);
@@ -823,8 +832,9 @@ namespace DurakProject
                         RealignCards(pnlPlayArea);
                     }
                 }
+
                 // if the card a [0] was a high card end the turn (can only happen duting hardAI)
-                if (highCard == true)
+                if (highCard == true && pnlPlayArea.Controls.Count <= 0)
                 {
                     //Swap player attack / pickup buttons at the end of thae phase.
                     btnPickUp.Visible = false;
@@ -898,11 +908,9 @@ namespace DurakProject
                                 playAreaIndex += 100;
                                 //remove from player hand
                                 pnlComputerHand.Controls.Remove(computerCard);
+                                aiAttackCounter++;
                                 computerCard.BorderStyle = BorderStyle.Fixed3D;
                                 pnlPlayArea.Controls.Add(computerCard);
-
-                                playerAttackCounter++;
-                                //MessageBox.Show("Attacker Counter +1!");
                             }
 
                             //realign computer hand
@@ -931,7 +939,7 @@ namespace DurakProject
                                 }
                                 i += 100; // end the examination loop
                                 playAreaIndex += 100;
-                                ComputerAttack(playerAttackCounter);
+                                ComputerAttack(aiAttackCounter);
                             }
                             else
                             {
@@ -947,7 +955,7 @@ namespace DurakProject
                 }
 
                 // The computer can not make another valid play
-                if (validPlay == false)
+                if (validPlay == false || aiAttackCounter >= 6)
                 {
                     //Swap player attack / pickup buttons at the end of thae phase.
                     btnPickUp.Visible = false;

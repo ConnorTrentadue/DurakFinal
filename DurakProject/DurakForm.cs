@@ -263,7 +263,7 @@ namespace DurakProject
                 }
                 else
                 {
-                    card.FaceUp = true;  //uncomment this to enable AI cards faceUp
+                    //card.FaceUp = true;  //uncomment this to enable AI cards faceUp
                     CardBox computerCardBox = new CardBox(card);
                     pnlComputerHand.Controls.Add(computerCardBox);
                 }
@@ -1125,7 +1125,7 @@ namespace DurakProject
                     CardBox card = (CardBox)pnlPlayArea.Controls[i];
                     pnlPlayArea.Controls.Remove(card);
                     //flip the card before entering computer hand
-                    card.FaceUp = true;
+                    card.FaceUp = false;
                     pnlComputerHand.Controls.Add(card);
                     RemoveBorder(card);
                     RealignCards(pnlComputerHand);
@@ -1321,7 +1321,7 @@ namespace DurakProject
                             card = durakDeck.DrawCard();
                             // adjsut the cards label showing how many cards are left in the deck
                             lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
-                            card.FaceUp = true;  //not required for AI hands, use only for debugging
+                            //card.FaceUp = true;  //not required for AI hands, use only for debugging
                             CardBox cardBox = new CardBox(card);
                             //add card to AI hand and realign the hand
                             pnlComputerHand.Controls.Add(cardBox);
@@ -1359,7 +1359,7 @@ namespace DurakProject
                             card = durakDeck.DrawCard();
                             // adjsut the cards label showing how many cards are left in the deck
                             lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
-                            card.FaceUp = true;  //not required for AI hands, use only for debugging
+                            //card.FaceUp = true;  //not required for AI hands, use only for debugging
                             CardBox cardBox = new CardBox(card);
                             //add card to AI hand and realign the hand
                             pnlComputerHand.Controls.Add(cardBox);

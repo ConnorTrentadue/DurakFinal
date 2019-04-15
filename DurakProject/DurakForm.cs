@@ -515,14 +515,17 @@ namespace DurakProject
                     }
                 }
 
-                //if(pnlPlayArea.Controls.Count == 0)
-                //{
-                //    for(int i = pnlPlayerHand.Controls.Count - 1; i > -1; i--)
-                //    {
-                //        CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
-                //        AddClickEvent(playerCard);
-                //    }
-                //}
+                if (pnlPlayArea.Controls.Count == 0)
+                {
+                    for (int i = pnlPlayerHand.Controls.Count - 1; i > -1; i--)
+                    {
+                        CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
+                        if (!playerCard.IsEventHandlerRegistered())
+                        {
+                            AddClickEvent(playerCard);
+                        }
+                    }
+                }
             }
         }
 

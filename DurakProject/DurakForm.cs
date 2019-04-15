@@ -441,7 +441,7 @@ namespace DurakProject
                             //exit the for loop
                             MessageBox.Show("Breaking the computer defense loop that occurs when there is more than 1 card in play.");
                             i += 111;
-                            break;
+                            //break;
                         }
                         else
                         {

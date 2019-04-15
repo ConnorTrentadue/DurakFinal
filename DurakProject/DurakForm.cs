@@ -351,6 +351,7 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
+            
             MessageBox.Show("CardBox_Click triggered");
             
             //convert the sender
@@ -439,7 +440,7 @@ namespace DurakProject
 
                             //exit the for loop
                             MessageBox.Show("Breaking the computer defense loop that occurs when there is more than 1 card in play.");
-                            //i += 111;
+                            i += 111;
                             break;
                         }
                         else

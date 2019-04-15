@@ -174,6 +174,8 @@ namespace DurakProject
             //clear any existing att / pickup buttons
             btnEndAttack.Visible = false;
             btnPickUp.Visible = false;
+            aiAttackCounter = 0;
+            winCheckPassed = false;
 
             //enable buttons if they were not visible
             btnForfeit.Visible = true;
@@ -359,7 +361,7 @@ namespace DurakProject
 
                 ComputerAttack(aiAttackCounter);
             }
-            else if (pickUpCounter >= 6 && aiAttackCounter >= 6)
+            else if (pickUpCounter == 6 && aiAttackCounter == 6)
             {
                 //MessageBox.Show("Pickup Counter: " + pickUpCounter + " & AI attack Counter: " + aiAttackCounter + " REACHED");
                 pickUpCounter = 0;
@@ -1074,7 +1076,7 @@ namespace DurakProject
                 }
 
                 // The computer can not make another valid play
-                if (validPlay == false || aiAttackCounter >= 6)
+                if (validPlay == false || aiAttackCounter == 6)
                 {
                     WinCheck(durakDeck);
                     //Swap player attack / pickup buttons at the end of thae phase.
@@ -1199,6 +1201,7 @@ namespace DurakProject
                 //end the for loop
                 //if (playMade)
                 //    i += 100;
+                WinCheck(durakDeck);
             }
 
             // check for attack end.
@@ -1229,6 +1232,7 @@ namespace DurakProject
                     }
                 }
             }
+            WinCheck(durakDeck);
         }
 
         //Method to determine which cards are valid when defending
@@ -1498,7 +1502,7 @@ namespace DurakProject
                     }
                 }
             }
-            else if (durakDeck.Count == 0 && pnlTrumpCard.Controls.Count == 0) //there are no cards in the deck.
+            else if (durakDeck.CardsRemaining == 0 && pnlTrumpCard.Controls.Count == 0) //there are no cards in the deck.
                 WinCheck(durakDeck);
         }
 
@@ -1508,18 +1512,21 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
-            //MessageBox.Show("Calling win check...");
+            MessageBox.Show("Calling win check...");
             if (winCheckPassed == false)
             {
+                MessageBox.Show("WinCheckPassed was false.");
                 if (durakDeck.CardsRemaining == 0)
                 {
-                    if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count <= 0)
+                    MessageBox.Show("No cards left in Durak deck check passed");
+                    if (pnlPlayerHand.Controls.Count == 0 && pnlComputerHand.Controls.Count == 0)
                     {
                         winCheckPassed = true;
                         MessageBox.Show("There is no fool?! \n\nGame has ended in a tie.");
                         playerStats.ties += 1;
                         lblTies.Text = "Ties: " + playerStats.ties;
                         Stats.WriteStats(playerStats);
+                        MessageBox.Show("The game ended in a tie. Unmapping all control events except new game.");
                         if (pnlPlayerHand.Controls.Count > 0)
                         {
                             for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
@@ -1534,13 +1541,14 @@ namespace DurakProject
                         btnForfeit.Visible = false;
                         //track stats
                     }
-                    else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
+                    else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count == 0)
                     {
                         winCheckPassed = true;
                         MessageBox.Show("You're a fool! \n\n" + newAI.Name + " has won.");
                         playerStats.losses += 1;
                         lblLosses.Text = "Wins: " + playerStats.losses;
                         Stats.WriteStats(playerStats);
+                        MessageBox.Show("The AI Won. Unmapping all control events except new game.");
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1553,13 +1561,20 @@ namespace DurakProject
                         //track stats
 
                     }
-                    else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
+                    else if (pnlPlayerHand.Controls.Count == 0 && pnlComputerHand.Controls.Count > 0)
                     {
                         winCheckPassed = true;
                         MessageBox.Show(newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
                         playerStats.wins += 1;
                         lblWins.Text = "Wins: " + playerStats.wins;
                         Stats.WriteStats(playerStats);
+                        MessageBox.Show("The player Won. Unmapping all control events except new game.");
+                        for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
+                        {
+                            CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
+                            RemoveClickEvent(cardBox);
+                            //RemoveBorder(cardBox);
+                        }
                         btnEndAttack.Visible = false;
                         btnPickUp.Visible = false;
                         btnForfeit.Visible = false;
@@ -1568,7 +1583,7 @@ namespace DurakProject
                 }
                 //else no win condition found.  Keep playing.
             }
-
+            MessageBox.Show("End of win check.");
         }
 
         /// <summary>

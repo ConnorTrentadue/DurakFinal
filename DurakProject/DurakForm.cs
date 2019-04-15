@@ -689,7 +689,7 @@ namespace DurakProject
                 lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                 //MessageBox.Show(card.ToString() + " Added to the discard pile");
                 RealignCards(pnlDiscard);
-                RepositionPlayedCards(pnlPlayerHand);
+                RealignCards(pnlPlayerHand);
                 RealignCards(pnlComputerHand);
             }
 
@@ -1308,6 +1308,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
+                                card.FaceUp = false;
                                 RealignCards(pnlComputerHand);
                             }
                             //no cards are in the deck at a redraw, check to see if a player has won
@@ -1345,6 +1346,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
+                                card.FaceUp = false;
                                 RealignCards(pnlComputerHand);
                             }
                             //no cards are in the deck at a redraw, check to see if a player has won

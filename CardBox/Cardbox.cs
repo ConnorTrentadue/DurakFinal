@@ -141,6 +141,15 @@ namespace DurakClassLibrary
             //if there is a hander for clicking the control in the client that is not null
             Click?.Invoke(this, e); // call the event
         }
+
+        public bool IsEventHandlerRegistered()
+        {
+            if (this.Click != null)
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
 
         #region CONSTRUCTORS

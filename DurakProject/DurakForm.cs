@@ -254,7 +254,10 @@ namespace DurakProject
                     card.FaceUp = true;
                     CardBox playerCardBox = new CardBox(card);
                     //wire the click event to the cardbox
-                    AddClickEvent(playerCardBox);
+                    if (!playerCardBox.IsEventHandlerRegistered())
+                    {
+                        AddClickEvent(playerCardBox);
+                    }
                     pnlPlayerHand.Controls.Add(playerCardBox);
                 }
                 else
@@ -327,6 +330,9 @@ namespace DurakProject
 
             if (pickUpCounter < 6)
             {
+                //if (difficultyChoice == 3)
+                //    HardAiAttack();
+
                 ComputerAttack(playerAttackCounter);
             }
             else if (pickUpCounter == 6)
@@ -338,7 +344,10 @@ namespace DurakProject
                 for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
                 {
                     CardBox card = (CardBox)pnlPlayerHand.Controls[j];
-                    AddClickEvent(card);
+                    if (!card.IsEventHandlerRegistered())
+                    {
+                        AddClickEvent(card);
+                    }
                 }
 
                 pickUpCounter = 0;
@@ -849,7 +858,10 @@ namespace DurakProject
                     for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
                     {
                         CardBox card = (CardBox)pnlPlayerHand.Controls[j];
-                        AddClickEvent(card);
+                        if (!card.IsEventHandlerRegistered())
+                        {
+                            AddClickEvent(card);
+                        }
                     }
                 }
             }
@@ -969,7 +981,10 @@ namespace DurakProject
                     for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
                     {
                         CardBox card = (CardBox)pnlPlayerHand.Controls[j];
-                        AddClickEvent(card);
+                        if (!card.IsEventHandlerRegistered())
+                        {
+                            AddClickEvent(card);
+                        }
                     }
                 }
                 // set boolean playMade successfully and realign the playArea
@@ -1079,7 +1094,10 @@ namespace DurakProject
                 {
                     //re-enable player clickable hand
                     CardBox card = (CardBox)pnlPlayerHand.Controls[i];
-                    AddClickEvent(card);
+                    if (!card.IsEventHandlerRegistered())
+                    {
+                        AddClickEvent(card);
+                    }
                 }
             }
         }
@@ -1102,7 +1120,10 @@ namespace DurakProject
                         //if the AI card is trump and that card is higher rank than an AI card
                         if (computerCard.Suit == trumpSuit && playerCard.Rank > computerCard.Rank)
                         {
-                            AddClickEvent(playerCard);
+                            if (!playerCard.IsEventHandlerRegistered())
+                            {
+                                AddClickEvent(playerCard);
+                            }
                             //DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
@@ -1111,7 +1132,10 @@ namespace DurakProject
                         //else if the player card is trump and AI card is not trump
                         else if (playerCard.Suit == trumpSuit && computerCard.Suit != trumpSuit)
                         {
-                            AddClickEvent(playerCard);
+                            if (!playerCard.IsEventHandlerRegistered())
+                            {
+                                AddClickEvent(playerCard);
+                            }
                             //DrawBorder(playerCard);
                             //MessageBox.Show(playerCard.ToString() + " is clickable.");
                             //i += 100;
@@ -1122,7 +1146,10 @@ namespace DurakProject
                     // else if the suit is the same and the player's card is greater than the AI card.
                     else if (playerCard.Suit == computerCard.Suit && playerCard.Rank > computerCard.Rank)
                     {
-                        AddClickEvent(playerCard);
+                        if (!playerCard.IsEventHandlerRegistered())
+                        {
+                            AddClickEvent(playerCard);
+                        }
                         //DrawBorder(playerCard);
                         //MessageBox.Show(playerCard.ToString() + " is clickable.");
                         //i += 100;
@@ -1214,7 +1241,10 @@ namespace DurakProject
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
                             //wire the click event to the cardbox
-                            AddClickEvent(cardBox);
+                            if (!cardBox.IsEventHandlerRegistered())
+                            {
+                                AddClickEvent(cardBox);
+                            }
                             //add the card to the hand and realign the hand
                             pnlPlayerHand.Controls.Add(cardBox);
                             RealignCards(pnlPlayerHand);
@@ -1325,7 +1355,10 @@ namespace DurakProject
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
                             //wire the click event to the cardbox
-                            AddClickEvent(cardBox);
+                            if (!cardBox.IsEventHandlerRegistered())
+                            {
+                                AddClickEvent(cardBox);
+                            }
                             //add the card to the hand and realign the hand
                             pnlPlayerHand.Controls.Add(cardBox);
                             RealignCards(pnlPlayerHand);

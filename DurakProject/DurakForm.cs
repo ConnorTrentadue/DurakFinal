@@ -508,6 +508,7 @@ namespace DurakProject
                             {
                                 MessageBox.Show("Click Event Added:  " + playerCard.ToString());
                                 AddClickEvent(playerCard);
+                                DrawBorder(playerCard);
                                 foundCard = true;
                             }
                         }

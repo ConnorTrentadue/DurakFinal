@@ -282,8 +282,8 @@ namespace DurakProject
             }
 
             //realign both player and commputer hand
-            RealignCards(pnlPlayerHand);
-            RealignCards(pnlComputerHand);
+            FlipPlayerHand(pnlPlayerHand);
+            FlipAiHand(pnlComputerHand);
 
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
@@ -409,8 +409,8 @@ namespace DurakProject
                 //MessageBox.Show("Attacker Counter +1!");
 
                 //realign player hand
-                RealignCards(pnlPlayerHand);
-                RepositionPlayedCards(pnlPlayArea);
+                FlipPlayerHand(pnlPlayerHand);
+                RealignCards(pnlPlayArea);
                 //remove the click event from the card as it enters the playarea
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
@@ -433,8 +433,8 @@ namespace DurakProject
                     //MessageBox.Show("Attacker Counter +1!");
 
                     //realign player hand
-                    RealignCards(pnlPlayerHand);
-                    RepositionPlayedCards(pnlPlayArea);
+                    FlipPlayerHand(pnlPlayerHand);
+                    RealignCards(pnlPlayArea);
                     //remove the click event from the card as it enters the playarea
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
@@ -458,14 +458,14 @@ namespace DurakProject
                             //requires location mapping
                             //MessageBox.Show("Card Removed!");
                             pnlPlayArea.Controls.Add(aCardBox);
-                            RepositionPlayedCards(pnlPlayArea);
+                            RealignCards(pnlPlayArea);
 
                             //MessageBox.Show("Card Added!");
                             playerAttackCounter++;
                             //MessageBox.Show("Attacker Counter +1!");
 
                             //realign player hand
-                            RealignCards(pnlPlayerHand);
+                            FlipPlayerHand(pnlPlayerHand);
                             //aCardBox.Click -= CardBox_Click;
                             RemoveClickEvent(aCardBox);
 
@@ -565,6 +565,8 @@ namespace DurakProject
                     }
                 }
             }
+
+            WinCheck(durakDeck);
         }
 
         /// <summary>
@@ -630,6 +632,7 @@ namespace DurakProject
 
         /// <summary>
         /// Repositions the cards in the play area so that each attack/defense card is grouped together
+        /// THIS METHOD CAUSES WEIRD BUGS DO NOT USE
         /// </summary>
         /// <param name="playArea"></param>
         private void RepositionPlayedCards(Panel playArea)
@@ -760,8 +763,8 @@ namespace DurakProject
                 lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                 //MessageBox.Show(card.ToString() + " Added to the discard pile");
                 RealignCards(pnlDiscard);
-                RealignCards(pnlPlayerHand);
-                RealignCards(pnlComputerHand);
+                FlipPlayerHand(pnlPlayerHand);
+                FlipAiHand(pnlComputerHand);
             }
 
             // remove all click events
@@ -863,7 +866,7 @@ namespace DurakProject
                                     m += 100;
                                 }
                             }
-                            // if the card is a queen or higher, save or higher save it for later
+                            // if the card is a queen or higher,  save it for later
                             if ((int)computerCard.Rank >= HIGH_CARD)
                             {
                                 // if not playing in end-game
@@ -898,8 +901,8 @@ namespace DurakProject
                                 aiAttackCounter++;
                                 pnlPlayArea.Controls.Add(computerCard);
                                 computerCard.BorderStyle = BorderStyle.Fixed3D;
-                                RealignCards(pnlComputerHand);
-                                RepositionPlayedCards(pnlPlayArea);
+                                FlipAiHand(pnlComputerHand);
+                                RealignCards(pnlPlayArea);
 
                                 //if no player cards can defend an attack
                                 if (validPlayerDefense(computerCard) == false)
@@ -915,11 +918,11 @@ namespace DurakProject
                                         // remove border from the card if it still has one.
                                         RemoveBorder(card);
                                         pnlPlayArea.Controls.Remove(card);
-                                        //card.FaceUp = false;
+                                        card.FaceUp = false;
                                         pnlPlayerHand.Controls.Add(card);
                                         RemoveClickEvent(card);
-                                        RealignCards(pnlPlayerHand);
-                                        RepositionPlayedCards(pnlPlayArea);
+                                        FlipPlayerHand(pnlPlayerHand);
+                                        RealignCards(pnlPlayArea);
                                         playerAttackCounter = 0;
 
                                     }
@@ -933,8 +936,10 @@ namespace DurakProject
                             }
                         }
                         // flag that a play was made and realign cards
-                        playMade = true;
-                        RepositionPlayedCards(pnlPlayArea);
+                        if(!highCard)
+                            playMade = true;
+
+                        RealignCards(pnlPlayArea);
                     }
                 }
 
@@ -961,8 +966,8 @@ namespace DurakProject
                         lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                         //MessageBox.Show(card.ToString() + " Added to the discard pile");
                         RealignCards(pnlDiscard);
-                        RealignCards(pnlPlayerHand);
-                        RealignCards(pnlComputerHand);
+                        FlipPlayerHand(pnlPlayerHand);
+                        FlipAiHand(pnlComputerHand);
 
                     }
 
@@ -1019,8 +1024,8 @@ namespace DurakProject
                             }
 
                             //realign computer hand
-                            RealignCards(pnlComputerHand);
-                            RepositionPlayedCards(pnlPlayArea);
+                            FlipAiHand(pnlComputerHand);
+                            RealignCards(pnlPlayArea);
 
                             //determine which player cards can be played to defend an attack
                             if (validPlayerDefense(computerCard) == false)
@@ -1035,11 +1040,11 @@ namespace DurakProject
                                     //MessageBox.Show("Picking up " + card + " at index " + k);
                                     pnlPlayArea.Controls.Remove(card);
                                     //flip the card before entering computer hand
-                                    //card.FaceUp = false;
+                                    card.FaceUp = false;
                                     RemoveBorder(card);
                                     pnlPlayerHand.Controls.Add(card);
-                                    RealignCards(pnlPlayerHand);
-                                    RepositionPlayedCards(pnlPlayArea);
+                                    FlipPlayerHand(pnlPlayerHand);
+                                    RealignCards(pnlPlayArea);
                                     //ComputerAttack(playerAttackCounter);
                                 }
                                 i += 100; // end the examination loop
@@ -1067,7 +1072,7 @@ namespace DurakProject
                     btnEndAttack.Visible = true;
 
                     //validPlay = true;  //reset validPlay
-                    MessageBox.Show(newAI.Name + " will not to play.");
+                    MessageBox.Show(newAI.Name + " will not play.");
                     //i += 100;
 
                     //send cards to discard pile
@@ -1082,8 +1087,8 @@ namespace DurakProject
                         lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                         //MessageBox.Show(card.ToString() + " Added to the discard pile");
                         RealignCards(pnlDiscard);
-                        RealignCards(pnlPlayerHand);
-                        RealignCards(pnlComputerHand);
+                        FlipPlayerHand(pnlPlayerHand);
+                        FlipAiHand(pnlComputerHand);
 
                     }
 
@@ -1102,7 +1107,7 @@ namespace DurakProject
                 }
                 // set boolean playMade successfully and realign the playArea
                 playMade = true;
-                RepositionPlayedCards(pnlPlayArea);
+                RealignCards(pnlPlayArea);
             }
 
 
@@ -1144,7 +1149,7 @@ namespace DurakProject
                             // RemoveEvent(card);
                             //i += 100;
                             playMade = true;
-                            RepositionPlayedCards(pnlPlayArea);
+                            RealignCards(pnlPlayArea);
                             //break;
                         }
                         else if (aiCard.Rank < playerCard.Rank && playerCard.Suit != trumpSuit)
@@ -1159,7 +1164,7 @@ namespace DurakProject
                             //RemoveEvent(card);
                             //i += 100;
                             playMade = true;
-                            RepositionPlayedCards(pnlPlayArea);
+                            RealignCards(pnlPlayArea);
                             //break;
                         }
 
@@ -1177,7 +1182,7 @@ namespace DurakProject
                         //RemoveEvent(card);
                         //i += 100;
                         playMade = true;
-                        RepositionPlayedCards(pnlPlayArea);
+                        RealignCards(pnlPlayArea);
                         //break;
                     }
                 }
@@ -1196,11 +1201,12 @@ namespace DurakProject
                     CardBox card = (CardBox)pnlPlayArea.Controls[i];
                     pnlPlayArea.Controls.Remove(card);
                     //flip the card before entering computer hand
-                    card.FaceUp = false;
+                    //card.FaceUp = !card.FaceUp;
                     pnlComputerHand.Controls.Add(card);
                     RemoveBorder(card);
-                    RealignCards(pnlComputerHand);
-                    RepositionPlayedCards(pnlPlayArea);
+                    //FlipAiHand(pnlComputerHand);
+                    FlipAiHand(pnlComputerHand);
+                    RealignCards(pnlPlayArea);
                     playerAttackCounter = 0;
                 }
                 for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
@@ -1336,7 +1342,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlPlayerHand.Controls.Add(trumpCard);
-                                RealignCards(pnlPlayerHand);
+                                FlipPlayerHand(pnlPlayerHand);
                             }
                             //no cards are in the deck at a redraw, check to see if a player has won
                             else if (pnlTrumpCard.Controls.Count == 0)
@@ -1360,8 +1366,8 @@ namespace DurakProject
                             }
                             //add the card to the hand and realign the hand
                             pnlPlayerHand.Controls.Add(cardBox);
-                            RealignCards(pnlPlayerHand);
-                            RepositionPlayedCards(pnlPlayArea);
+                            FlipPlayerHand(pnlPlayerHand);
+                            RealignCards(pnlPlayArea);
                             //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
                         }
 
@@ -1380,7 +1386,7 @@ namespace DurakProject
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
                                 card.FaceUp = false;
-                                RealignCards(pnlComputerHand);
+                                FlipAiHand(pnlComputerHand);
                             }
                             //no cards are in the deck at a redraw, check to see if a player has won
                             else if (pnlTrumpCard.Controls.Count == 0)
@@ -1397,7 +1403,7 @@ namespace DurakProject
                             CardBox cardBox = new CardBox(card);
                             //add card to AI hand and realign the hand
                             pnlComputerHand.Controls.Add(cardBox);
-                            RealignCards(pnlComputerHand);
+                            FlipAiHand(pnlComputerHand);
                         }
                     }
                 }
@@ -1418,7 +1424,7 @@ namespace DurakProject
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
                                 card.FaceUp = false;
-                                RealignCards(pnlComputerHand);
+                                FlipAiHand(pnlComputerHand);
                             }
                             //no cards are in the deck at a redraw, check to see if a player has won
                             else if (pnlTrumpCard.Controls.Count == 0)
@@ -1436,7 +1442,7 @@ namespace DurakProject
                             CardBox cardBox = new CardBox(card);
                             //add card to AI hand and realign the hand
                             pnlComputerHand.Controls.Add(cardBox);
-                            RealignCards(pnlComputerHand);
+                            FlipAiHand(pnlComputerHand);
                         }
                     }
 
@@ -1453,7 +1459,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlPlayerHand.Controls.Add(trumpCard);
-                                RealignCards(pnlPlayerHand);
+                                FlipPlayerHand(pnlPlayerHand);
 
                             }
                             else if (pnlTrumpCard.Controls.Count == 0)
@@ -1476,7 +1482,7 @@ namespace DurakProject
                             }
                             //add the card to the hand and realign the hand
                             pnlPlayerHand.Controls.Add(cardBox);
-                            RealignCards(pnlPlayerHand);
+                            FlipPlayerHand(pnlPlayerHand);
                             //MessageBox.Show(pnlPlayerHand.Controls.Count.ToString() + " cards in hand");
                         }
                     }
@@ -1718,7 +1724,7 @@ namespace DurakProject
                 pnlPlayArea.Controls.Remove(card);
                 card.FaceUp = flipped; //  changes the flip value of the card based on the bool passed.
                 hand.Controls.Add(card);
-                RealignCards(pnlPlayerHand);
+                FlipPlayerHand(pnlPlayerHand);
             }
         }
 
@@ -1852,7 +1858,31 @@ namespace DurakProject
                 tempHand.Remove(transferCard);
                 pnlComputerHand.Controls.Add(transferCard);
             }
-            RealignCards(pnlComputerHand);
+            FlipAiHand(pnlComputerHand);
+        }
+
+        private void FlipAiHand(Panel computerHand)
+        {
+            for(int i = computerHand.Controls.Count - 1; i > -1; i--)
+            {
+                CardBox tempCard = (CardBox)computerHand.Controls[i];
+
+                tempCard.FaceUp = false;
+            }
+
+            RealignCards(computerHand);
+        }
+
+        private void FlipPlayerHand(Panel playerHand)
+        {
+            for (int i = playerHand.Controls.Count - 1; i > -1; i--)
+            {
+                CardBox tempCard = (CardBox)playerHand.Controls[i];
+
+                tempCard.FaceUp = true;
+            }
+
+            RealignCards(playerHand);
         }
 
         #endregion

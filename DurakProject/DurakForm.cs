@@ -399,6 +399,7 @@ namespace DurakProject
 
             if (playerAttack != true) //player is defending
             {
+                //MessageBox.Show("playerAttack variable was false. Player is defending.");
                 //remove card from player hand
                 pnlPlayerHand.Controls.Remove(aCardBox);
                 //add the card to the play area
@@ -420,8 +421,10 @@ namespace DurakProject
             }
             else //player is attacking
             {
+                //MessageBox.Show("playerAttack variable was true. Player is attacking.");
                 if (pnlPlayArea.Controls.Count == 0)
                 {
+                    //MessageBox.Show("Play area has 0 cards in it during player attack.");
                     //remove from player hand
                     pnlPlayerHand.Controls.Remove(aCardBox);
                     //add the card to the play area
@@ -444,14 +447,17 @@ namespace DurakProject
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
+                    //MessageBox.Show("Play area has more than 0 cards in it during player attack.");
                     //MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count + " Cards on the table");
                     for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
                     {
+                        //MessageBox.Show("Looping through play area.");
                         //MessageBox.Show("entering if (pnlPlayArea > 0), index is " + i);
                         CardBox validCardCheck = (CardBox)pnlPlayArea.Controls[i];
                         // check cards in the playarea for valid rank
                         if (aCardBox.Rank == validCardCheck.Rank)
                         {
+                            //MessageBox.Show("Checking that the current player card is valid by comparing it to each card in the play area.");
                             //remove from player hand
                             pnlPlayerHand.Controls.Remove(aCardBox);
                             //add the card to the play area
@@ -482,6 +488,7 @@ namespace DurakProject
                         }
                         else
                         {
+                            //MessageBox.Show("The current checked card was not valid for play. Setting validPlay bool to false.");
                             validPlay = false;
                             //break;
                         }
@@ -490,11 +497,13 @@ namespace DurakProject
                 }
                 if (validPlay == false)
                 {
+                    //MessageBox.Show("If validPlay bool is false resetting validPlay.");
                     validPlay = true;
                     //MessageBox.Show(aCardBox.ToString() + " is not a valid card");
                 }
                 if (pnlPlayerHand.Controls.Count == 0)
                 {
+                    //MessageBox.Show("Player hand it empty, redrawing cards.");
                     RedrawCards(durakDeck, playerAttack);
                 }
                 // revaluate click events
@@ -531,6 +540,7 @@ namespace DurakProject
 
                 for (int i = pnlPlayerHand.Controls.Count - 1; i > -1; i--)
                 {
+                    //MessageBox.Show("Looping through player hand to remove/add click events for valid cards.");
                     bool foundCard = false;
                     CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
                     RemoveClickEvent(playerCard);
@@ -908,7 +918,7 @@ namespace DurakProject
                                 if (validPlayerDefense(computerCard) == false)
                                 {
                                     pickUpCounter++;
-                                    MessageBox.Show("You can not defend, take the card");
+                                    //MessageBox.Show("You can not defend, take the card");
                                     //for all cards on the table, pick them up
                                     for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
                                     {
@@ -951,7 +961,7 @@ namespace DurakProject
                     btnEndAttack.Visible = true;
 
                     //validPlay = true;  //reset validPlay
-                    MessageBox.Show(newAI.Name + " Chose not to play.");
+                    MessageBox.Show(newAI.Name + " chose not to play.");
                     //i += 100;
 
                     //send cards to discard pile
@@ -1067,6 +1077,7 @@ namespace DurakProject
                 // The computer can not make another valid play
                 if (validPlay == false || aiAttackCounter >= 6)
                 {
+                    WinCheck(durakDeck);
                     //Swap player attack / pickup buttons at the end of thae phase.
                     btnPickUp.Visible = false;
                     btnEndAttack.Visible = true;
@@ -1498,6 +1509,7 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
+            MessageBox.Show("Calling win check...");
             if (winCheckPassed == false)
             {
                 if (durakDeck.CardsRemaining == 0)

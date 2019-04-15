@@ -618,6 +618,12 @@ namespace DurakProject
             //determine AI difficulty
             if (difficultyChoice == 3)
                 HardAiDefense();
+            else if(difficultyChoice == 2)
+            {
+                int choiceNumber = randomNumber.Next(1, 3);
+                if (choiceNumber == 2)
+                    HardAiDefense();
+            }
 
             ComputerDefend(cardBox);
 
@@ -685,6 +691,12 @@ namespace DurakProject
             //Checks for Hard difficulty
             if (difficultyChoice == 3)
                 HardAiAttack();
+            else if (difficultyChoice == 2)
+            {
+                int choiceNumber = randomNumber.Next(1, 3);
+                if (choiceNumber == 2)
+                    HardAiAttack();
+            }
 
             //remove the btnEndAttack
             btnEndAttack.Visible = false;

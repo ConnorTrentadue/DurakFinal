@@ -69,6 +69,7 @@
             this.btnNewGame.Name = "btnNewGame";
             this.btnNewGame.Size = new System.Drawing.Size(75, 23);
             this.btnNewGame.TabIndex = 6;
+            this.btnNewGame.TabStop = false;
             this.btnNewGame.Text = "&New Game";
             this.btnNewGame.UseVisualStyleBackColor = true;
             this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click);
@@ -80,6 +81,7 @@
             this.btnForfeit.Name = "btnForfeit";
             this.btnForfeit.Size = new System.Drawing.Size(75, 23);
             this.btnForfeit.TabIndex = 7;
+            this.btnForfeit.TabStop = false;
             this.btnForfeit.Text = "&Forfeit";
             this.btnForfeit.UseVisualStyleBackColor = true;
             this.btnForfeit.Click += new System.EventHandler(this.btnForfeit_Click);

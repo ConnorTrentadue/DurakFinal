@@ -1141,7 +1141,7 @@ namespace DurakProject
 
             bool playMade = false; //bool to track if a play was made
             //logic to add a defend card from computer hand
-            for (int i = 0; i < pnlComputerHand.Controls.Count && playMade != true; i++)
+            for (int i = 0; i < pnlComputerHand.Controls.Count && !playMade; i++)
             {
                 CardBox aiCard = (CardBox)pnlComputerHand.Controls[i];
                 if (aiCard.Suit == playerCard.Suit /*playerCard*/ || aiCard.Suit == trumpSuit)

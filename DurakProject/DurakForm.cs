@@ -668,7 +668,7 @@ namespace DurakProject
                 {
                     everyTwoCards++;
 
-                    if (everyTwoCards % 2 == 0 && everyTwoCards != 0)
+                    if (everyTwoCards == 2)
                     {
                         repositionCounter += 25;
                     }

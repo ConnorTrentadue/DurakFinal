@@ -807,7 +807,6 @@ namespace DurakProject
                                     i += 100;
 
                                 }
-
                             }
                         }
                         // flag that a play was made and realign cards

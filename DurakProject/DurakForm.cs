@@ -378,7 +378,7 @@ namespace DurakProject
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
-                MessageBox.Show("player COunter " + playerAttackCounter.ToString());
+                MessageBox.Show("player Counter " + playerAttackCounter.ToString());
                 ComputerAttack(playerAttackCounter);
             }
             else //player is attacking
@@ -597,6 +597,7 @@ namespace DurakProject
             //bool playMade = false;
 
             btnEndAttack.Visible = true;
+            btnPickUp.Visible = false;
             //AI attack logic
             //ComputerAttack(playMade);
 

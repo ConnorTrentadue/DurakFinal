@@ -351,9 +351,9 @@ namespace DurakProject
 
         public void CardBox_Click(object sender, EventArgs e)
         {
-            
+
             MessageBox.Show("CardBox_Click triggered");
-            
+
             //convert the sender
             CardBox aCardBox = sender as CardBox;
             RemoveClickEvent(aCardBox);
@@ -407,7 +407,7 @@ namespace DurakProject
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
-                    MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count +" Cards on the table");
+                    MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count + " Cards on the table");
                     for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
                     {
                         MessageBox.Show("entering if (pnlPlayArea > 0), index is " + i);
@@ -462,7 +462,7 @@ namespace DurakProject
                 }
                 // revaluate click events
                 //MessageBox.Show("re-evaluate click events");  //debugging
-                
+
                 //for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
                 //{
                 //    CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
@@ -492,7 +492,7 @@ namespace DurakProject
                 //    }
                 //}
 
-                for(int i = pnlPlayerHand.Controls.Count - 1; i > -1; i--)
+                for (int i = pnlPlayerHand.Controls.Count - 1; i > -1; i--)
                 {
                     bool foundCard = false;
                     CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
@@ -502,7 +502,7 @@ namespace DurakProject
                     {
                         CardBox validCardCheck = (CardBox)pnlPlayArea.Controls[j];
 
-                        if((int)playerCard.Rank == (int)validCardCheck.Rank)
+                        if ((int)playerCard.Rank == (int)validCardCheck.Rank)
                         {
                             if (!playerCard.IsEventHandlerRegistered())
                             {
@@ -973,7 +973,7 @@ namespace DurakProject
                 playMade = true;
                 RealignCards(pnlPlayArea);
             }
-           
+
 
             // if the AI hand is empty, redraw and check for win
             if (pnlComputerHand.Controls.Count == 0 || pnlPlayerHand.Controls.Count == 0)

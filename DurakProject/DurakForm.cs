@@ -614,20 +614,20 @@ namespace DurakProject
         /// <param name="playArea"></param>
         private void RepositionPlayedCards(Panel playArea)
         {
-            //int everyTwoCards = 1;
-            //int positionIndex = 50;
+            int everyTwoCards = 1;
+            int positionIndex = 50;
 
-            //for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
-            //{
-            //    if (everyTwoCards % 2 == 0)
-            //    {
-            //        positionIndex += 15;
-            //    }
+            for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i-=2)
+            {
+                if (everyTwoCards % 2 == 0)
+                {
+                    positionIndex += 15;
+                }
 
-            //    pnlPlayArea.Controls[i].Location = new Point(positionIndex, 100);
+                pnlPlayArea.Controls[i].Location = new Point(positionIndex, 100);
 
-            //    everyTwoCards++;
-            //}
+                everyTwoCards++;
+            }
         }
 
         #endregion
@@ -689,7 +689,7 @@ namespace DurakProject
                 lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                 //MessageBox.Show(card.ToString() + " Added to the discard pile");
                 RealignCards(pnlDiscard);
-                RealignCards(pnlPlayerHand);
+                RepositionPlayedCards(pnlPlayerHand);
                 RealignCards(pnlComputerHand);
             }
 

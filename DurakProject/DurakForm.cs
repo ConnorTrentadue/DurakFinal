@@ -328,7 +328,7 @@ namespace DurakProject
         private void btnPickUp_Click(object sender, EventArgs e)
         {
             PickUpCards(ref pnlPlayerHand, true);
-            MessageBox.Show("Pickup Counter: " + pickUpCounter + "AI attack Counter: " + aiAttackCounter);
+            //MessageBox.Show("Pickup Counter: " + pickUpCounter + "AI attack Counter: " + aiAttackCounter);
 
             if (pickUpCounter < 6)
             {
@@ -339,7 +339,7 @@ namespace DurakProject
             }
             else if (pickUpCounter >= 6 && aiAttackCounter >= 6)
             {
-                MessageBox.Show("Pickup Counter: " + pickUpCounter + " & AI attack Counter: " + aiAttackCounter + " REACHED");
+                //MessageBox.Show("Pickup Counter: " + pickUpCounter + " & AI attack Counter: " + aiAttackCounter + " REACHED");
                 pickUpCounter = 0;
                 btnEndAttack.Visible = true;
                 btnPickUp.Visible = false;
@@ -356,7 +356,7 @@ namespace DurakProject
             }
             else
             {
-                MessageBox.Show("AI attack Counter: " + aiAttackCounter);
+                //MessageBox.Show("AI attack Counter: " + aiAttackCounter);
                 ComputerAttack(aiAttackCounter);
             }
 
@@ -369,7 +369,7 @@ namespace DurakProject
         public void CardBox_Click(object sender, EventArgs e)
         {
 
-            MessageBox.Show("CardBox_Click triggered");
+            //MessageBox.Show("CardBox_Click triggered");
 
             //convert the sender
             CardBox aCardBox = sender as CardBox;
@@ -395,7 +395,7 @@ namespace DurakProject
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
 
-                MessageBox.Show("player Counter " + playerAttackCounter.ToString());
+                //MessageBox.Show("player Counter " + playerAttackCounter.ToString());
                 ComputerAttack(playerAttackCounter);
             }
             else //player is attacking
@@ -419,15 +419,15 @@ namespace DurakProject
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
-                    MessageBox.Show("Computer is playing a defense against a single card in play area");
+                    //MessageBox.Show("Computer is playing a defense against a single card in play area");
                     MakeNormalPlay(aCardBox, playerAttackCounter);
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
-                    MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count + " Cards on the table");
+                    //MessageBox.Show("Else trigged " + pnlPlayArea.Controls.Count + " Cards on the table");
                     for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
                     {
-                        MessageBox.Show("entering if (pnlPlayArea > 0), index is " + i);
+                        //MessageBox.Show("entering if (pnlPlayArea > 0), index is " + i);
                         CardBox validCardCheck = (CardBox)pnlPlayArea.Controls[i];
                         // check cards in the playarea for valid rank
                         if (aCardBox.Rank == validCardCheck.Rank)
@@ -456,7 +456,7 @@ namespace DurakProject
                             MakeNormalPlay(aCardBox, playerAttackCounter);
 
                             //exit the for loop
-                            MessageBox.Show("Breaking the computer defense loop that occurs when there is more than 1 card in play.");
+                            //MessageBox.Show("Breaking the computer defense loop that occurs when there is more than 1 card in play.");
                             i += 111;
                             //break;
                         }
@@ -523,7 +523,7 @@ namespace DurakProject
                         {
                             if (!playerCard.IsEventHandlerRegistered())
                             {
-                                MessageBox.Show("Click Event Added:  " + playerCard.ToString());
+                                //MessageBox.Show("Click Event Added:  " + playerCard.ToString());
                                 AddClickEvent(playerCard);
                                 DrawBorder(playerCard);
                                 foundCard = true;
@@ -1426,7 +1426,7 @@ namespace DurakProject
                     if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count <= 0)
                     {
                         winCheckPassed = true;
-                        MessageBox.Show("There is no fool?! \nGame has ended in a tie.");
+                        MessageBox.Show("There is no fool?! \n\nGame has ended in a tie.");
                         if (pnlPlayerHand.Controls.Count > 0)
                         {
                             for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
@@ -1444,7 +1444,7 @@ namespace DurakProject
                     else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count <= 0)
                     {
                         winCheckPassed = true;
-                        MessageBox.Show("You're a fool! \n" + newAI.Name + " has won.");
+                        MessageBox.Show("You're a fool! \n\n" + newAI.Name + " has won.");
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1460,7 +1460,7 @@ namespace DurakProject
                     else if (pnlPlayerHand.Controls.Count <= 0 && pnlComputerHand.Controls.Count > 0)
                     {
                         winCheckPassed = true;
-                        MessageBox.Show(newAI.Name + " is the fool! \n" + newPlayer.Name + " has won.");
+                        MessageBox.Show(newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
                         btnEndAttack.Visible = false;
                         btnPickUp.Visible = false;
                         btnForfeit.Visible = false;

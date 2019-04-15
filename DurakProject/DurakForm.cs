@@ -600,6 +600,28 @@ namespace DurakProject
             }
         }
 
+        /// <summary>
+        /// Repositions the cards in the play area so that each attack/defense card is grouped together
+        /// </summary>
+        /// <param name="playArea"></param>
+        private void RepositionPlayedCards(Panel playArea)
+        {
+            //int everyTwoCards = 1;
+            //int positionIndex = 50;
+
+            //for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
+            //{
+            //    if (everyTwoCards % 2 == 0)
+            //    {
+            //        positionIndex += 15;
+            //    }
+
+            //    pnlPlayArea.Controls[i].Location = new Point(positionIndex, 100);
+
+            //    everyTwoCards++;
+            //}
+        }
+
         #endregion
 
         #region METHODS

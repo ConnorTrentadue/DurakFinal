@@ -462,7 +462,7 @@ namespace DurakProject
                 }
                 // revaluate click events
                 //MessageBox.Show("re-evaluate click events");  //debugging
-                bool foundCard = false;
+                
                 for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
                 {
                     CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
@@ -471,6 +471,7 @@ namespace DurakProject
                 }
                 for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
                 {
+                    bool foundCard = false;
                     CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
                     for (int j = 0; j < pnlPlayArea.Controls.Count && !foundCard; j++)
                     {
@@ -482,6 +483,10 @@ namespace DurakProject
                             MessageBox.Show("Click Event Added:  " + playerCard.ToString());
                             AddClickEvent(playerCard);
                             foundCard = true;
+                        }
+                        else
+                        {
+                            RemoveClickEvent(playerCard);
                         }
                         //MessageBox.Show("Index value is " + i); //debugging
                     }

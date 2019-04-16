@@ -1512,10 +1512,10 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
-            MessageBox.Show("Calling win check...");
+            //MessageBox.Show("Calling win check...");
             if (winCheckPassed == false)
             {
-                MessageBox.Show("WinCheckPassed was false.");
+               //MessageBox.Show("WinCheckPassed was false.");
                 if (durakDeck.CardsRemaining == 0)
                 {
                     MessageBox.Show("No cards left in Durak deck check passed");
@@ -1526,7 +1526,7 @@ namespace DurakProject
                         playerStats.ties += 1;
                         lblTies.Text = "Ties: " + playerStats.ties;
                         Stats.WriteStats(playerStats);
-                        MessageBox.Show("The game ended in a tie. Unmapping all control events except new game.");
+                        //MessageBox.Show("The game ended in a tie. Unmapping all control events except new game.");
                         if (pnlPlayerHand.Controls.Count > 0)
                         {
                             for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
@@ -1548,7 +1548,7 @@ namespace DurakProject
                         playerStats.losses += 1;
                         lblLosses.Text = "Wins: " + playerStats.losses;
                         Stats.WriteStats(playerStats);
-                        MessageBox.Show("The AI Won. Unmapping all control events except new game.");
+                        //MessageBox.Show("The AI Won. Unmapping all control events except new game.");
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1568,7 +1568,7 @@ namespace DurakProject
                         playerStats.wins += 1;
                         lblWins.Text = "Wins: " + playerStats.wins;
                         Stats.WriteStats(playerStats);
-                        MessageBox.Show("The player Won. Unmapping all control events except new game.");
+                        //MessageBox.Show("The player Won. Unmapping all control events except new game.");
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1583,7 +1583,7 @@ namespace DurakProject
                 }
                 //else no win condition found.  Keep playing.
             }
-            MessageBox.Show("End of win check.");
+            //MessageBox.Show("End of win check.");
         }
 
         /// <summary>

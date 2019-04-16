@@ -116,12 +116,34 @@ namespace DurakProject
 
         private void mnuAbout_Click(object sender, EventArgs e)
         {
+            string aboutInfo = "This project was developed by:\n\n" +
+                "Raymond Michael, Shaun McCrum and Connor Trentadue\n\n" +
+                "It was developed for OOP4200 as a semester long project.\n\n" +
+                "This program allows you to play Durak (or Fool), a Russian card game.\n\n\n" +
+                "ATTRIBUTION: \n\n" +
+                "Wood table image for form design created by Pixaby 20 Feb of an unknown year. " +
+                "Images release under the Creative Commons CC0 License. " +
+                "Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/. \n\n\n\n" +
+                "                                                                                       " +
+                "                                      V1.0 ©" + DateTime.Now.ToString("yyyy");
 
+            frmAboutForm about = new frmAboutForm(aboutInfo);
+            
+            about.Show();
         }
 
         private void mnuHelp_Click(object sender, EventArgs e)
         {
+            string videoLink = "<INSERT VIDEO LINK HERE>";
 
+            try
+            {
+                System.Diagnostics.Process.Start(videoLink);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error redirecting to help video. Please see this link for the video: <INSERT VIDEO LINK HERE>.");
+            }
         }
 
         private void mnuLog_Click(object sender, EventArgs e)

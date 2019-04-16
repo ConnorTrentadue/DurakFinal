@@ -130,8 +130,8 @@ namespace DurakProject
                 "Wood table image for form design created by Pixaby 20 Feb of an unknown year. " +
                 "Images release under the Creative Commons CC0 License. " +
                 "Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/. \n\n\n\n" +
-                "Card images used in class were created by Byron Knoll" +
-                "These images are released into the public domain - attribution is appreciated but not required." +
+                "Card images used in class were created by Byron Knoll\n" +
+                "These images are released into the public domain - attribution is appreciated but not required.\n" +
                 "Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019" +
                 "                                                                          " +
                 "                                      V1.0 ©" + DateTime.Now.ToString("yyyy");
@@ -727,9 +727,9 @@ namespace DurakProject
                 // for each of the remaining controls, in reverse order.
                 for (int index = myCount - 2; index >= 0; index--)
                 {
-                    everyTwoCards++;
+                    //everyTwoCards++;
 
-                    if (everyTwoCards == 2)
+                    if (index % 2 != 0)
                     {
                         repositionCounter += 25;
                     }
@@ -737,9 +737,9 @@ namespace DurakProject
                     //panelHand.Controls[index].Top = POP;
                     playArea.Controls[index].Left = playArea.Controls[index + 1].Left + offset + repositionCounter;
 
-                    if (everyTwoCards == 2)
+                    if (index % 2 != 0)
                     {
-                        everyTwoCards = 0;
+                        //everyTwoCards = 0;
                         repositionCounter = 0;
                     }
                 }

@@ -38,14 +38,14 @@
             this.lblAboutInfo.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAboutInfo.Location = new System.Drawing.Point(0, 0);
             this.lblAboutInfo.Name = "lblAboutInfo";
-            this.lblAboutInfo.Size = new System.Drawing.Size(444, 257);
+            this.lblAboutInfo.Size = new System.Drawing.Size(449, 298);
             this.lblAboutInfo.TabIndex = 0;
             // 
             // frmAboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 257);
+            this.ClientSize = new System.Drawing.Size(449, 298);
             this.Controls.Add(this.lblAboutInfo);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

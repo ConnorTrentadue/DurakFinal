@@ -132,9 +132,9 @@ namespace DurakProject
                 "Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/. \n\n\n\n" +
                 "Card images used in class were created by Byron Knoll\n" +
                 "These images are released into the public domain - attribution is appreciated but not required.\n" +
-                "Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019" +
+                "Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019\n\n" +
                 "                                                                          " +
-                "                                      V1.0 ©" + DateTime.Now.ToString("yyyy");
+                "                                                     V1.0 ©" + DateTime.Now.ToString("yyyy");
 
             frmAboutForm about = new frmAboutForm(aboutInfo);
             

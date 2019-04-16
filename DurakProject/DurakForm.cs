@@ -12,6 +12,12 @@
  * Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/.
  **/
 
+/** ATTRIBUTION 
+* Card images used in class were created by Byron Knoll
+* These images are released into the public domain - attribution is appreciated but not required.
+* Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019
+*/
+
 using System;
 using DurakClassLibrary;
 using System.Linq;
@@ -124,7 +130,10 @@ namespace DurakProject
                 "Wood table image for form design created by Pixaby 20 Feb of an unknown year. " +
                 "Images release under the Creative Commons CC0 License. " +
                 "Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/. \n\n\n\n" +
-                "                                                                                       " +
+                "Card images used in class were created by Byron Knoll" +
+                "These images are released into the public domain - attribution is appreciated but not required." +
+                "Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019" +
+                "                                                                          " +
                 "                                      V1.0 ©" + DateTime.Now.ToString("yyyy");
 
             frmAboutForm about = new frmAboutForm(aboutInfo);

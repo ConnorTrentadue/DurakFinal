@@ -12,6 +12,12 @@
  * Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/.
  **/
 
+/** ATTRIBUTION 
+* Card images used in class were created by Byron Knoll
+* These images are released into the public domain - attribution is appreciated but not required.
+* Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019
+*/
+
 using System;
 using DurakClassLibrary;
 using System.Linq;
@@ -123,9 +129,13 @@ namespace DurakProject
                 "ATTRIBUTION: \n\n" +
                 "Wood table image for form design created by Pixaby 20 Feb of an unknown year. " +
                 "Images release under the Creative Commons CC0 License. " +
-                "Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/. \n\n\n\n" +
-                "                                                                                       " +
-                "                                      V1.0 ©" + DateTime.Now.ToString("yyyy");
+                "Downloaded from https://www.pexels.com/photo/close-up-of-wooden-plank-326311/. \n\n" +
+                "Card images used in class were created by Byron Knoll. \n" +
+                "These images are released into the public domain - attribution is appreciated but not required.\n" +
+                "Downloaded from : http://code.google.com/p/vector-playing-cards/ on 4 Mar 2019" +  
+                "                                                                              " +
+                "                                                                              " +
+                "                                         V1.0 ©" + DateTime.Now.ToString("yyyy");
 
             frmAboutForm about = new frmAboutForm(aboutInfo);
             
@@ -298,12 +308,14 @@ namespace DurakProject
                         AddClickEvent(playerCardBox);
                     }
                     pnlPlayerHand.Controls.Add(playerCardBox);
+                    //pnlPlayArea.Controls.Add(playerCardBox);
                 }
                 else
                 {
                     //card.FaceUp = true;  //uncomment this to enable AI cards faceUp
                     CardBox computerCardBox = new CardBox(card);
                     pnlComputerHand.Controls.Add(computerCardBox);
+                    //pnlPlayArea.Controls.Add(computerCardBox);
                 }
             }
 
@@ -665,7 +677,7 @@ namespace DurakProject
 
         /// <summary>
         /// Repositions the cards in the play area so that each attack/defense card is grouped together
-        /// THIS METHOD CAUSES WEIRD BUGS DO NOT USE
+        /// THIS METHOD CAUSES WEIRD BUGS ****DO NOT USE****
         /// </summary>
         /// <param name="playArea"></param>
         private void RepositionPlayedCards(Panel playArea)
@@ -718,9 +730,7 @@ namespace DurakProject
                 // for each of the remaining controls, in reverse order.
                 for (int index = myCount - 2; index >= 0; index--)
                 {
-                    everyTwoCards++;
-
-                    if (everyTwoCards == 2)
+                    if (index % 2 != 0)
                     {
                         repositionCounter += 25;
                     }
@@ -728,9 +738,8 @@ namespace DurakProject
                     //panelHand.Controls[index].Top = POP;
                     playArea.Controls[index].Left = playArea.Controls[index + 1].Left + offset + repositionCounter;
 
-                    if (everyTwoCards == 2)
+                    if (index % 2 != 0)
                     {
-                        everyTwoCards = 0;
                         repositionCounter = 0;
                     }
                 }
@@ -1534,13 +1543,13 @@ namespace DurakProject
         /// <param name="durakDeck">requires the current durakDeck to begin if it is empty or not.</param>
         public void WinCheck(Deck durakDeck)
         {
-            MessageBox.Show("Calling win check...");
+            //MessageBox.Show("Calling win check...");
             if (winCheckPassed == false)
             {
-                MessageBox.Show("WinCheckPassed was false.");
+                //MessageBox.Show("WinCheckPassed was false.");
                 if (durakDeck.CardsRemaining == 0)
                 {
-                    MessageBox.Show("No cards left in Durak deck check passed");
+                    //MessageBox.Show("No cards left in Durak deck check passed");
                     if (pnlPlayerHand.Controls.Count == 0 && pnlComputerHand.Controls.Count == 0)
                     {
                         winCheckPassed = true;
@@ -1548,7 +1557,8 @@ namespace DurakProject
                         playerStats.ties += 1;
                         lblTies.Text = "Ties: " + playerStats.ties;
                         Stats.WriteStats(playerStats);
-                        MessageBox.Show("The game ended in a tie. Unmapping all control events except new game.");
+                        //MessageBox.Show("The game ended in a tie. Unmapping all control events except new game.");
+                        //Application.Restart();
                         if (pnlPlayerHand.Controls.Count > 0)
                         {
                             for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
@@ -1570,7 +1580,8 @@ namespace DurakProject
                         playerStats.losses += 1;
                         lblLosses.Text = "Wins: " + playerStats.losses;
                         Stats.WriteStats(playerStats);
-                        MessageBox.Show("The AI Won. Unmapping all control events except new game.");
+                        //MessageBox.Show("The AI Won. Unmapping all control events except new game.");
+                        //Application.Restart();
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1590,7 +1601,8 @@ namespace DurakProject
                         playerStats.wins += 1;
                         lblWins.Text = "Wins: " + playerStats.wins;
                         Stats.WriteStats(playerStats);
-                        MessageBox.Show("The player Won. Unmapping all control events except new game.");
+                        //MessageBox.Show("The player Won. Unmapping all control events except new game.");
+                        //Application.Restart();
                         for (int i = (pnlPlayerHand.Controls.Count - 1); i > -1; i--)
                         {
                             CardBox cardBox = (CardBox)pnlPlayerHand.Controls[i];
@@ -1605,7 +1617,7 @@ namespace DurakProject
                 }
                 //else no win condition found.  Keep playing.
             }
-            MessageBox.Show("End of win check.");
+            //MessageBox.Show("End of win check.");
         }
 
         /// <summary>

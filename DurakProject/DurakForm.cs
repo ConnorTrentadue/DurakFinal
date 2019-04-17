@@ -728,13 +728,13 @@ namespace DurakProject
                 // for each of the remaining controls, in reverse order.
                 for (int index = myCount - 2; index >= 0; index--)
                 {
-                    //everyTwoCards++;
-
+                    
+                    //on 4th card play reduce the offset.
                     if (index == myCount - 4)
                     {
                         offset = offset / 2;
                     }
-
+                    //everyTwoCards++;
                     if (index % 2 != 0)
                     {
                         repositionCounter += 10;

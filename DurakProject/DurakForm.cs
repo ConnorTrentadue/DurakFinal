@@ -109,6 +109,15 @@ namespace DurakProject
             btnPickUp.Visible = false;
             btnEndAttack.Visible = false;
             btnForfeit.Visible = false;
+            mnuForfeit.Visible = false;
+
+            lblGameNumber.Visible = false;
+            lblRoundNumber.Visible = false;
+            lblWins.Visible = false;
+            lblLosses.Visible = false;
+            lblTies.Visible = false;
+            lblDiscard.Visible = false;
+            lblCardsRemaining.Visible = false;
         }
 
         /// <summary>
@@ -186,9 +195,14 @@ namespace DurakProject
         {
             //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
             // Closes log form and writes to file
-            frmLog.Close();
-            playerStats.round = 0;
-            Stats.WriteStats(playerStats);
+            if (frmLog != null)
+                frmLog.Close();
+            if (playerStats != null)
+            {
+                playerStats.round = 0;
+                Stats.WriteStats(playerStats);
+            }
+
 
             Close();
         }
@@ -208,16 +222,17 @@ namespace DurakProject
             aiAttackCounter = 0;
             winCheckPassed = false;
 
-            //enable buttons if they were not visible
+            //enable forfeit button and menu option
             btnForfeit.Visible = true;
+            mnuForfeit.Visible = true;
 
             // If player has not entered a name have them do so
             while (playerName == "")
             {
                 //prompt the user for their name
                 frmPlayerNameEntry namePrompt = new frmPlayerNameEntry();
-                //namePrompt.Show();
 
+                //check if the dialog has been been click OK.
                 if (namePrompt.ShowDialog() == DialogResult.OK)
                 {
                     playerName = namePrompt.PlayerName;
@@ -230,7 +245,6 @@ namespace DurakProject
             //pull statistics from statistics log file.
             //else store their name and continue 
 
-
             //prompt the user for their choice of difficulty
             frmDifficultyChoice difficultyPrompt = new frmDifficultyChoice();
             if (difficultyPrompt.ShowDialog() == DialogResult.OK)
@@ -238,10 +252,7 @@ namespace DurakProject
                 difficultyChoice = difficultyPrompt.DifficultyValue;
             }
 
-            // Writes to the log screen, which writes to the text file when the form is closed
-            frmLog.WriteToLog("\nNew Game started");
-
-            // Get player existing stats
+             // Get player existing stats
             playerStats = Stats.ReadStats();
             if (playerStats != null)
             {
@@ -249,6 +260,10 @@ namespace DurakProject
                 playerStats.round += 1;
             }
 
+            // Writes to the log screen, which writes to the text file when the form is closed
+            frmLog.WriteToLog("\nNew Game # " + playerStats.gamesPlayed + " has started");
+
+            //set the game labels.
             lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
             lblRoundNumber.Text = "Round #: " + playerStats.round;
             lblWins.Text = "Wins: " + playerStats.wins;
@@ -261,6 +276,15 @@ namespace DurakProject
             pnlTrumpCard.Controls.Clear();
             pnlPlayArea.Controls.Clear();
             pnlDiscard.Controls.Clear();
+
+            //enable the new-game buttons
+            lblGameNumber.Visible = true;
+            lblRoundNumber.Visible = true;
+            lblWins.Visible = true;
+            lblLosses.Visible = true;
+            lblTies.Visible = true;
+            lblDiscard.Visible = true;
+            lblCardsRemaining.Visible = true;
 
             //ranomdizer for first player selection
             int someNumber = randomNumber.Next(1, 20);
@@ -363,18 +387,26 @@ namespace DurakProject
         private void btnForfeit_Click(object sender, EventArgs e)
         {
             // Log the game as a loss for the player
-
-            playerStats.losses += 1;
-            //frmLog.Close();
+            if (playerStats != null)
+                playerStats.losses += 1;
+            // close the lof if it was open.
+            if (frmLog != null)
+                frmLog.Close();
             Stats.WriteStats(playerStats);
             // disable all player controls
             btnForfeit.Visible = false;
             mnuForfeit.Visible = false;
             btnEndAttack.Visible = false;
             btnPickUp.Visible = false;
-            // Closes log form and writes to file
-            //frmLog.Close();
-            //Stats.WriteStats(playerStats);
+            // remove all click-events from cards on the table.
+            // remove all click events
+            for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+            {
+                CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                RemoveClickEvent(card);
+                //RemoveBorder(card);
+            }
+
         }
 
         /// <summary>
@@ -884,7 +916,7 @@ namespace DurakProject
                     {
                         //MessageBox.Show("index play " + i);
 
-                        // ------------------------------------------------ NEW CODE HERE ----------------------------------
+                        // ------------------------------------------------ NEW HARD AI CODE HERE ----------------------------------
                         // -------------------------------------------------------------------------------------------------
                         //Checks if Hard difficulty is selected
                         if (difficultyChoice == 3)
@@ -938,7 +970,7 @@ namespace DurakProject
                         {
                             i -= 100;  //end the loop that play cards
                         }
-                        // --------------------------------------------- NEW CODE ENDS HERE ------------------------------------------
+                        // --------------------------------------------- NEW HARD AI CODE ENDS HERE ------------------------------------------
                         // -----------------------------------------------------------------------------------------------------------
                         //the card at 0 is not high, play as normal
                         else
@@ -1559,10 +1591,11 @@ namespace DurakProject
                //MessageBox.Show("WinCheckPassed was false.");
                 if (durakDeck.CardsRemaining == 0)
                 {
-                    MessageBox.Show("No cards left in Durak deck check passed");
+                    //MessageBox.Show("No cards left in Durak deck check passed");
                     if (pnlPlayerHand.Controls.Count == 0 && pnlComputerHand.Controls.Count == 0)
                     {
                         winCheckPassed = true;
+                        frmLog.WriteToLog("\nThere is no fool?! \n\nGame has ended in a tie.");
                         MessageBox.Show("There is no fool?! \n\nGame has ended in a tie.");
                         playerStats.ties += 1;
                         lblTies.Text = "Ties: " + playerStats.ties;
@@ -1585,6 +1618,7 @@ namespace DurakProject
                     else if (pnlPlayerHand.Controls.Count > 0 && pnlComputerHand.Controls.Count == 0)
                     {
                         winCheckPassed = true;
+                        frmLog.WriteToLog("\n" + "You're a fool! \n\n" + newAI.Name + " has won.");
                         MessageBox.Show("You're a fool! \n\n" + newAI.Name + " has won.");
                         playerStats.losses += 1;
                         lblLosses.Text = "Wins: " + playerStats.losses;
@@ -1605,6 +1639,7 @@ namespace DurakProject
                     else if (pnlPlayerHand.Controls.Count == 0 && pnlComputerHand.Controls.Count > 0)
                     {
                         winCheckPassed = true;
+                        frmLog.WriteToLog("\n"+ newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
                         MessageBox.Show(newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
                         playerStats.wins += 1;
                         lblWins.Text = "Wins: " + playerStats.wins;

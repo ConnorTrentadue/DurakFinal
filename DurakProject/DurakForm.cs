@@ -166,7 +166,8 @@ namespace DurakProject
 
         private void mnuLog_Click(object sender, EventArgs e)
         {
-            frmLog.Show();
+            if (frmLog != null)
+                frmLog.Show();
         }
 
         /// <summary>

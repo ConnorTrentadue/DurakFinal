@@ -687,6 +687,7 @@ namespace DurakProject
             {
                 // Determine how wide one card/control is.
                 int cardWidth = playArea.Controls[0].Width;
+                int cardHeight = playArea.Controls[0].Height;
 
                 // Determine where the left-hand edge of a card/control placed 
                 // in the middle of the panel should be  
@@ -729,19 +730,28 @@ namespace DurakProject
                 {
                     //everyTwoCards++;
 
+                    if (index == myCount - 4)
+                    {
+                        offset = offset / 2;
+                    }
+
                     if (index % 2 != 0)
                     {
-                        repositionCounter += 25;
+                        repositionCounter += 10;
+
+                        playArea.Controls[index].Left = playArea.Controls[index + 1].Left + (offset) + repositionCounter;
+                        repositionCounter = 0;
                     }
+                    else
                     // Align the current card
                     //panelHand.Controls[index].Top = POP;
                     playArea.Controls[index].Left = playArea.Controls[index + 1].Left + offset + repositionCounter;
 
-                    if (index % 2 != 0)
-                    {
-                        //everyTwoCards = 0;
-                        repositionCounter = 0;
-                    }
+                    //if (index % 2 != 0)
+                    //{
+                    //    //everyTwoCards = 0;
+                    //    repositionCounter = 0;
+                    //}
                 }
             }
         }

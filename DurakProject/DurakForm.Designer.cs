@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDurak));
             this.btnNewGame = new System.Windows.Forms.Button();
             this.btnForfeit = new System.Windows.Forms.Button();
             this.lblGameNumber = new System.Windows.Forms.Label();
@@ -387,6 +388,7 @@
             this.Controls.Add(this.btnNewGame);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

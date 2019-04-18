@@ -4,6 +4,7 @@
  * Author: Shaun McCrum, Raymond Michael
  * Since: 22 Mar 2019
  * 
+ * 
  */
 
 /** ATTRIBUTION
@@ -111,6 +112,7 @@ namespace DurakProject
             btnForfeit.Visible = false;
             mnuForfeit.Visible = false;
 
+            //set the initial state of the txt labels.
             lblGameNumber.Visible = false;
             lblRoundNumber.Visible = false;
             lblWins.Visible = false;
@@ -152,7 +154,7 @@ namespace DurakProject
 
         private void mnuHelp_Click(object sender, EventArgs e)
         {
-            string videoLink = "<INSERT VIDEO LINK HERE>";
+            string videoLink = "https://youtu.be/W1rWxnHFAVk";
 
             try
             {
@@ -160,7 +162,7 @@ namespace DurakProject
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error redirecting to help video. Please see this link for the video: <INSERT VIDEO LINK HERE>.");
+                MessageBox.Show("Error redirecting to help video. Please see this link for the video: https://youtu.be/W1rWxnHFAVk.");
             }
         }
 

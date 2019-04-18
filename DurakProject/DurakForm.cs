@@ -234,6 +234,7 @@ namespace DurakProject
             btnPickUp.Visible = false;
             aiAttackCounter = 0;
             winCheckPassed = false;
+            testRecursionEnd = false;
 
             //enable forfeit button and menu option
             btnForfeit.Visible = true;

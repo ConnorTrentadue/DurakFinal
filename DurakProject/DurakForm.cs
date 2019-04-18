@@ -1,10 +1,12 @@
 ﻿/*
  * DurakForm.cs - The Main application form for playing Durak.
  * 
- * Author: Shaun McCrum, Raymond Michael
+ * Author: Shaun McCrum, Raymond Michael, Connor Trentadue
  * Since: 22 Mar 2019
  * 
- * 
+ * @see https://www.pagat.com/beating/podkidnoy_durak.html
+ * @see https://boardgamegeek.com/thread/913632/comprehensive-durak-strategy-guide
+ * @see http://cs229.stanford.edu/proj2013/Learning%20Game%20Playing%20Strategy%20for%20Durak_SN%20&%20NT.pdf
  */
 
 /** ATTRIBUTION
@@ -151,7 +153,9 @@ namespace DurakProject
             
             about.Show();
         }
-
+        /// <summary>
+        /// Help button links to online video tutorial for Durak.
+        /// </summary>
         private void mnuHelp_Click(object sender, EventArgs e)
         {
             string videoLink = "https://youtu.be/W1rWxnHFAVk";
@@ -166,6 +170,9 @@ namespace DurakProject
             }
         }
 
+        /// <summary>
+        /// Menu Log click starts game logging.
+        /// </summary>
         private void mnuLog_Click(object sender, EventArgs e)
         {
             if (frmLog != null)
@@ -192,8 +199,6 @@ namespace DurakProject
         /// <summary>
         /// Closes the program
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void mnuClose_Click(object sender, EventArgs e)
         {
             //close the progra.  REMOVE AFTER ADDING STATS TRACING FUNCTIONALITY
@@ -215,8 +220,6 @@ namespace DurakProject
         /// Creates a new deck and deals 6 cards to each player.
         /// Determine who attacks first.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnNewGame_Click(object sender, EventArgs e)
         {
             //clear any existing att / pickup buttons
@@ -456,6 +459,11 @@ namespace DurakProject
 
         #region CARDBOX EVENT HANDLERS
 
+        /// <summary>
+        /// Cardbox_Click handles log after a card has been clicked to be added to the play area.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CardBox_Click(object sender, EventArgs e)
         {
             //convert the sender
@@ -763,9 +771,15 @@ namespace DurakProject
 
         #endregion
 
-        #region METHODS
+        #region METHODS AND PLAY LOGIC
 
-        //starts a normal play where the player is attacking and AI is defending
+        
+        /// <summary>
+        /// MakeNoralPlay starts a normal play where the player is attacking and AI is defending
+        /// </summary>
+        /// <param name="cardBox">Receives a cardbox</param>
+        /// <param name="playCount">Tracks how many plays have occurred</param>
+        /// <param name="duplicateCards">Monitors for card duplicates</param>
         public void MakeNormalPlay(CardBox cardBox, int playCount, int duplicateCards = 0)
         {
             //bool playMade = false;
@@ -790,7 +804,10 @@ namespace DurakProject
 
         }
 
-        // Method to unwire cardbox click events
+        /// <summary>
+        /// Remove Click Event Method to unwire cardbox click events
+        /// </summary>
+        /// <param name="card">Card box being modified</param>
         public void RemoveClickEvent(CardBox card)
         {
             //remove the event handler 
@@ -798,7 +815,10 @@ namespace DurakProject
             RemoveBorder(card);
         }
 
-        // Method to wire cardbox click events
+        /// <summary>
+        /// Add Click Event Method to wire cardbox click events
+        /// </summary>
+        /// <param name="card">cardbox being modified</param>
         public void AddClickEvent(CardBox card)
         {
             //add the event handler 
@@ -807,7 +827,9 @@ namespace DurakProject
             //MessageBox.Show(card.ToString() + " enabled.");
         }
 
-        // Method to handle End Attack button click
+        /// <summary>
+        /// EbtnEndAttack Method to handle End Attack button click
+        /// </summary>
         private void btnEndAttack_Click(object sender, EventArgs e)
         {
             //send cards to discard pile
@@ -841,7 +863,42 @@ namespace DurakProject
 
         }
 
-        // logic for computer on attack, player on defense
+        /// <summary>
+        /// btnStatsReset click resets player stats
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mnuStatsReset_Click(object sender, EventArgs e)
+        {
+            //if stats exist
+            if (playerStats != null)
+            {
+                playerStats.gamesPlayed = 0;
+                playerStats.round = 0;
+                playerStats.wins = 0;
+                playerStats.ties = 0;
+                playerStats.losses = 0;
+
+                Stats.WriteStats(playerStats);
+
+                //reset the game labels
+                lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
+                lblRoundNumber.Text = "Round #: " + playerStats.round;
+                lblWins.Text = "Wins: " + playerStats.wins;
+                lblLosses.Text = "Losses: " + playerStats.losses;
+                lblTies.Text = "Ties: " + playerStats.ties;
+
+                MessageBox.Show("Stats have been reset, fool!");
+                if (frmLog != null)
+                    frmLog.WriteToLog("\nThere is no fool?! \n\nGame has ended in a tie.");
+            }
+        }
+
+        /// <summary>
+        /// ComputerAttack logic for computer on attack, player on defense
+        /// Handles Base AI and cardsave logic for HardAI
+        /// </summary>
+        /// <param name="playCount">PlayCount for tracking how many plays have occurred when this is called.</param>
         public void ComputerAttack(int playCount)
         {
             bool playMade = false;  //conditionally bool to see if a play was made
@@ -1178,7 +1235,10 @@ namespace DurakProject
 
         }
 
-        //Method for Player on attack, computer on defense
+        /// <summary>
+        /// ComputerDefend Method for Player on attack, computer on defense
+        /// </summary>
+        /// <param name="playerCard">cardbox for determining logic on the card played.</param>
         public void ComputerDefend(CardBox playerCard)
         {
             //ensure buttons are visible
@@ -1282,7 +1342,11 @@ namespace DurakProject
             WinCheck(durakDeck);
         }
 
-        //Method to determine which cards are valid when defending
+        /// <summary>
+        /// Method to determine which cards are valid when defending
+        /// </summary>
+        /// <param name="computerCard">Receives a card from the AI attack</param>
+        /// <returns> boolean status if the player hand has an acceptable defense</returns>
         public bool validPlayerDefense(CardBox computerCard)
         {
             bool canPlay = false;
@@ -1943,6 +2007,10 @@ namespace DurakProject
             FlipAiHand(pnlComputerHand);
         }
 
+        /// <summary>
+        /// FlipAIHand for changing the AI cards to faceUp all at once
+        /// </summary>
+        /// <param name="computerHand"></param>
         private void FlipAiHand(Panel computerHand)
         {
             for (int i = computerHand.Controls.Count - 1; i > -1; i--)
@@ -1954,7 +2022,10 @@ namespace DurakProject
 
             RealignCards(computerHand);
         }
-
+        /// <summary>
+        /// FlipPlayerHand for changing the player cards to faceUpn all at once
+        /// </summary>
+        /// <param name="playerHand"></param>
         private void FlipPlayerHand(Panel playerHand)
         {
             for (int i = playerHand.Controls.Count - 1; i > -1; i--)
@@ -1968,5 +2039,7 @@ namespace DurakProject
         }
 
         #endregion
+
+        
     }
 }

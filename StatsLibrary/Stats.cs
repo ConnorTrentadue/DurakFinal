@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Stats.cs - The class for defining player logged stats.
+ * 
+ * Author: Raymond Michael, Shaun McCrum
+ * Since: 10 Apr 2019
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +22,10 @@ namespace StatsLibrary
         const string STATS_PATH = "Log/stats.json";
         const string LOG_PATH = "Log/log.txt";
 
+        /// <summary>
+        /// WriteStats writes statistics to the file
+        /// </summary>
+        /// <param name="player">Player statistics object</param>
         public static void WriteStats(PlayerStats player)
         {
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Log"))
@@ -29,6 +40,10 @@ namespace StatsLibrary
             }
         }
 
+        /// <summary>
+        /// WriteLog writes to a file
+        /// </summary>
+        /// <param name="toWrite">stat to be written</param>
         public static void WriteLog(string toWrite)
         {
             if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "Log"))
@@ -41,6 +56,10 @@ namespace StatsLibrary
             }
         }
 
+        /// <summary>
+        /// ReadStats reads jSon from the file
+        /// </summary>
+        /// <returns>playerstats object</returns>
         public static PlayerStats ReadStats()
         {
             PlayerStats aPlayerStats = new PlayerStats();

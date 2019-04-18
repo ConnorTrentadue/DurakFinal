@@ -57,6 +57,7 @@
             this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.lblDiscard = new System.Windows.Forms.Label();
             this.lblTrumpIndicator = new System.Windows.Forms.Label();
+            this.mnuStatsReset = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -261,8 +262,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFile,
-            this.mnuLog,
             this.mnuAbout,
+            this.mnuLog,
             this.mnuHelp});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -275,7 +276,8 @@
             this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuNewGame,
             this.mnuForfeit,
-            this.mnuClose});
+            this.mnuClose,
+            this.mnuStatsReset});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "File";
@@ -284,14 +286,14 @@
             // 
             this.mnuNewGame.Name = "mnuNewGame";
             this.mnuNewGame.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
-            this.mnuNewGame.Size = new System.Drawing.Size(171, 22);
+            this.mnuNewGame.Size = new System.Drawing.Size(180, 22);
             this.mnuNewGame.Text = "New Game";
             this.mnuNewGame.Click += new System.EventHandler(this.mnuNewGame_Click);
             // 
             // mnuForfeit
             // 
             this.mnuForfeit.Name = "mnuForfeit";
-            this.mnuForfeit.Size = new System.Drawing.Size(171, 22);
+            this.mnuForfeit.Size = new System.Drawing.Size(180, 22);
             this.mnuForfeit.Text = "Forfeit";
             this.mnuForfeit.Click += new System.EventHandler(this.mnuForfeit_Click);
             // 
@@ -299,7 +301,7 @@
             // 
             this.mnuClose.Name = "mnuClose";
             this.mnuClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.mnuClose.Size = new System.Drawing.Size(171, 22);
+            this.mnuClose.Size = new System.Drawing.Size(180, 22);
             this.mnuClose.Text = "&Close";
             this.mnuClose.Click += new System.EventHandler(this.mnuClose_Click);
             // 
@@ -347,6 +349,13 @@
             this.lblTrumpIndicator.Text = "Trump";
             this.lblTrumpIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTrumpIndicator.Visible = false;
+            // 
+            // mnuStatsReset
+            // 
+            this.mnuStatsReset.Name = "mnuStatsReset";
+            this.mnuStatsReset.Size = new System.Drawing.Size(180, 22);
+            this.mnuStatsReset.Text = "Stats Rese&t";
+            this.mnuStatsReset.Click += new System.EventHandler(this.mnuStatsReset_Click);
             // 
             // frmDurak
             // 
@@ -424,6 +433,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuHelp;
         private System.Windows.Forms.Label lblDiscard;
         private System.Windows.Forms.Label lblTrumpIndicator;
+        private System.Windows.Forms.ToolStripMenuItem mnuStatsReset;
     }
 }
 

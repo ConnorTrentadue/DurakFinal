@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * PlayerStats.cs - The Class for defininf player stats objects.
+ * 
+ * Author: Connor Trentadue, Shaun McCrum
+ * Since: 10 Apr 2019
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,7 +81,10 @@ namespace StatsLibrary
             this.myLosses = losses;
             this.myTies = ties;
         }
-
+        /// <summary>
+        /// toJson builds the player stats object
+        /// </summary>
+        /// <returns>json object string</returns>
         public string toJson()
         {
             StringBuilder jsonBuilder = new StringBuilder();
@@ -89,7 +99,10 @@ namespace StatsLibrary
 
             return jsonBuilder.ToString();
         }
-
+        /// <summary>
+        /// GetInfo retrieves player stats info from object
+        /// </summary>
+        /// <returns>returns the info as a string</returns>
         public string GetInfo()
         {
             StringBuilder info = new StringBuilder();

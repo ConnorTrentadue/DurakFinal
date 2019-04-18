@@ -520,7 +520,8 @@ namespace DurakProject
                 //remove the click event from the card as it enters the playarea
                 //RemoveBorder(aCardBox);
                 RemoveClickEvent(aCardBox);
-
+                
+                
                 //MessageBox.Show("player Counter " + playerAttackCounter.ToString());
                 ComputerAttack(playerAttackCounter);
             }
@@ -547,8 +548,9 @@ namespace DurakProject
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
-                    //MessageBox.Show("Computer is playing a defense against a single card in play area");
-                    MakeNormalPlay(aCardBox, playerAttackCounter);
+                    if (winCheckPassed != true)
+                        //MessageBox.Show("Computer is playing a defense against a single card in play area");
+                        MakeNormalPlay(aCardBox, playerAttackCounter);
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
@@ -583,8 +585,9 @@ namespace DurakProject
                             //remove the click event from the card as it enters the playarea
                             //RemoveBorder(aCardBox);
                             //RemoveClickEvent(aCardBox);
-
-                            MakeNormalPlay(aCardBox, playerAttackCounter);
+                            
+                            if (winCheckPassed != true)
+                                MakeNormalPlay(aCardBox, playerAttackCounter);
 
                             //exit the for loop
                             //MessageBox.Show("Breaking the computer defense loop that occurs when there is more than 1 card in play.");
@@ -1190,7 +1193,7 @@ namespace DurakProject
                                         //debugging for card indexes on table.
                                         //MessageBox.Show("Picking up " + card + " at index " + k);
                                         pnlPlayArea.Controls.Remove(card);
-                                        frmLog.WriteToLog(newAI.Name + " has picked up " + card.ToString());
+                                        frmLog.WriteToLog(playerName + " has picked up " + card.ToString());
                                         //flip the card before entering computer hand
                                         card.FaceUp = false;
                                         RemoveBorder(card);
@@ -1527,7 +1530,7 @@ namespace DurakProject
                             //set the card faceup for a player hand
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
-                            frmLog.WriteToLog(playerName + " has drawn " + cardBox.ToString());
+                            frmLog.WriteToLog(playerName + " has draw a " + cardBox.ToString() + "card.");
                             //wire the click event to the cardbox
                             if (!cardBox.IsEventHandlerRegistered())
                             {

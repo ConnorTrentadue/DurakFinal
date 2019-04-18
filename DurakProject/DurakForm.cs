@@ -250,7 +250,7 @@ namespace DurakProject
                 {
                     playerName = namePrompt.PlayerName;
                 }
-                if (playerName == "" || playerName.Contains("\\"))
+                if (playerName == "" || playerName.Contains(@"\"))
                     MessageBox.Show("Please enter a valid name.");
             }
 

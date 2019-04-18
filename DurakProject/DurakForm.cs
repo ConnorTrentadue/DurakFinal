@@ -274,7 +274,8 @@ namespace DurakProject
             }
 
             // Get player existing stats
-            playerStats = Stats.ReadStats();
+            if(playerStats == null)
+                playerStats = Stats.ReadStats();
             if (playerStats != null)
             {
                 playerStats.gamesPlayed += 1;
@@ -282,7 +283,7 @@ namespace DurakProject
             }
 
             // Writes to the log screen, which writes to the text file when the form is closed
-            frmLog.WriteToLog("\nNew Game # " + playerStats.gamesPlayed + " has started");
+            frmLog.WriteToLog("\nNew Game # " + playerStats.gamesPlayed + " has started at " + DateTime.Now.ToString());
 
             //set the game labels.
             lblGameNumber.Text = "Game #: " + playerStats.gamesPlayed;
@@ -378,11 +379,11 @@ namespace DurakProject
             Card trumpCard = durakDeck.DrawCard();
             CardBox aTrumpCardbox = new CardBox(trumpCard);
             // log the tump card
-            if (frmLog != null)
-                frmLog.WriteToLog("\n"+ aTrumpCardbox.ToString() + " is the Trump card for this hand");
 
             //draw the card to the trump panel face up
             trumpCard.FaceUp = true;
+            if (frmLog != null)
+                frmLog.WriteToLog("\n" + aTrumpCardbox.Suit.ToString() + " is the Trump for this hand");
             pnlTrumpCard.Controls.Add(aTrumpCardbox);
             // assign the trump suit for the game
             trumpSuit = trumpCard.Suit;
@@ -468,6 +469,7 @@ namespace DurakProject
                 for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
                 {
                     CardBox card = (CardBox)pnlPlayerHand.Controls[j];
+                    frmLog.WriteToLog(playerName + " has picked up " + card.ToString());
                     if (!card.IsEventHandlerRegistered())
                     {
                         AddClickEvent(card);
@@ -497,6 +499,7 @@ namespace DurakProject
             CardBox aCardBox = sender as CardBox;
             RemoveClickEvent(aCardBox);
             //MessageBox.Show(aCardBox.ToString() + " was clicked");
+            frmLog.WriteToLog(playerName + " has played " + aCardBox.ToString());
             bool validPlay = true;
 
             if (playerAttack != true) //player is defending
@@ -867,7 +870,7 @@ namespace DurakProject
                 pnlDiscard.Controls.Add(card);
                 pnlDiscard.Controls.SetChildIndex(card, 0);
                 lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
-                //MessageBox.Show(card.ToString() + " Added to the discard pile");
+                frmLog.WriteToLog(card.ToString() + " was added to the discard pile.");
                 RealignCards(pnlDiscard);
                 FlipPlayerHand(pnlPlayerHand);
                 FlipAiHand(pnlComputerHand);
@@ -1043,6 +1046,7 @@ namespace DurakProject
                                     pnlComputerHand.Controls.Remove(computerCard);
                                     aiAttackCounter++;
                                     pnlPlayArea.Controls.Add(computerCard);
+                                    frmLog.WriteToLog(newAI.Name + " has played " + computerCard.ToString());
                                     computerCard.BorderStyle = BorderStyle.Fixed3D;
                                     FlipAiHand(pnlComputerHand);
                                     RepositionPlayedCards(pnlPlayArea);
@@ -1063,6 +1067,7 @@ namespace DurakProject
                                             pnlPlayArea.Controls.Remove(card);
                                             //card.FaceUp = false;
                                             pnlPlayerHand.Controls.Add(card);
+                                            frmLog.WriteToLog(playerName + " has picked up " + card.ToString());
                                             RemoveClickEvent(card);
                                             FlipPlayerHand(pnlPlayerHand);
                                             RepositionPlayedCards(pnlPlayArea);
@@ -1095,6 +1100,7 @@ namespace DurakProject
 
                         //validPlay = true;  //reset validPlay
                         MessageBox.Show(newAI.Name + " chose not to play.");
+                        frmLog.WriteToLog(newAI.Name + " chose not to play.");
                         //i += 100;
 
                         //send cards to discard pile
@@ -1108,6 +1114,7 @@ namespace DurakProject
                             pnlDiscard.Controls.SetChildIndex(card, 0);
                             lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
                             //MessageBox.Show(card.ToString() + " Added to the discard pile");
+                            frmLog.WriteToLog(card.ToString() + " Added to the discard pile");
                             RealignCards(pnlDiscard);
                             FlipPlayerHand(pnlPlayerHand);
                             FlipAiHand(pnlComputerHand);
@@ -1164,6 +1171,7 @@ namespace DurakProject
                                     aiAttackCounter++;
                                     computerCard.BorderStyle = BorderStyle.Fixed3D;
                                     pnlPlayArea.Controls.Add(computerCard);
+                                    frmLog.WriteToLog(newAI.Name + " has played " + computerCard.ToString());
                                 }
 
                                 //realign computer hand
@@ -1182,6 +1190,7 @@ namespace DurakProject
                                         //debugging for card indexes on table.
                                         //MessageBox.Show("Picking up " + card + " at index " + k);
                                         pnlPlayArea.Controls.Remove(card);
+                                        frmLog.WriteToLog(newAI.Name + " has picked up " + card.ToString());
                                         //flip the card before entering computer hand
                                         card.FaceUp = false;
                                         RemoveBorder(card);
@@ -1217,6 +1226,7 @@ namespace DurakProject
 
                         //validPlay = true;  //reset validPlay
                         MessageBox.Show(newAI.Name + " has chosen not to attack.");
+                        frmLog.WriteToLog(newAI.Name + " has chosen not to attack.");
                         //i += 100;
 
                         //send cards to discard pile
@@ -1229,6 +1239,7 @@ namespace DurakProject
                             pnlDiscard.Controls.Add(card);
                             pnlDiscard.Controls.SetChildIndex(card, 0);
                             lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
+                            frmLog.WriteToLog(card.ToString() + " has been discarded.");
                             //MessageBox.Show(card.ToString() + " Added to the discard pile");
                             RealignCards(pnlDiscard);
                             FlipPlayerHand(pnlPlayerHand);
@@ -1291,7 +1302,7 @@ namespace DurakProject
                             //flip the card as it is played
                             aiCard.FaceUp = true;
                             pnlPlayArea.Controls.Add(aiCard);
-
+                            frmLog.WriteToLog(newAI.Name + " has played " + aiCard.ToString());
                             // remove a click event from a card in the playArea
                             // RemoveEvent(card);
                             //i += 100;
@@ -1306,6 +1317,7 @@ namespace DurakProject
                             //flip the card as it is played
                             aiCard.FaceUp = true;
                             pnlPlayArea.Controls.Add(aiCard);
+                            frmLog.WriteToLog(newAI.Name + " has played " + aiCard.ToString());
                             // remove border
                             // remove a click event from a card in the playArea
                             //RemoveEvent(card);
@@ -1324,7 +1336,7 @@ namespace DurakProject
                         //flip the card as it is played
                         aiCard.FaceUp = true;
                         pnlPlayArea.Controls.Add(aiCard);
-
+                        frmLog.WriteToLog(newAI.Name + " has played " + aiCard.ToString());
                         // remove a click event from a card in the playArea
                         //RemoveEvent(card);
                         //i += 100;
@@ -1343,6 +1355,7 @@ namespace DurakProject
             if (playMade == false)
             {
                 MessageBox.Show(newAI.Name + " has passed on the attacking card.");
+                frmLog.WriteToLog(newAI.Name + " has passed on the attacking card.");
                 for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
                 {
                     //debugging for card indexes on table.
@@ -1494,6 +1507,7 @@ namespace DurakProject
                             if (pnlTrumpCard.Controls.Count > 0)
                             {
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
+
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlPlayerHand.Controls.Add(trumpCard);
                                 FlipPlayerHand(pnlPlayerHand);
@@ -1513,6 +1527,7 @@ namespace DurakProject
                             //set the card faceup for a player hand
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
+                            frmLog.WriteToLog(playerName + " has drawn " + cardBox.ToString());
                             //wire the click event to the cardbox
                             if (!cardBox.IsEventHandlerRegistered())
                             {
@@ -1555,6 +1570,7 @@ namespace DurakProject
                             lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
                             //card.FaceUp = true;  //not required for AI hands, use only for debugging
                             CardBox cardBox = new CardBox(card);
+                            frmLog.WriteToLog(playerName + " has drawn " + cardBox.ToString());
                             //add card to AI hand and realign the hand
                             pnlComputerHand.Controls.Add(cardBox);
                             FlipAiHand(pnlComputerHand);
@@ -1594,6 +1610,7 @@ namespace DurakProject
                             lblCardsRemaining.Text = "Remaining: " + durakDeck.CardsRemaining.ToString();
                             //card.FaceUp = true;  //not required for AI hands, use only for debugging
                             CardBox cardBox = new CardBox(card);
+                            frmLog.WriteToLog(playerName + " has drawn " + cardBox.ToString());
                             //add card to AI hand and realign the hand
                             pnlComputerHand.Controls.Add(cardBox);
                             FlipAiHand(pnlComputerHand);
@@ -1629,6 +1646,7 @@ namespace DurakProject
                             //set the card faceup for a player hand
                             card.FaceUp = true;
                             CardBox cardBox = new CardBox(card);
+                            frmLog.WriteToLog(playerName + " has drawn " + cardBox.ToString());
                             //wire the click event to the cardbox
                             if (!cardBox.IsEventHandlerRegistered())
                             {

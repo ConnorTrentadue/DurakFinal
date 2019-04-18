@@ -26,15 +26,15 @@ namespace DurakProject
             {
                 if (rbtnTenToAce.Checked)
                 {
-                    return 10;
+                    return 10;  //small deck 20
                 }
                 else if (rbtnSixToAce.Checked)
                 {
-                    return 6;
+                    return 6;   //medium deck 36 cards
                 }
                 else if (rbtnStandardDeck.Checked)
                 {
-                    return 2;
+                    return 2;   //standard 52 card deck
                 }
                 else
                     return 6;

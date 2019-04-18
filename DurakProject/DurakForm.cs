@@ -573,36 +573,6 @@ namespace DurakProject
                 }
                 // revaluate click events
                 //MessageBox.Show("re-evaluate click events");  //debugging
-
-                //for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
-                //{
-                //    CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
-                //    //remove click event
-                //    RemoveClickEvent(playerCard);
-                //}
-                //for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
-                //{
-                //    bool foundCard = false;
-                //    CardBox playerCard = (CardBox)pnlPlayerHand.Controls[i];
-                //    for (int j = 0; j < pnlPlayArea.Controls.Count && !foundCard; j++)
-                //    {
-                //        CardBox validCardCheck = (CardBox)pnlPlayArea.Controls[j];
-                //        // check cards in the playarea for valid rank
-                //        //MessageBox.Show("evaluate " + playerCard.ToString() + " vs " + validCardCheck.ToString() );
-                //        if ((int)playerCard.Rank == (int)validCardCheck.Rank)
-                //        {
-                //            MessageBox.Show("Click Event Added:  " + playerCard.ToString());
-                //            AddClickEvent(playerCard);
-                //            foundCard = true;
-                //        }
-                //        //else
-                //        //{
-                //        //    RemoveClickEvent(playerCard);
-                //        //}
-                //        //MessageBox.Show("Index value is " + i); //debugging
-                //    }
-                //}
-
                 for (int i = pnlPlayerHand.Controls.Count - 1; i > -1; i--)
                 {
                     //MessageBox.Show("Looping through player hand to remove/add click events for valid cards.");
@@ -993,7 +963,7 @@ namespace DurakProject
                                 if (validPlayerDefense(computerCard) == false)
                                 {
                                     pickUpCounter++;
-                                    //MessageBox.Show("You can not defend, take the card");
+                                    MessageBox.Show("You can not defend, take the card");
                                     //for all cards on the table, pick them up
                                     for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
                                     {
@@ -1158,7 +1128,7 @@ namespace DurakProject
                     btnEndAttack.Visible = true;
 
                     //validPlay = true;  //reset validPlay
-                    MessageBox.Show(newAI.Name + " will not play.");
+                    MessageBox.Show(newAI.Name + " has chosen not to attack.");
                     //i += 100;
 
                     //send cards to discard pile
@@ -1281,6 +1251,7 @@ namespace DurakProject
             // check for attack end.
             if (playMade == false)
             {
+                MessageBox.Show(newAI.Name + " has passed on the attacking card.");
                 for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
                 {
                     //debugging for card indexes on table.
@@ -1882,21 +1853,27 @@ namespace DurakProject
                 if ((int)playerCard.Rank < (int)aiCard.Rank)
                 {
                     playerAttack = true;
+                    MessageBox.Show("Your " + playerCard.ToString() + " is the lowest trump.");
                 }
                 else
                 {
                     playerAttack = false;
+                    aiCard.FaceUp = true;
+                    MessageBox.Show(newAI.Name + "'s " + aiCard.ToString() + " is the lowest trump.");
+                    aiCard.FaceUp = false;
                 }
             }
             // playerCard is trump, but AI card is not
             else if (playerCard.Suit == trumpSuit && aiCard.Suit != trumpSuit)
             {
                 playerAttack = true;
+                MessageBox.Show("Your " + playerCard.ToString() + " is the lowest trump.");
             }
             // aiCard is trump but playerCard is not
             else if (playerCard.Suit != trumpSuit && aiCard.Suit == trumpSuit)
             {
                 playerAttack = false;
+                MessageBox.Show(newAI.Name + "'s " + aiCard.ToString() + " is the lowest trump.");
 
             }
             else

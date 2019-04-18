@@ -240,7 +240,7 @@ namespace DurakProject
             mnuForfeit.Visible = true;
 
             // If player has not entered a name have them do so
-            while (playerName == "")
+            while (playerName == "" || playerName.Contains(@"\"))
             {
                 //prompt the user for their name
                 frmPlayerNameEntry namePrompt = new frmPlayerNameEntry();
@@ -250,8 +250,8 @@ namespace DurakProject
                 {
                     playerName = namePrompt.PlayerName;
                 }
-                if (playerName == "")
-                    MessageBox.Show("Please enter a name.");
+                if (playerName == "" || playerName.Contains("\\"))
+                    MessageBox.Show("Please enter a valid name.");
             }
 
             //if name exists in the log-file

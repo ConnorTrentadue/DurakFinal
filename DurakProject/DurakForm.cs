@@ -62,7 +62,10 @@ namespace DurakProject
         //*************************
         //*************************
 
-        int deckSize = 36;  // size of the durak card deck.  2 = 36 card default
+        int deckSize;  // size of the durak card deck.  2 = 36 card default
+
+        int deckSizeShuffle;
+
         int pickUpCounter = 0;
 
         //Declares new computer player
@@ -322,8 +325,15 @@ namespace DurakProject
             Card card = new Card();
             //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
+            if (deckSize == 2)
+                deckSizeShuffle = 52;
+            else if (deckSize == 6)
+                deckSizeShuffle = 36;
+            else if (deckSize == 10)
+                deckSizeShuffle = 20;
+
             // shuffle the new deck.
-            durakDeck.Shuffle(deckSize);
+            durakDeck.Shuffle(deckSizeShuffle);
             //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
             // Set the deck image to a card back image
@@ -348,12 +358,14 @@ namespace DurakProject
                     {
                         AddClickEvent(playerCardBox);
                     }
+                    //MessageBox.Show(playerCardBox.ToString());
                     pnlPlayerHand.Controls.Add(playerCardBox);
                 }
                 else
                 {
                     //card.FaceUp = true;  //uncomment this to enable AI cards faceUp
                     CardBox computerCardBox = new CardBox(card);
+                    //MessageBox.Show(computerCardBox.ToString());
                     pnlComputerHand.Controls.Add(computerCardBox);
                 }
             }

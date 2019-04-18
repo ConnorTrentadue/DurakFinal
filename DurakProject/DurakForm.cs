@@ -548,9 +548,11 @@ namespace DurakProject
                     //RemoveBorder(aCardBox);
                     RemoveClickEvent(aCardBox);
 
-                    if (winCheckPassed != true)
+                    if (winCheckPassed == false)
+                    {
                         //MessageBox.Show("Computer is playing a defense against a single card in play area");
                         MakeNormalPlay(aCardBox, playerAttackCounter);
+                    }
                 }
                 else if (pnlPlayArea.Controls.Count > 0)
                 {
@@ -1349,9 +1351,9 @@ namespace DurakProject
                 }
                 //end the for loop
                 //if (playMade)
-                //    i += 100;
-                WinCheck(durakDeck);
+                //    i += 100;  
             }
+            WinCheck(durakDeck);
             if (winCheckPassed != true)
             {
                 // check for attack end.

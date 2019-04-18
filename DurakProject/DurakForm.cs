@@ -654,7 +654,7 @@ namespace DurakProject
                 }
             }
 
-            WinCheck(durakDeck);
+            //WinCheck(durakDeck);
         }
 
         /// <summary>
@@ -893,7 +893,6 @@ namespace DurakProject
             playerAttack = false;
             // switch to computer attack
             ComputerAttack(aiAttackCounter);
-
         }
 
         /// <summary>
@@ -1353,34 +1352,36 @@ namespace DurakProject
                 //    i += 100;
                 WinCheck(durakDeck);
             }
-
-            // check for attack end.
-            if (playMade == false)
+            if (winCheckPassed != true)
             {
-                MessageBox.Show(newAI.Name + " has passed on the attacking card.");
-                frmLog.WriteToLog(newAI.Name + " has passed on the attacking card.");
-                for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
+                // check for attack end.
+                if (playMade == false)
                 {
-                    //debugging for card indexes on table.
-                    //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                    CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                    pnlPlayArea.Controls.Remove(card);
-                    //flip the card before entering computer hand
-                    //card.FaceUp = !card.FaceUp;
-                    pnlComputerHand.Controls.Add(card);
-                    RemoveBorder(card);
-                    //FlipAiHand(pnlComputerHand);
-                    FlipAiHand(pnlComputerHand);
-                    RepositionPlayedCards(pnlPlayArea);
-                    playerAttackCounter = 0;
-                }
-                for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
-                {
-                    //re-enable player clickable hand
-                    CardBox card = (CardBox)pnlPlayerHand.Controls[i];
-                    if (!card.IsEventHandlerRegistered())
+                    MessageBox.Show(newAI.Name + " has passed on the attacking card.");
+                    frmLog.WriteToLog(newAI.Name + " has passed on the attacking card.");
+                    for (int i = pnlPlayArea.Controls.Count - 1; i > -1; i--)
                     {
-                        AddClickEvent(card);
+                        //debugging for card indexes on table.
+                        //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
+                        CardBox card = (CardBox)pnlPlayArea.Controls[i];
+                        pnlPlayArea.Controls.Remove(card);
+                        //flip the card before entering computer hand
+                        //card.FaceUp = !card.FaceUp;
+                        pnlComputerHand.Controls.Add(card);
+                        RemoveBorder(card);
+                        //FlipAiHand(pnlComputerHand);
+                        FlipAiHand(pnlComputerHand);
+                        RepositionPlayedCards(pnlPlayArea);
+                        playerAttackCounter = 0;
+                    }
+                    for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+                    {
+                        //re-enable player clickable hand
+                        CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                        if (!card.IsEventHandlerRegistered())
+                        {
+                            AddClickEvent(card);
+                        }
                     }
                 }
             }

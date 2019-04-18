@@ -51,6 +51,9 @@ namespace DurakProject
         //Seeding random number generator
         static Random randomNumber = new Random();
 
+        //Boolean to test ending recursive calls
+        bool testRecursionEnd = false;
+
         //*************************
         //*************************
         //*************************
@@ -913,338 +916,340 @@ namespace DurakProject
         /// <param name="playCount">PlayCount for tracking how many plays have occurred when this is called.</param>
         public void ComputerAttack(int playCount)
         {
-            bool playMade = false;  //conditionally bool to see if a play was made
-            bool validPlay = false;
-            bool highCard = false;  //is the card a highcard
-            const int HIGH_CARD = 13; //rank of a card that is high
-
-            //Checks for Hard difficulty
-            if (difficultyChoice == 3)
-                HardAiAttack();
-            else if (difficultyChoice == 2)
+            if(testRecursionEnd == false)
             {
-                int choiceNumber = randomNumber.Next(1, 3);
-                if (choiceNumber == 2)
+                bool playMade = false;  //conditionally bool to see if a play was made
+                bool validPlay = false;
+                bool highCard = false;  //is the card a highcard
+                const int HIGH_CARD = 13; //rank of a card that is high
+
+                //Checks for Hard difficulty
+                if (difficultyChoice == 3)
                     HardAiAttack();
-            }
-
-            //remove the btnEndAttack
-            btnEndAttack.Visible = false;
-            //remove the btnPickup
-            btnPickUp.Visible = true;
-            // render player hand unclickable before attack cards are played
-            //foreach (CardBox playerCard in (CardBox)pnlPlayerHand)
-            for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
-            {
-                CardBox card = (CardBox)pnlPlayerHand.Controls[i];
-                RemoveClickEvent(card);
-                //RemoveBorder(card);
-            }
-            // clear any borders from the playArea cards
-            for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
-            {
-                CardBox card = (CardBox)pnlPlayArea.Controls[i];
-                card.BorderStyle = BorderStyle.None;
-            }
-
-            // if playArea is empty begin attack
-            if (pnlPlayArea.Controls.Count <= 0)
-            {
-                CardBox computerCard = new CardBox();
-                //logic to add first card from computer hand (no attack logic applied)
-                for (int i = pnlComputerHand.Controls.Count; i > -1; i--)
+                else if (difficultyChoice == 2)
                 {
-                    if (pnlComputerHand.Controls.Count != 0)
+                    int choiceNumber = randomNumber.Next(1, 3);
+                    if (choiceNumber == 2)
+                        HardAiAttack();
+                }
+
+                //remove the btnEndAttack
+                btnEndAttack.Visible = false;
+                //remove the btnPickup
+                btnPickUp.Visible = true;
+                // render player hand unclickable before attack cards are played
+                //foreach (CardBox playerCard in (CardBox)pnlPlayerHand)
+                for (int i = 0; i < pnlPlayerHand.Controls.Count; i++)
+                {
+                    CardBox card = (CardBox)pnlPlayerHand.Controls[i];
+                    RemoveClickEvent(card);
+                    //RemoveBorder(card);
+                }
+                // clear any borders from the playArea cards
+                for (int i = 0; i < pnlPlayArea.Controls.Count; i++)
+                {
+                    CardBox card = (CardBox)pnlPlayArea.Controls[i];
+                    card.BorderStyle = BorderStyle.None;
+                }
+
+                // if playArea is empty begin attack
+                if (pnlPlayArea.Controls.Count <= 0)
+                {
+                    CardBox computerCard = new CardBox();
+                    //logic to add first card from computer hand (no attack logic applied)
+                    for (int i = pnlComputerHand.Controls.Count; i > -1; i--)
                     {
-                        //MessageBox.Show("index play " + i);
-
-                        // ------------------------------------------------ NEW HARD AI CODE HERE ----------------------------------
-                        // -------------------------------------------------------------------------------------------------
-                        //Checks if Hard difficulty is selected
-                        if (difficultyChoice == 3)
+                        if (pnlComputerHand.Controls.Count != 0)
                         {
-                            //Loops through computer hand
-                            for (int m = 0; m < pnlComputerHand.Controls.Count; m++)
-                            {
-                                //Creates cardbox for each control in the computer hand for checking
-                                CardBox tempCard = (CardBox)pnlComputerHand.Controls[m];
+                            //MessageBox.Show("index play " + i);
 
-                                //Checks if the current card in the hand is trump
-                                if (tempCard.Suit == trumpSuit)
+                            // ------------------------------------------------ NEW HARD AI CODE HERE ----------------------------------
+                            // -------------------------------------------------------------------------------------------------
+                            //Checks if Hard difficulty is selected
+                            if (difficultyChoice == 3)
+                            {
+                                //Loops through computer hand
+                                for (int m = 0; m < pnlComputerHand.Controls.Count; m++)
                                 {
-                                    //Checks that we're not looking at the last card in hand
-                                    if (m != pnlComputerHand.Controls.Count - 1)
+                                    //Creates cardbox for each control in the computer hand for checking
+                                    CardBox tempCard = (CardBox)pnlComputerHand.Controls[m];
+
+                                    //Checks if the current card in the hand is trump
+                                    if (tempCard.Suit == trumpSuit)
                                     {
-                                        //Sets the computers choice to the NEXT card in hand 
-                                        computerCard = (CardBox)pnlComputerHand.Controls[m + 1];
+                                        //Checks that we're not looking at the last card in hand
+                                        if (m != pnlComputerHand.Controls.Count - 1)
+                                        {
+                                            //Sets the computers choice to the NEXT card in hand 
+                                            computerCard = (CardBox)pnlComputerHand.Controls[m + 1];
+                                        }
+                                        //Checks that we're looking at the last card in the hand
+                                        //All cards in hand were trump suit (WOW!) sets computer choice to LOWEST of the bunch
+                                        else if (m == pnlComputerHand.Controls.Count - 1)
+                                        {
+                                            //Sets the computer choice to the last card
+                                            computerCard = (CardBox)pnlComputerHand.Controls[0];
+                                        }
                                     }
-                                    //Checks that we're looking at the last card in the hand
-                                    //All cards in hand were trump suit (WOW!) sets computer choice to LOWEST of the bunch
-                                    else if (m == pnlComputerHand.Controls.Count - 1)
+                                    else // Card chosen is not a trump
                                     {
-                                        //Sets the computer choice to the last card
                                         computerCard = (CardBox)pnlComputerHand.Controls[0];
+                                        m += 100;
                                     }
                                 }
-                                else // Card chosen is not a trump
+                                // if the card is a queen or higher,  save it for later
+                                if ((int)computerCard.Rank >= HIGH_CARD)
                                 {
-                                    computerCard = (CardBox)pnlComputerHand.Controls[0];
-                                    m += 100;
+                                    // if not playing in end-game
+                                    if (durakDeck.CardsRemaining > 1)
+                                    {
+                                        highCard = true;
+                                    }
                                 }
                             }
-                            // if the card is a queen or higher,  save it for later
-                            if ((int)computerCard.Rank >= HIGH_CARD)
+                            else // Easy AI always plays the first card in hand
                             {
-                                // if not playing in end-game
-                                if (durakDeck.CardsRemaining > 1)
+                                computerCard = (CardBox)pnlComputerHand.Controls[0];
+                            }
+
+                            // triggers if hardAI flags the next card playable as high.
+                            if (highCard == true)
+                            {
+                                i -= 100;  //end the loop that play cards
+                            }
+                            // --------------------------------------------- NEW HARD AI CODE ENDS HERE ------------------------------------------
+                            // -----------------------------------------------------------------------------------------------------------
+                            //the card at 0 is not high, play as normal
+                            else
+                            {
+                                //If no cards are in the playArea
+                                if (pnlPlayArea.Controls.Count <= 0)
                                 {
-                                    highCard = true;
+                                    //flip the card as it is played
+                                    computerCard.FaceUp = true;
+                                    //play the card in the computer hand
+                                    pnlComputerHand.Controls.Remove(computerCard);
+                                    aiAttackCounter++;
+                                    pnlPlayArea.Controls.Add(computerCard);
+                                    computerCard.BorderStyle = BorderStyle.Fixed3D;
+                                    FlipAiHand(pnlComputerHand);
+                                    RepositionPlayedCards(pnlPlayArea);
+
+                                    //if no player cards can defend an attack
+                                    if (validPlayerDefense(computerCard) == false)
+                                    {
+                                        pickUpCounter++;
+                                        MessageBox.Show("You can not defend, take the card");
+                                        //for all cards on the table, pick them up
+                                        for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
+                                        {
+                                            //debugging for card indexes on table.
+                                            //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
+                                            CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                                            // remove border from the card if it still has one.
+                                            RemoveBorder(card);
+                                            pnlPlayArea.Controls.Remove(card);
+                                            //card.FaceUp = false;
+                                            pnlPlayerHand.Controls.Add(card);
+                                            RemoveClickEvent(card);
+                                            FlipPlayerHand(pnlPlayerHand);
+                                            RepositionPlayedCards(pnlPlayArea);
+                                            playerAttackCounter = 0;
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
+                                        i -= 100;
+
+                                    }
                                 }
                             }
+                            // flag that a play was made and realign cards
+                            if (!highCard)
+                                playMade = true;
+
+                            RepositionPlayedCards(pnlPlayArea);
                         }
-                        else // Easy AI always plays the first card in hand
+                    }
+
+                    // if the card a [0] was a high card end the turn (can only happen duting hardAI)
+                    if (highCard == true && pnlPlayArea.Controls.Count <= 0)
+                    {
+                        //Swap player attack / pickup buttons at the end of thae phase.
+                        btnPickUp.Visible = false;
+                        btnEndAttack.Visible = true;
+
+                        //validPlay = true;  //reset validPlay
+                        MessageBox.Show(newAI.Name + " chose not to play.");
+                        //i += 100;
+
+                        //send cards to discard pile
+                        for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
                         {
-                            computerCard = (CardBox)pnlComputerHand.Controls[0];
+                            CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                            // remove border from the card if it still has one.
+                            card.BorderStyle = BorderStyle.None;
+                            pnlPlayArea.Controls.Remove(card);
+                            pnlDiscard.Controls.Add(card);
+                            pnlDiscard.Controls.SetChildIndex(card, 0);
+                            lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
+                            //MessageBox.Show(card.ToString() + " Added to the discard pile");
+                            RealignCards(pnlDiscard);
+                            FlipPlayerHand(pnlPlayerHand);
+                            FlipAiHand(pnlComputerHand);
+
                         }
 
-                        // triggers if hardAI flags the next card playable as high.
-                        if (highCard == true)
+                        RedrawCards(durakDeck, playerAttack); // draw cards to fill hand
+
+                        playerAttack = true; //set player to attack phase
+                                             //render player hand to be clickable
+                        for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
                         {
-                            i -= 100;  //end the loop that play cards
-                        }
-                        // --------------------------------------------- NEW HARD AI CODE ENDS HERE ------------------------------------------
-                        // -----------------------------------------------------------------------------------------------------------
-                        //the card at 0 is not high, play as normal
-                        else
-                        {
-                            //If no cards are in the playArea
-                            if (pnlPlayArea.Controls.Count <= 0)
+                            CardBox card = (CardBox)pnlPlayerHand.Controls[j];
+                            if (!card.IsEventHandlerRegistered())
                             {
-                                //flip the card as it is played
-                                computerCard.FaceUp = true;
-                                //play the card in the computer hand
-                                pnlComputerHand.Controls.Remove(computerCard);
-                                aiAttackCounter++;
-                                pnlPlayArea.Controls.Add(computerCard);
-                                computerCard.BorderStyle = BorderStyle.Fixed3D;
+                                AddClickEvent(card);
+                            }
+                        }
+                    }
+                }
+                // if there are cards in the play area and cards remaining in the player hand
+                else if (pnlComputerHand.Controls.Count > 0 && pnlPlayerHand.Controls.Count > 0)
+                {
+
+                    //logic to add card from computer hand (no attack logic applied)
+                    for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
+                    {
+                        //MessageBox.Show("index ELSE play " + i);
+                        //bool validPlay = false;
+                        CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
+                        CardBox validCardCheck = new CardBox();
+
+                        //iterate through each card in the playArea
+                        for (int playAreaIndex = 0; playAreaIndex < pnlPlayArea.Controls.Count; playAreaIndex++)
+                        {
+                            validCardCheck = (CardBox)pnlPlayArea.Controls[playAreaIndex];
+                            //MessageBox.Show(computerCard.ToString() + " vs >> " + validCardCheck.ToString());
+
+                            if (computerCard.Rank == validCardCheck.Rank)
+                            {
+                                //uncomment to show validation of playable card
+                                //MessageBox.Show(computerCard.ToString() + " vs >> " + validCardCheck.ToString() + "\n" + computerCard.ToString() + " is playable");
+                                validPlay = true;
+
+                                //debug to display when each individual card is unplayable by the AI
+                                if (validPlay == true)
+                                {
+                                    computerCard.FaceUp = true; //set chosen card face up.
+                                    //MessageBox.Show(computerCard.ToString() + " is playable");
+                                    i += 100; // end the examination loop
+                                    playAreaIndex += 100;
+                                    //remove from player hand
+                                    pnlComputerHand.Controls.Remove(computerCard);
+                                    aiAttackCounter++;
+                                    computerCard.BorderStyle = BorderStyle.Fixed3D;
+                                    pnlPlayArea.Controls.Add(computerCard);
+                                }
+
+                                //realign computer hand
                                 FlipAiHand(pnlComputerHand);
                                 RepositionPlayedCards(pnlPlayArea);
 
-                                //if no player cards can defend an attack
+                                //determine which player cards can be played to defend an attack
                                 if (validPlayerDefense(computerCard) == false)
                                 {
-                                    pickUpCounter++;
-                                    MessageBox.Show("You can not defend, take the card");
+                                    MessageBox.Show(pnlPlayArea.Controls.Count +
+                                        " cards on table. \nYou can not mount a defense");
                                     //for all cards on the table, pick them up
-                                    for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
+                                    for (int k = (pnlPlayArea.Controls.Count - 1); k > -1; k--)
                                     {
+                                        CardBox card = (CardBox)pnlPlayArea.Controls[k];
                                         //debugging for card indexes on table.
-                                        //MessageBox.Show(pnlPlayArea.Controls.Count + " cards on table.  Index is " + i);
-                                        CardBox card = (CardBox)pnlPlayArea.Controls[j];
-                                        // remove border from the card if it still has one.
-                                        RemoveBorder(card);
+                                        //MessageBox.Show("Picking up " + card + " at index " + k);
                                         pnlPlayArea.Controls.Remove(card);
-                                        //card.FaceUp = false;
+                                        //flip the card before entering computer hand
+                                        card.FaceUp = false;
+                                        RemoveBorder(card);
                                         pnlPlayerHand.Controls.Add(card);
-                                        RemoveClickEvent(card);
                                         FlipPlayerHand(pnlPlayerHand);
                                         RepositionPlayedCards(pnlPlayArea);
-                                        playerAttackCounter = 0;
-
+                                        //ComputerAttack(playerAttackCounter);
                                     }
+                                    i += 100; // end the examination loop
+                                    playAreaIndex += 100;
+                                    ComputerAttack(aiAttackCounter);
                                 }
                                 else
                                 {
-                                    //MessageBox.Show("You have " + pnlPlayerHand.Controls.Count + " cards, attempt a defense. ");
-                                    i -= 100;
-
+                                    //validPlay = true;
+                                    i += 100;
+                                    MessageBox.Show("You have " + pnlPlayerHand.Controls.Count +
+                                        " cards, attempt a defense. ");
                                 }
+                                //computerCard.BorderStyle = BorderStyle.None;
                             }
                         }
-                        // flag that a play was made and realign cards
-                        if (!highCard)
-                            playMade = true;
-
-                        RepositionPlayedCards(pnlPlayArea);
-                    }
-                }
-
-                // if the card a [0] was a high card end the turn (can only happen duting hardAI)
-                if (highCard == true && pnlPlayArea.Controls.Count <= 0)
-                {
-                    //Swap player attack / pickup buttons at the end of thae phase.
-                    btnPickUp.Visible = false;
-                    btnEndAttack.Visible = true;
-
-                    //validPlay = true;  //reset validPlay
-                    MessageBox.Show(newAI.Name + " chose not to play.");
-                    //i += 100;
-
-                    //send cards to discard pile
-                    for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
-                    {
-                        CardBox card = (CardBox)pnlPlayArea.Controls[j];
-                        // remove border from the card if it still has one.
-                        card.BorderStyle = BorderStyle.None;
-                        pnlPlayArea.Controls.Remove(card);
-                        pnlDiscard.Controls.Add(card);
-                        pnlDiscard.Controls.SetChildIndex(card, 0);
-                        lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
-                        //MessageBox.Show(card.ToString() + " Added to the discard pile");
-                        RealignCards(pnlDiscard);
-                        FlipPlayerHand(pnlPlayerHand);
-                        FlipAiHand(pnlComputerHand);
 
                     }
 
-                    RedrawCards(durakDeck, playerAttack); // draw cards to fill hand
-
-                    playerAttack = true; //set player to attack phase
-                                         //render player hand to be clickable
-                    for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
+                    // The computer can not make another valid play
+                    if (validPlay == false || aiAttackCounter == 6)
                     {
-                        CardBox card = (CardBox)pnlPlayerHand.Controls[j];
-                        if (!card.IsEventHandlerRegistered())
+                        WinCheck(durakDeck);
+                        //Swap player attack / pickup buttons at the end of thae phase.
+                        btnPickUp.Visible = false;
+                        btnEndAttack.Visible = true;
+
+                        //validPlay = true;  //reset validPlay
+                        MessageBox.Show(newAI.Name + " has chosen not to attack.");
+                        //i += 100;
+
+                        //send cards to discard pile
+                        for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
                         {
-                            AddClickEvent(card);
-                        }
-                    }
-                }
-            }
-            // if there are cards in the play area and cards remaining in the player hand
-            else if (pnlComputerHand.Controls.Count > 0 && pnlPlayerHand.Controls.Count > 0)
-            {
-
-                //logic to add card from computer hand (no attack logic applied)
-                for (int i = 0; i < pnlComputerHand.Controls.Count; i++)
-                {
-                    //MessageBox.Show("index ELSE play " + i);
-                    //bool validPlay = false;
-                    CardBox computerCard = (CardBox)pnlComputerHand.Controls[i];
-                    CardBox validCardCheck = new CardBox();
-
-                    //iterate through each card in the playArea
-                    for (int playAreaIndex = 0; playAreaIndex < pnlPlayArea.Controls.Count; playAreaIndex++)
-                    {
-                        validCardCheck = (CardBox)pnlPlayArea.Controls[playAreaIndex];
-                        //MessageBox.Show(computerCard.ToString() + " vs >> " + validCardCheck.ToString());
-
-                        if (computerCard.Rank == validCardCheck.Rank)
-                        {
-                            //uncomment to show validation of playable card
-                            //MessageBox.Show(computerCard.ToString() + " vs >> " + validCardCheck.ToString() + "\n" + computerCard.ToString() + " is playable");
-                            validPlay = true;
-
-                            //debug to display when each individual card is unplayable by the AI
-                            if (validPlay == true)
-                            {
-                                computerCard.FaceUp = true; //set chosen card face up.
-                                //MessageBox.Show(computerCard.ToString() + " is playable");
-                                i += 100; // end the examination loop
-                                playAreaIndex += 100;
-                                //remove from player hand
-                                pnlComputerHand.Controls.Remove(computerCard);
-                                aiAttackCounter++;
-                                computerCard.BorderStyle = BorderStyle.Fixed3D;
-                                pnlPlayArea.Controls.Add(computerCard);
-                            }
-
-                            //realign computer hand
+                            CardBox card = (CardBox)pnlPlayArea.Controls[j];
+                            // remove border from the card if it still has one.
+                            card.BorderStyle = BorderStyle.None;
+                            pnlPlayArea.Controls.Remove(card);
+                            pnlDiscard.Controls.Add(card);
+                            pnlDiscard.Controls.SetChildIndex(card, 0);
+                            lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
+                            //MessageBox.Show(card.ToString() + " Added to the discard pile");
+                            RealignCards(pnlDiscard);
+                            FlipPlayerHand(pnlPlayerHand);
                             FlipAiHand(pnlComputerHand);
-                            RepositionPlayedCards(pnlPlayArea);
 
-                            //determine which player cards can be played to defend an attack
-                            if (validPlayerDefense(computerCard) == false)
-                            {
-                                MessageBox.Show(pnlPlayArea.Controls.Count +
-                                    " cards on table. \nYou can not mount a defense");
-                                //for all cards on the table, pick them up
-                                for (int k = (pnlPlayArea.Controls.Count - 1); k > -1; k--)
-                                {
-                                    CardBox card = (CardBox)pnlPlayArea.Controls[k];
-                                    //debugging for card indexes on table.
-                                    //MessageBox.Show("Picking up " + card + " at index " + k);
-                                    pnlPlayArea.Controls.Remove(card);
-                                    //flip the card before entering computer hand
-                                    card.FaceUp = false;
-                                    RemoveBorder(card);
-                                    pnlPlayerHand.Controls.Add(card);
-                                    FlipPlayerHand(pnlPlayerHand);
-                                    RepositionPlayedCards(pnlPlayArea);
-                                    //ComputerAttack(playerAttackCounter);
-                                }
-                                i += 100; // end the examination loop
-                                playAreaIndex += 100;
-                                ComputerAttack(aiAttackCounter);
-                            }
-                            else
-                            {
-                                //validPlay = true;
-                                i += 100;
-                                MessageBox.Show("You have " + pnlPlayerHand.Controls.Count +
-                                    " cards, attempt a defense. ");
-                            }
-                            //computerCard.BorderStyle = BorderStyle.None;
                         }
-                    }
 
-                }
+                        RedrawCards(durakDeck, playerAttack); // draw cards to fill hand
 
-                // The computer can not make another valid play
-                if (validPlay == false || aiAttackCounter == 6)
-                {
-                    WinCheck(durakDeck);
-                    //Swap player attack / pickup buttons at the end of thae phase.
-                    btnPickUp.Visible = false;
-                    btnEndAttack.Visible = true;
-
-                    //validPlay = true;  //reset validPlay
-                    MessageBox.Show(newAI.Name + " has chosen not to attack.");
-                    //i += 100;
-
-                    //send cards to discard pile
-                    for (int j = pnlPlayArea.Controls.Count - 1; j > -1; j--)
-                    {
-                        CardBox card = (CardBox)pnlPlayArea.Controls[j];
-                        // remove border from the card if it still has one.
-                        card.BorderStyle = BorderStyle.None;
-                        pnlPlayArea.Controls.Remove(card);
-                        pnlDiscard.Controls.Add(card);
-                        pnlDiscard.Controls.SetChildIndex(card, 0);
-                        lblDiscard.Text = "Discarded: " + pnlDiscard.Controls.Count.ToString();
-                        //MessageBox.Show(card.ToString() + " Added to the discard pile");
-                        RealignCards(pnlDiscard);
-                        FlipPlayerHand(pnlPlayerHand);
-                        FlipAiHand(pnlComputerHand);
-
-                    }
-
-                    RedrawCards(durakDeck, playerAttack); // draw cards to fill hand
-
-                    playerAttack = true; //set player to attack phase
-                                         //render player hand to be clickable
-                    for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
-                    {
-                        CardBox card = (CardBox)pnlPlayerHand.Controls[j];
-                        if (!card.IsEventHandlerRegistered())
+                        playerAttack = true; //set player to attack phase
+                                             //render player hand to be clickable
+                        for (int j = pnlPlayerHand.Controls.Count - 1; j > -1; j--)
                         {
-                            AddClickEvent(card);
+                            CardBox card = (CardBox)pnlPlayerHand.Controls[j];
+                            if (!card.IsEventHandlerRegistered())
+                            {
+                                AddClickEvent(card);
+                            }
                         }
                     }
+                    // set boolean playMade successfully and realign the playArea
+                    playMade = true;
+                    RepositionPlayedCards(pnlPlayArea);
                 }
-                // set boolean playMade successfully and realign the playArea
-                playMade = true;
-                RepositionPlayedCards(pnlPlayArea);
+
+
+                // if the AI hand is empty, redraw and check for win
+                if (pnlComputerHand.Controls.Count == 0 || pnlPlayerHand.Controls.Count == 0)
+                {
+                    RedrawCards(durakDeck, playerAttack);
+                    WinCheck(durakDeck);
+                }
             }
-
-
-            // if the AI hand is empty, redraw and check for win
-            if (pnlComputerHand.Controls.Count == 0 || pnlPlayerHand.Controls.Count == 0)
-            {
-                RedrawCards(durakDeck, playerAttack);
-                WinCheck(durakDeck);
-            }
-
         }
 
         /// <summary>
@@ -1647,6 +1652,7 @@ namespace DurakProject
                         winCheckPassed = true;
                         frmLog.WriteToLog("\nThere is no fool?! \n\nGame has ended in a tie.");
                         MessageBox.Show("There is no fool?! \n\nGame has ended in a tie.");
+                        testRecursionEnd = true;
                         playerStats.ties += 1;
                         lblTies.Text = "Ties: " + playerStats.ties;
                         Stats.WriteStats(playerStats);
@@ -1670,6 +1676,7 @@ namespace DurakProject
                         winCheckPassed = true;
                         frmLog.WriteToLog("\n" + "You're a fool! \n\n" + newAI.Name + " has won.");
                         MessageBox.Show("You're a fool! \n\n" + newAI.Name + " has won.");
+                        testRecursionEnd = true;
                         playerStats.losses += 1;
                         lblLosses.Text = "Wins: " + playerStats.losses;
                         Stats.WriteStats(playerStats);
@@ -1691,6 +1698,7 @@ namespace DurakProject
                         winCheckPassed = true;
                         frmLog.WriteToLog("\n"+ newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
                         MessageBox.Show(newAI.Name + " is the fool! \n\n" + newPlayer.Name + " has won.");
+                        testRecursionEnd = true;
                         playerStats.wins += 1;
                         lblWins.Text = "Wins: " + playerStats.wins;
                         Stats.WriteStats(playerStats);

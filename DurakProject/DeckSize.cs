@@ -26,18 +26,18 @@ namespace DurakProject
             {
                 if (rbtnTenToAce.Checked)
                 {
-                    return 1;
+                    return 10;
                 }
                 else if (rbtnSixToAce.Checked)
                 {
-                    return 2;
+                    return 6;
                 }
                 else if (rbtnStandardDeck.Checked)
                 {
-                    return 3;
+                    return 2;
                 }
                 else
-                    return 1;
+                    return 6;
             }
         }
         /// <summary>

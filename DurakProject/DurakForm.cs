@@ -59,7 +59,7 @@ namespace DurakProject
         //*************************
         //*************************
 
-        int deckSize = 2;  // size of the durak card deck.  2 = 36 card default
+        int deckSize = 36;  // size of the durak card deck.  2 = 36 card default
         int pickUpCounter = 0;
 
         //Declares new computer player
@@ -320,7 +320,7 @@ namespace DurakProject
             //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
             // shuffle the new deck.
-            durakDeck.Shuffle();
+            durakDeck.Shuffle(deckSize);
             //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 
             // Set the deck image to a card back image
@@ -408,8 +408,8 @@ namespace DurakProject
             if (playerStats != null)
                 playerStats.losses += 1;
             // close the lof if it was open.
-            if (frmLog != null)
-                frmLog.Close();
+            //if (frmLog != null)
+            //    frmLog.Close();
             Stats.WriteStats(playerStats);
             // disable all player controls
             btnForfeit.Visible = false;

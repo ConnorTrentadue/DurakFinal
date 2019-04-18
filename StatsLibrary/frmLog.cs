@@ -30,7 +30,8 @@ namespace StatsLibrary
 
         public void WriteToLog(string log)
         {
-            txtLog.AppendText(log+"\n");
+            if (txtLog != null)
+                txtLog.AppendText(log+"\n");
         }
     }
 }

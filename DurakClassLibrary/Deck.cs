@@ -45,12 +45,12 @@ namespace DurakClassLibrary
         /// Parameterized constructor to set the size of a deck
         /// </summary>
         /// <param name="deckSize">Alters the size of the deck used</param>
-        public Deck(int deckSize)
+        public Deck(int lowRank)
         {
             // cards = new Card[];
             for (int suitValue = 0; suitValue < 4; suitValue++)
             {
-                for (int rankValue = deckSize; rankValue < 15; rankValue++)
+                for (int rankValue = lowRank; rankValue < 15; rankValue++)
                 {
                     // assign cards a unique value  (obsolete)
                     //cards[suitValue * 13 + rankValue - 1] = new Card((Suit)suitValue, 
@@ -91,16 +91,16 @@ namespace DurakClassLibrary
         /// </summary>
         public int CardsRemaining { get { return cards.Count(); } }
 
-        public void Shuffle()
+        public void Shuffle(int deckSize)
         {
             // create temp card array
             //Card[] newDeck = new Card[36];
             Cards newDeck = new Cards();    // create new collection of cards
-            bool[] assigned = new bool[36]; // durak deck size
+            bool[] assigned = new bool[deckSize]; // durak deck size
             Random sourceGen = new Random();      // for generating random numbers
 
             // loop through the card array looking for a card
-            for (int i = 0; i < 36; i++)
+            for (int i = 0; i < deckSize; i++)
             {
                 //int destCard = 0;
                 int sourceCard = 0;
@@ -109,7 +109,7 @@ namespace DurakClassLibrary
                 while (foundCard == false)
                 {
                     //destCard = sourceGen.Next(36);      //defines the random number for the temp card array
-                    sourceCard = sourceGen.Next(36);
+                    sourceCard = sourceGen.Next(deckSize);
                     if (assigned[sourceCard] == false)    // check if the current random value was assigned or not
                     {
                         foundCard = true;

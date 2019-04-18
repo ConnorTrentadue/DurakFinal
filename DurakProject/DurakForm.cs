@@ -353,6 +353,9 @@ namespace DurakProject
             // set the trump suit for this game.
             Card trumpCard = durakDeck.DrawCard();
             CardBox aTrumpCardbox = new CardBox(trumpCard);
+            // log the tump card
+            if (frmLog != null)
+                frmLog.WriteToLog("\n"+ aTrumpCardbox.ToString() + " is the Trump card for this hand");
 
             //draw the card to the trump panel face up
             trumpCard.FaceUp = true;

@@ -40,6 +40,25 @@ namespace DurakClassLibrary
                 }
             }
         }
+        
+        /// <summary>
+        /// Parameterized constructor to set the size of a deck
+        /// </summary>
+        /// <param name="deckSize">Alters the size of the deck used</param>
+        public Deck(int deckSize)
+        {
+            // cards = new Card[];
+            for (int suitValue = 0; suitValue < 4; suitValue++)
+            {
+                for (int rankValue = deckSize; rankValue < 15; rankValue++)
+                {
+                    // assign cards a unique value  (obsolete)
+                    //cards[suitValue * 13 + rankValue - 1] = new Card((Suit)suitValue, 
+                    //    (Rank)rankValue);
+                    cards.Add(new Card((Rank)rankValue, (Suit)suitValue));
+                }
+            }
+        }
 
         /// <summary>
         /// Parameterized Constructor

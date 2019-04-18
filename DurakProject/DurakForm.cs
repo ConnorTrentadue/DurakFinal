@@ -59,6 +59,7 @@ namespace DurakProject
         //*************************
         //*************************
 
+        int deckSize = 2;  // size of the durak card deck.  2 = 36 card default
         int pickUpCounter = 0;
 
         //Declares new computer player
@@ -258,7 +259,15 @@ namespace DurakProject
                 difficultyChoice = difficultyPrompt.DifficultyValue;
             }
 
-             // Get player existing stats
+
+            //prompt the user for their choice of difficulty
+            frmDeckSize deckSizePrompt = new frmDeckSize();
+            if (deckSizePrompt.ShowDialog() == DialogResult.OK)
+            {
+                deckSize = deckSizePrompt.DeckSize;
+            }
+
+            // Get player existing stats
             playerStats = Stats.ReadStats();
             if (playerStats != null)
             {
@@ -306,7 +315,7 @@ namespace DurakProject
 
 
             // create a new deck
-            durakDeck = new Deck();
+            durakDeck = new Deck(deckSize);
             Card card = new Card();
             //MessageBox.Show(durakDeck.CardsRemaining.ToString());
 

@@ -52,12 +52,12 @@
             this.mnuNewGame = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuForfeit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuStatsReset = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuLog = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.lblDiscard = new System.Windows.Forms.Label();
             this.lblTrumpIndicator = new System.Windows.Forms.Label();
-            this.mnuStatsReset = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pbTrumpIndicator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeck)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -276,8 +276,8 @@
             this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuNewGame,
             this.mnuForfeit,
-            this.mnuClose,
-            this.mnuStatsReset});
+            this.mnuStatsReset,
+            this.mnuClose});
             this.mnuFile.Name = "mnuFile";
             this.mnuFile.Size = new System.Drawing.Size(37, 20);
             this.mnuFile.Text = "File";
@@ -305,12 +305,12 @@
             this.mnuClose.Text = "&Close";
             this.mnuClose.Click += new System.EventHandler(this.mnuClose_Click);
             // 
-            // mnuLog
+            // mnuStatsReset
             // 
-            this.mnuLog.Name = "mnuLog";
-            this.mnuLog.Size = new System.Drawing.Size(39, 20);
-            this.mnuLog.Text = "Log";
-            this.mnuLog.Click += new System.EventHandler(this.mnuLog_Click);
+            this.mnuStatsReset.Name = "mnuStatsReset";
+            this.mnuStatsReset.Size = new System.Drawing.Size(180, 22);
+            this.mnuStatsReset.Text = "Stats Rese&t";
+            this.mnuStatsReset.Click += new System.EventHandler(this.mnuStatsReset_Click);
             // 
             // mnuAbout
             // 
@@ -318,6 +318,13 @@
             this.mnuAbout.Size = new System.Drawing.Size(52, 20);
             this.mnuAbout.Text = "About";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
+            // 
+            // mnuLog
+            // 
+            this.mnuLog.Name = "mnuLog";
+            this.mnuLog.Size = new System.Drawing.Size(39, 20);
+            this.mnuLog.Text = "Log";
+            this.mnuLog.Click += new System.EventHandler(this.mnuLog_Click);
             // 
             // mnuHelp
             // 
@@ -349,13 +356,6 @@
             this.lblTrumpIndicator.Text = "Trump";
             this.lblTrumpIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblTrumpIndicator.Visible = false;
-            // 
-            // mnuStatsReset
-            // 
-            this.mnuStatsReset.Name = "mnuStatsReset";
-            this.mnuStatsReset.Size = new System.Drawing.Size(180, 22);
-            this.mnuStatsReset.Text = "Stats Rese&t";
-            this.mnuStatsReset.Click += new System.EventHandler(this.mnuStatsReset_Click);
             // 
             // frmDurak
             // 

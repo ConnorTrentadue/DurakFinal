@@ -51,6 +51,12 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeckSize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeckSize.Designer.cs">
+      <DependentUpon>DeckSize.cs</DependentUpon>
+    </Compile>
     <Compile Include="DifficultyChoice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeckSize.resx">
+      <DependentUpon>DeckSize.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DifficultyChoice.resx">
       <DependentUpon>DifficultyChoice.cs</DependentUpon>

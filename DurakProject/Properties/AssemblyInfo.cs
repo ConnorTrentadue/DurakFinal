@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DurakProject")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Durak Game")]
+[assembly: AssemblyDescription("Russian Card Game of Durak")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DurakProject")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyProduct("Durak Game")]
+[assembly: AssemblyCopyright("Copyright ©  2019, Shaun McCrum, Ray Michael, Connor Trentadue")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

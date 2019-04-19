@@ -369,6 +369,7 @@ namespace DurakProject
                     CardBox computerCardBox = new CardBox(card);
                     //MessageBox.Show(computerCardBox.ToString());
                     pnlComputerHand.Controls.Add(computerCardBox);
+                    FlipAiHand(pnlComputerHand);
                 }
             }
 
@@ -1091,7 +1092,7 @@ namespace DurakProject
                             // flag that a play was made and realign cards
                             if (!highCard)
                                 playMade = true;
-
+                            FlipAiHand(pnlComputerHand);
                             RepositionPlayedCards(pnlPlayArea);
                         }
                     }
@@ -1275,6 +1276,7 @@ namespace DurakProject
                 if (pnlComputerHand.Controls.Count == 0 || pnlPlayerHand.Controls.Count == 0)
                 {
                     RedrawCards(durakDeck, playerAttack);
+                    FlipAiHand(pnlComputerHand);
                     WinCheck(durakDeck);
                 }
             }
@@ -1900,6 +1902,7 @@ namespace DurakProject
                 CardBox tempCard = SortedList[i];
                 //MessageBox.Show("Adding " + tempCard.ToString() + " to computer hand.");
                 pnlComputerHand.Controls.Add(tempCard);
+                FlipAiHand(pnlComputerHand);
             }
         }
 

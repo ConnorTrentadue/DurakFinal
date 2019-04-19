@@ -1563,7 +1563,7 @@ namespace DurakProject
                                 CardBox trumpCard = (CardBox)pnlTrumpCard.Controls[0];
                                 pnlTrumpCard.Controls.Remove(trumpCard);
                                 pnlComputerHand.Controls.Add(trumpCard);
-                                card.FaceUp = false;
+                                trumpCard.FaceUp = false;
                                 FlipAiHand(pnlComputerHand);
                             }
                             //no cards are in the deck at a redraw, check to see if a player has won
@@ -1833,6 +1833,7 @@ namespace DurakProject
                         {
                             PickUpCards(ref pnlComputerHand, true); // pick up cards in players
                             i -= 100; // end defense logic
+                            FlipAiHand(pnlComputerHand);
 
                         }
 
